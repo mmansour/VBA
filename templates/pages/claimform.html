@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% load mezzanine_tags keyword_tags %}
+
+{% block meta_title %}
+Claim Your Real Estate Profile
+{% endblock %}
+
+{% comment %}{% block meta_keywords %}{% metablock %}
+{% keywords_for page as keywords %}
+{% for keyword in keywords %}
+    {% if not forloop.first %}, {% endif %}
+    {{ keyword }}
+{% endfor %}
+{% endmetablock %}{% endblock %}{% endcomment %}
+
+{% block meta_description %}{% metablock %}
+Form to claim your real estate agent profile
+{% endmetablock %}{% endblock %}
+
+{% block title %}
+Claim Your Real Estate Profile
+{% endblock %}
+
+{% block extra_breadcrumb %}
+<li class="active">
+Claim Your Profile
+</li>
+{% endblock %}
+
+{% block main %}
+
+<h3>Enter your Real Estate License ID to Finish Claiming your Profile</h3>
+<p>If you don't have your Real Estate License ID handy just enter your last name in the search box,
+    top right of page, to find your profile. Your License ID is on your profile page.</p>
+
+<form enctype="multipart/form-data" action="/agent/claimprofile/" method="post" id="claim-profile" autocomplete="on">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="Claim Profile" />
+</form>
+
+{% endblock %}

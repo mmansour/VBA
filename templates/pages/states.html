@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% load mezzanine_tags keyword_tags %}
+
+{% block meta_title %}
+Real Estate Agent Lookup by Region
+{% endblock %}
+
+{% comment %}{% block meta_keywords %}{% metablock %}
+{% keywords_for page as keywords %}
+{% for keyword in keywords %}
+    {% if not forloop.first %}, {% endif %}
+    {{ keyword }}
+{% endfor %}
+{% endmetablock %}{% endblock %}{% endcomment %}
+
+{% block meta_description %}{% metablock %}
+Lookup Real Estate Agents, Brokers and Corporations by Region
+{% endmetablock %}{% endblock %}
+
+{% block title %}
+Real Estate Licensee lookup by Region
+{% endblock %}
+
+{% block extra_breadcrumb %}
+<li class="active">
+Agents by Region
+</li>
+{% endblock %}
+
+{% block alert_header %}
+    {% if request.user.is_authenticated %}
+        {% if not profile_claimed.0 %}
+            <div class="alert" data-alert="alert">
+            <a class="close" href="#" onclick="$(this).parent().fadeOut('fast'); return false;">×</a> <a href="/agent/claimprofile/">To finish claiming your profile click here!</a> Just one more step!
+            </div>
+        {% else %}
+           <div class="alert" data-alert="alert">
+                <a class="close" href="#" onclick="$(this).parent().fadeOut('fast'); return false;">×</a> <a href="/agent/profile/edit/{{ profile_claimed.1 }}/">To edit your profile click here!</a>
+            </div>
+        {% endif %}
+    {% endif %}
+{% endblock %}
+
+{% block main %}
+<ul>
+
+{% for st in active_regions %}
+
+<li><a href="/agent_lookup/{{ st.slugged_region }}/">{{ st.region|title }}</a></li>
+
+{% endfor %}
+
+</ul>
+{% endblock %}

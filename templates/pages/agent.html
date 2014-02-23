@@ -1,0 +1,237 @@
+{% extends "base2.html" %}
+{% load mezzanine_tags keyword_tags agent_tags %}
+
+{% block meta_title %}{% if agent.first_name or agent.last_name %}{{ agent.first_name }} {{ agent.last_name }}{% else %}{{ agent.full_name }}
+{% endif %} {{ agent.mailing_city }}, {{ agent.mailing_state }} {{ agent.mailing_zip }}
+{% endblock %}
+
+{#{% block meta_keywords %}{% metablock %}#}
+{#{% keywords_for page as keywords %}#}
+{#{% for keyword in keywords %}#}
+{#    {% if not forloop.first %}, {% endif %}#}
+{#    {{ keyword }}#}
+{#{% endfor %}#}
+{#{% endmetablock %}{% endblock %}#}
+
+{% block meta_description %}{% metablock %}Information about Real Estate
+{% if agent.license_type == "SALESPERSON" %} Agent {% if agent.first_name or agent.last_name %}
+{{ agent.first_name }} {{ agent.last_name }}{% else %}{{ agent.full_name }}{% endif %}
+{% endif %}
+
+{% if agent.license_type == "BROKER" %} Broker {% if agent.first_name or agent.last_name %}
+{{ agent.first_name }} {{ agent.last_name }}{% else %}{{ agent.full_name }}{% endif %}
+{% endif %}
+
+{% if agent.license_type == "CORPORATION" %} Corporation {{ agent.full_name }}{% endif %}
+{% if agent.mailing_city %}, {{ agent.mailing_city|title }}, {{ agent.mailing_state }}{% endif %}
+{% endmetablock %}{% endblock %}
+
+{% block title %}
+{#{% if agent.first_name or agent.last_name %}{{ agent.first_name }} {{ agent.last_name }}#}
+{#{% else %}{{ agent.full_name }}{% endif %}#}
+{#{% if agent.license_type == "SALESPERSON" %} - Real Estate Agent{% endif %}#}
+{#{% if agent.license_type == "BROKER" %} - Real Estate Broker{% endif %}#}
+{#{% if agent.license_type == "CORPORATION" %} - Real Estate Corporation{% endif %}#}
+{% endblock %}
+
+{% block extra_breadcrumb %}
+<li>
+<a href="/agent_lookup/">Agents by Region</a>
+<span class="divider">/</span>
+</li>
+<li>
+<a href="/agent_lookup/{{ active_region.region|slugify }}/">{{ active_region.region|title }}</a>
+<span class="divider">/</span>
+</li>
+<li>
+<a href="/agent_lookup/{{ active_region.region|slugify }}/{{ agent.mailing_city|slugify }}">{{ agent.mailing_city|title }}</a>
+<span class="divider">/</span>
+</li>
+<li class="active">
+{% if agent.first_name or agent.last_name %}
+{{ agent.first_name }} {{ agent.last_name }}{% else %}
+{{ agent.full_name }}{% endif %}
+</li>
+{% endblock %}
+
+{% block extra_header %}
+<h1><small>{% if agent.first_name or agent.last_name %}
+{{ agent.first_name }} {{ agent.last_name }}{% else %}
+{{ agent.full_name }}{% endif %}{% if agent.license_type == "SALESPERSON" %} (Real Estate Agent){% endif %}
+{% if agent.license_type == "BROKER" %} (Real Estate Broker){% endif %}
+{% if agent.license_type == "CORPORATION" %} (Real Estate Corporation){% endif %}</small></h1>
+{% endblock %}
+
+{% block alert_header %}
+    {% if request.user.is_authenticated %}
+        {% if not profile_claimed.0 %}
+            <div class="alert" data-alert="alert">
+                <a class="close" href="#" onclick="$(this).parent().fadeOut('fast'); return false;">×</a> To finish claiming your profile copy your license id from your profile below then <a href="/agent/claimprofile/">click here!</a> That's the last step!
+            </div>
+        {% else %}
+           <div class="alert" data-alert="alert">
+                <a class="close" href="#" onclick="$(this).parent().fadeOut('fast'); return false;">×</a> <a href="/agent/profile/edit/{{ profile_claimed.1 }}/">Edit your profile!</a>
+            </div>
+        {% endif %}
+    {% else %}
+        {% if not agent.profile_claimed %}
+            <div class="alert" data-alert="alert">
+                <a class="close" href="#" onclick="$(this).parent().fadeOut('fast'); return false;">×</a> Are you {% if agent.first_name or agent.last_name %}{{ agent.first_name }}  {{ agent.last_name }}{% else %}{{ agent.full_name }}{% endif %}?
+                <a href="/account/signup/?next={{ agent.get_absolute_url }}">Claim and edit your profile!</a>
+            </div>
+        {% endif %}
+    {% endif %}
+{% endblock %}
+
+{% block extra_left_panel %}
+{% comment %}<div class="panel tree"><h4>Agent lookup by city and state:</h4>
+<ol class="explore-list">
+{% for st in active_region %}
+<li><a href='/agent_lookup/{{ st.region|slugify }}/'>{{ st.region }}</a></li>
+{% endfor %}
+</ol></div>{% endcomment %}
+{% endblock %}
+
+
+{% block main %}
+
+{% if agent.profile_image %}
+<div class="profile_image">
+<img src="{{ MEDIA_URL }}{% agent_thumbnail agent.profile_image 190 190 %}"
+     alt="{% if agent.first_name or agent.last_name %}{{ agent.first_name }}  {{ agent.last_name }}{% else %}{{ agent.full_name }}{% endif %} Real Estate {{ agent.license_type|title }}" />
+<h2><small>{% if agent.first_name or agent.last_name %}{{ agent.first_name }}  {{ agent.last_name }}
+{% else %}{{ agent.full_name }}{% endif %}</small></h2>
+</div>
+{% endif %}
+
+
+<div class="state_license_info">
+    <h3><small>Mailing Address</small></h3>
+    <address>
+    {{ agent.mailing_address }}<br />
+    {{ agent.mailing_city }}, {{ agent.mailing_state }} {{ agent.mailing_zip }}
+    </address>
+
+    <h3><small>Real Estate License Information</small></h3>
+    <ul>
+        <li>License Status: {{ agent.license_status }} {{ agent.license_type }}</li>
+        <li>License ID: {{ agent.license_id }}</li>
+        <li>License Issue Date : {% if agent.license_type == "SALESPERSON" %}
+    {{ agent.salesperson_license_issue_date|truncatechars:11 }}
+    {% endif %}{% if agent.license_type == "BROKER" %}
+    {{ agent.broker_license_issue_date|truncatechars:11 }}
+    {% endif %}{% if agent.license_type == "CORPORATION" %}
+    {{ agent.corp_license_issue_date|truncatechars:11 }}
+    {% endif %}</li>
+        <li>License Expiration Date: {{ agent.license_expiration_date|truncatechars:11 }}</li>
+    </ul>
+
+    {% if agent.license_type == "SALESPERSON" %}
+        <h3><small>Addition Sales Agent Information</small></h3>
+        {% if agent.get_clean_salesperson_employing_broker %}
+        <h5>Employing Broker</h5>
+        <a href="/{{ agent.get_clean_salesperson_employing_broker_url }}/">{{ agent.get_clean_salesperson_employing_broker|safe }}</a>
+        {% endif %}
+        <h5>Public Comments about this Agent</h5>
+        {{ agent.get_clean_public_comments }}
+    {% endif %}
+
+    {% if agent.license_type == "BROKER" %}
+        <h3><small>Addition Broker Information</small></h3>
+        <h5>Brokerage Main Office Address</h5>
+        <address><small>{{agent.get_clean_main_office_address}}</small></address>
+        <h5>DBA (Doing Business As)</h5>
+        {{ agent.get_clean_dba }}
+        <h5>Branches</h5>
+        {{ agent.get_clean_branches }}
+        <h5>Corporations Affiliated with this Broker</h5>
+        {{ agent.get_clean_affiliated_corps }}
+        <h5>Public Comments about this Broker</h5>
+        {{ agent.get_clean_public_comments }}
+    {% endif %}
+
+    {% if agent.license_type == "CORPORATION" %}
+        <h3><small>Addition Corporation Information</small></h3>
+        <h5>Brokerage Main Office Address</h5>
+        <address><small>{{agent.get_clean_main_office_address}}</small></address>
+        <h5>DBA (Doing Business As)</h5>
+        {{ agent.get_clean_dba }}
+        <h5>Branches</h5>
+        {{ agent.get_clean_branches }}
+    {#    <h5>Salespersons</h5>#}
+    {#    {{ agent.salespersons_employed }}#}
+        <h5>Public Comments about this Broker</h5>
+        {{ agent.get_clean_public_comments }}
+    {% endif %}
+
+    <h5>About Me</h5>
+    {% if agent.about_me %}
+          <p>{{ agent.about_me }}</p>
+    {% else %}
+          <p><em>About Me</em> data not yet provided by {{ agent.license_type|title }}, {{ agent.full_name }}.</p>
+    {% endif %}
+
+    <h5>Specialties</h5>
+    {% if agent.specialties %}
+          <p>{{ agent.specialties }}</p>
+    {% else %}
+          <p><em>Specialties</em> not added.</p>
+    {% endif %}
+
+    <h5>Website and Social Media Profiles</h5>
+    <ul>
+    {% if agent.website %}
+          <li><a href="{{ agent.website }}" target="_blank">My Website</a></li>
+    {% else %}
+          <li><em>Website</em> not added.</li>
+    {% endif %}
+
+    {% if agent.youtube %}
+          <li><a href="{{ agent.youtube }}" target="_blank">My Youtube Channel</a></li>
+    {% else %}
+          <li><em>Youtube channel</em> not added.</li>
+    {% endif %}
+
+    {% if agent.linkedin %}
+          <li><a href="{{ agent.linkedin }}" target="_blank">My Linkedin</a></li>
+    {% else %}
+          <li><em>Linkedin page</em> not added.</li>
+    {% endif %}
+
+    {% if agent.facebook %}
+          <li><a href="{{ agent.facebook }}" target="_blank">My Facebook</a></li>
+    {% else %}
+          <li><em>Facebook page</em> not added.</li>
+    {% endif %}
+
+    {% if agent.twitter %}
+          <li><a href="{{ agent.twitter }}" target="_blank">My Twitter</a></li>
+    {% else %}
+          <li><em>Twitter page</em> not added.</li>
+    {% endif %}
+
+    {% if agent.pinterest %}
+          <li><a href="{{ agent.pinterest }}" target="_blank">My Pinterest</a></li>
+    {% else %}
+          <li><em>Pinterest page</em> not added.</li>
+    {% endif %}
+    </ul>
+
+    <h5>Certifications and Awards</h5>
+    {% if agent.certifications_awards %}
+          <p>{{ agent.certifications_awards }}</p>
+    {% else %}
+          <p><em>Certifications and Awards</em> not added.</p>
+    {% endif %}
+
+    <h5>MLS / Association</h5>
+    {% if agent.mls_association %}
+          <p>{{ agent.mls_association }}</p>
+    {% else %}
+          <p><em>MLS / Association</em> not added.</p>
+    {% endif %}
+
+</div>
+{% endblock %}
+
+

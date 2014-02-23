@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block meta_title %}{% trans "Home" %}{% endblock %}
+{% block extra_meta %}<meta name="google-site-verification" content="mBbDnJ3OSmxkOf1MPysdt0fOerHpBdTo0AT5pTHm2kQ" />{% endblock %}
+{% block title %}{% trans "Home" %}{% endblock %}
+
+{% block breadcrumb_menu %}
+<li class="active">{% trans "Home" %}</li>
+{% endblock %}
+
+{% block alert_header %}
+    {% if request.user.is_authenticated %}
+        {% if not profile_claimed.0 %}
+            <div class="alert" data-alert="alert">
+            <a class="close" href="#" onclick="$(this).parent().fadeOut('fast'); return false;">×</a> <a href="/agent/claimprofile/">To finish claiming your profile click here!</a> Just one more step!
+            </div>
+        {% else %}
+           <div class="alert" data-alert="alert">
+                <a class="close" href="#" onclick="$(this).parent().fadeOut('fast'); return false;">×</a> <a href="/agent/profile/edit/{{ profile_claimed.1 }}/">To edit your profile click here!</a>
+            </div>
+        {% endif %}
+    {% endif %}
+{% endblock %}
+
+{% block extra_left_panel %}
+<div class="panel tree"><h4>Agent lookup by city and state:</h4>
+<ol class="explore-list">
+{% for st in active_region %}
+<li><a href='/agent_lookup/{{ st.region|slugify }}/'>{{ st.region }}</a></li>
+{% endfor %}
+</ol></div>
+{% endblock %}
+
+{% block main %}
+{% trans "Welcome to Real Estate Agent Lookup. Our database holds millions of real estate agents, brokers and corporations. The one you're looking for is probably in here. If not he or she might be soon. You can search by city below. Or use the search box above. Best of luck in your search!" %}
+
+<h2><small>{% trans "Ten Most Recently Added Real Estate Agents" %}</small></h2>
+<ul>
+{% for agt in most_recent_agents %}
+{% if agt.first_name or agt.last_name %}
+<li><a href="{{ agt.get_absolute_url }}">{{ agt.first_name }} {{ agt.last_name }}{% if agt.mailing_city %} - {{ agt.mailing_city|title }}{% endif %}</a></li>
+{% endif %}
+{% endfor %}
+</ul>
+{% endblock %}
+
+{% block extra_footer %}{% endblock %}

@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% load mezzanine_tags keyword_tags %}
+
+{% block meta_title %}
+Edit Your Real Estate Profile
+{% endblock %}
+
+{% comment %}{% block meta_keywords %}{% metablock %}
+{% keywords_for page as keywords %}
+{% for keyword in keywords %}
+    {% if not forloop.first %}, {% endif %}
+    {{ keyword }}
+{% endfor %}
+{% endmetablock %}{% endblock %}{% endcomment %}
+
+{% block meta_description %}{% metablock %}
+Form to Edit your real estate agent profile
+{% endmetablock %}{% endblock %}
+
+{% block title %}
+Edit Your Real Estate Profile
+{% endblock %}
+
+{% block extra_breadcrumb %}
+<li class="active">
+Edit Your Profile
+</li>
+{% endblock %}
+
+{% block main %}
+
+<h3>Fill out the fields below to update your real estate profile</h3>
+{% comment %}<p>If you don't have your Real Estate License ID handy just enter your last name in the search box,
+    top right of page, to find your profile. Your License ID is on your profile page.</p>{% endcomment %}
+
+<form enctype="multipart/form-data" action="/agent/profile/edit/{{ agent.id }}/" method="post" id="edit-profile" autocomplete="on">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="Submit Changes" />
+</form>
+
+{% endblock %}
