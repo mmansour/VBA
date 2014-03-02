@@ -45,7 +45,7 @@
 
 </head>
 <body id="{% block body_id %}body{% endblock %}">
-Test Deployment
+
 <div class="navbar navbar-fixed-top">
 <div class="navbar-inner">
 <div class="container">
@@ -92,6 +92,7 @@ Test Deployment
     {% block left_panel %}
     <div class="panel tree">{% page_menu "pages/menus/tree.html" %}</div>
     {% endblock %}
+    {% block extra_left_panel %}{% endblock %}
 </div>
 
 <div class="span7 middle">
