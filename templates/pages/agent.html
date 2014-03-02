@@ -99,13 +99,13 @@
 <div class="profile_image">
 <img src="{{ MEDIA_URL }}{% agent_thumbnail agent.profile_image 190 190 %}"
      alt="{% if agent.first_name or agent.last_name %}{{ agent.first_name }}  {{ agent.last_name }}{% else %}{{ agent.full_name }}{% endif %} Real Estate {{ agent.license_type|title }}" />
-<h2><small>{% if agent.first_name or agent.last_name %}{{ agent.first_name }}  {{ agent.last_name }}
-{% else %}{{ agent.full_name }}{% endif %}</small></h2>
 </div>
 {% endif %}
 
 
 <div class="state_license_info">
+    <h2><small>{% if agent.first_name or agent.last_name %}{{ agent.first_name }}  {{ agent.last_name }}
+    {% else %}{{ agent.full_name }}{% endif %}</small></h2>
     <h3><small>Mailing Address</small></h3>
     <address>
     {{ agent.mailing_address }}<br />
