@@ -14,8 +14,8 @@ class Command(BaseCommand):
     help = 'Import local data to production'
     def handle(self, *args, **options):
 
-#        reader = csv.reader(open('/users/mattmansour/django/sites/dev/socialtracker/docs/social-tracker-raw-data.csv', 'rU'), delimiter=',')
-#        reader = csv.reader(open('/home/mattym/webapps/socialtracker/docs/social-tracker-raw-data.csv', 'rU'), delimiter=',')
+#         reader = csv.reader(open('/users/mattmansour/django/sites/dev/socialtracker/docs/social-tracker-raw-data.csv', 'rU'), delimiter=',')
+#         reader = csv.reader(open('/home/mattym/webapps/vba/docs/CurrList_Comma_Delimited.txt', 'rU'), delimiter=',')
         reader = csv.reader(open(TEMPLATE_DIRS[0] + '/agents.csv', 'rU'), delimiter=',')
         reader.next() # Skip first line
 #        col[3] title
