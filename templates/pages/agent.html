@@ -114,8 +114,8 @@
     <ul>
         <li>License Status: {{ agent.license_status }} {{ agent.license_type }}</li>
         <li>License ID: {{ agent.license_id }}</li>
-        <li>License Issue Date : {{ agent.license_issue_date|date:"D d M Y" }}</li>
-        <li>License Expiration Date: {{ agent.license_exp_date|date:"D d M Y" }}</li>
+        <li>License Issue Date : {{ agent.license_issue_date|date:"l, F d, Y" }}</li>
+        <li>License Expiration Date: {{ agent.license_exp_date|date:"l, F d, Y" }}</li>
     </ul>
 
     {% if agent.get_data_for_license_type.license_type == "Agent" %}
