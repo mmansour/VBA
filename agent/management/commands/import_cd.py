@@ -81,7 +81,7 @@ class Command(BaseCommand):
                 agent.employing_broker = col[9]
                 agent.licensed_officers = unicode(full_name_officer.strip()).encode("utf-8")
                 agent.save()
-                print 'Agent exists: {0}'.format(agent.title)
+                # print 'Agent exists: {0}'.format(agent.title)
             except Agent.DoesNotExist:
                 agent = Agent.objects.create(
                     title=unicode(the_title).encode("utf-8"),
