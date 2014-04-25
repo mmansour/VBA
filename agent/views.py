@@ -8,6 +8,7 @@ from django import forms
 from django.http import HttpResponse, Http404, HttpResponsePermanentRedirect, HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.sites.models import Site
+from django.core.urlresolvers import reverse
 
 from django.db.models.signals import post_save
 from django.dispatch import receiver
@@ -17,6 +18,8 @@ from django.core.exceptions import ValidationError
 from django.db import IntegrityError
 
 from django.utils.translation import ugettext_lazy as _
+
+from mezzanine.utils.views import paginate
 
 
 # FORMS
@@ -59,7 +62,7 @@ def email_profile_claimed(request_user, agent_title, agent_url):
 
 def abbreviate_slugged_state(region):
     if region == 'california':
-        return  'ca'
+        return 'ca'
     if region == 'michigan':
         return 'mi'
 
@@ -79,13 +82,22 @@ def is_profile_claimed(request_user):
 
 def agents(request, agent_state_slug, agent_city_slug):
     agents = get_list_or_404(Agent, slugged_state=abbreviate_slugged_state(agent_state_slug),
-                                  slugged_city=agent_city_slug)
+                             slugged_city=agent_city_slug)
+    agents = paginate(agents,
+                      request.GET.get("page", 1),
+                      300, 10)
 
     profile_claimed = is_profile_claimed(request.user)
 
-    return render_to_response('pages/agents.html',{'agents':agents, 'agent_state_slug':agent_state_slug,
-                                                   'agent_city_slug':agent_city_slug, 'profile_claimed':profile_claimed},
-                context_instance=RequestContext(request))
+    if request.GET.get("page") == '1':
+        return HttpResponsePermanentRedirect(reverse('agent.views.agents',
+                                                     args=[agent_state_slug, agent_city_slug]))
+
+    return render_to_response('pages/agents.html',
+                              {'agents': agents,
+                               'agent_state_slug': agent_state_slug,
+                               'agent_city_slug': agent_city_slug,
+                               'profile_claimed': profile_claimed}, context_instance=RequestContext(request))
 
 @login_required
 def agent_claim(request):
@@ -196,7 +208,7 @@ def states(request):
     profile_claimed = is_profile_claimed(request.user)
     return render_to_response('pages/states.html',
             {'active_regions':active_regions, 'profile_claimed':profile_claimed},
-                context_instance=RequestContext(request))
+              context_instance=RequestContext(request))
 
 
 def cities(request, agent_state_slug):
@@ -208,13 +220,14 @@ def cities(request, agent_state_slug):
     profile_claimed = is_profile_claimed(request.user)
     
     return render_to_response('pages/cities_by_state.html',
-            {'agent':agent, 'active_region':active_region, 'profile_claimed':profile_claimed},
-                context_instance=RequestContext(request))
+                              {'agent': agent,
+                               'active_region': active_region,
+                               'profile_claimed': profile_claimed}, context_instance=RequestContext(request))
 
 
 def home(request):
     active_region = ActiveRegion.objects.all()
-    most_recent_agents = Agent.objects.filter(license_type='SALESPERSON').order_by('-publish_date')[:10]
+    most_recent_agents = Agent.objects.filter(license_type='Salesperson').order_by('-publish_date')[:10]
 
     profile_claimed = is_profile_claimed(request.user)
 

@@ -64,4 +64,7 @@ Real Estate Agents in {{ agents.0.mailing_city|title }}, {{ agents.0.mailing_sta
     <li><a href="{{ agent.get_absolute_url }}">{{ agent.title }}</a></li>
 {% endfor %}
 </ul>
+<div id="pagination">
+    {% pagination_for agents %}
+</div>
 {% endblock %}

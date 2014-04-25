@@ -1,4 +1,5 @@
 import csv
+import os
 
 from django.core.management.base import BaseCommand, CommandError
 
@@ -6,14 +7,14 @@ from mezzanine.utils.urls import slugify
 
 from agent.models import Agent
 
-
-from settings import TEMPLATE_DIRS
+from settings import TEMPLATE_DIRS, PROJECT_ROOT
 
 class Command(BaseCommand):
     help = 'Import local data to production'
+
     def handle(self, *args, **options):
 
-        reader = csv.reader(open('/users/mattmansour/django/webapps/vba/docs/agents/CurrList_Comma_Delimited.txt', 'rU'), delimiter=',')
+        reader = csv.reader(open('{0}/docs/agents/CurrList_Comma_Delimited2.txt'.format(PROJECT_ROOT), 'rU'), delimiter=',')
 #         reader = csv.reader(open('/home/mattym/webapps/vba/docs/CurrList_Comma_Delimited.txt', 'rU'), delimiter=',')
 #         reader = csv.reader(open(TEMPLATE_DIRS[0] + '/agents.csv', 'rU'), delimiter=',')
         reader.next() # Skip first line
@@ -58,31 +59,39 @@ class Command(BaseCommand):
             else:
                 clean_lic_type = "Agent"
 
-            the_title = '{0} {1} Real Estate {2} {3} {4} {5}'.format(col[2],
-                                                                     col[1],
-                                                                     clean_lic_type,
-                                                                     col[19],
-                                                                     col[20],
-                                                                     col[21])
+            the_title = '{0} {1} Real Estate {2} {3} {4}'.format(col[2],
+                                                                 col[1],
+                                                                 clean_lic_type,
+                                                                 col[19],
+                                                                 col[20]
+                                                                 )
 
             full_name = "{0} {1} {2}".format(col[2], col[1], col[3])
+
+            full_name_officer = "{0} {1} {2}".format(col[14], col[13], col[15])
 
             employer = "{0} {1}".format(col[10], col[11])
 
             try:
                 agent = Agent.objects.get(license_id=col[4])
                 agent.in_sitemap = False
+                agent.licence_type = col[5]
+                agent.license_issue_date = dt_lic_effective_date
+                agent.license_exp_date = dt_lic_expiration_date
+                agent.employing_broker = col[9]
+                agent.licensed_officers = unicode(full_name_officer.strip()).encode("utf-8")
                 agent.save()
                 print 'Agent exists: {0}'.format(agent.title)
             except Agent.DoesNotExist:
-                agent = Agent(
-                    title=the_title,
-                    slug=slugify(the_title),
+                agent = Agent.objects.create(
+                    title=unicode(the_title).encode("utf-8"),
+                    slug=slugify(unicode(the_title).encode("utf-8")),
                     status=2,
-                    full_name=full_name.strip(),
-                    first_name=col[2].strip(),
-                    last_name=col[1].strip(),
-                    mailing_address=col[17],
+                    full_name=unicode(full_name.strip()).encode("utf-8"),
+                    first_name=unicode(col[2].strip()).encode("utf-8"),
+                    last_name=unicode(col[1].strip()).encode("utf-8"),
+                    mailing_address=unicode(col[17]).encode("utf-8"),
+                    licensed_officers=unicode(full_name_officer.strip()).encode("utf-8"),
                     mailing_city=col[19],
                     mailing_state=col[20],
                     mailing_zip=col[21],
@@ -91,11 +100,9 @@ class Command(BaseCommand):
                     license_id=col[4],
                     license_type=col[5],
                     license_status=col[6],
-                    license_expiration_date=col[8],
-                    salesperson_license_issue_date=col[7],
-                    broker_license_issue_date=col[7],
-                    corp_license_issue_date=col[7],
-                    employing_broker=employer,
+                    license_issue_date=dt_lic_effective_date,
+                    license_exp_date=dt_lic_expiration_date,
+                    employing_broker=unicode(employer).encode("utf-8"),
 
 
             #        # affiliated_corporations= col[34],
@@ -108,9 +115,7 @@ class Command(BaseCommand):
             #         # public_comment = col[38],
 
                 )
-                agent.save()
-
-                print "Created Agent: {0}".format(agent)
+                print "Created Agent: {0}".format(unicode(agent).encode("utf-8"))
 
         print 'Finished importing agents'
 

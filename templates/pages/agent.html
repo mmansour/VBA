@@ -14,24 +14,24 @@
 {#{% endmetablock %}{% endblock %}#}
 
 {% block meta_description %}{% metablock %}Information about Real Estate
-{% if agent.license_type == "SALESPERSON" %} Agent {% if agent.first_name or agent.last_name %}
+
+{% if agent.get_data_for_license_type.license_type == "Agent" %} Agent {% if agent.first_name or agent.last_name %}
 {{ agent.first_name }} {{ agent.last_name }}{% else %}{{ agent.full_name }}{% endif %}
 {% endif %}
 
-{% if agent.license_type == "BROKER" %} Broker {% if agent.first_name or agent.last_name %}
+{% if agent.get_data_for_license_type.license_type == "Broker" %} Broker {% if agent.first_name or agent.last_name %}
 {{ agent.first_name }} {{ agent.last_name }}{% else %}{{ agent.full_name }}{% endif %}
 {% endif %}
 
-{% if agent.license_type == "CORPORATION" %} Corporation {{ agent.full_name }}{% endif %}
+{% if agent.get_data_for_license_type.license_type == "Officer" %} Officer {% if agent.first_name or agent.last_name %}
+{{ agent.first_name }} {{ agent.last_name }}{% else %}{{ agent.full_name }}{% endif %}
+{% endif %}
+
+{% if agent.get_data_for_license_type.license_type == "Corporation" %} Corporation {{ agent.full_name }}{% endif %}
 {% if agent.mailing_city %}, {{ agent.mailing_city|title }}, {{ agent.mailing_state }}{% endif %}
 {% endmetablock %}{% endblock %}
 
 {% block title %}
-{#{% if agent.first_name or agent.last_name %}{{ agent.first_name }} {{ agent.last_name }}#}
-{#{% else %}{{ agent.full_name }}{% endif %}#}
-{#{% if agent.license_type == "SALESPERSON" %} - Real Estate Agent{% endif %}#}
-{#{% if agent.license_type == "BROKER" %} - Real Estate Broker{% endif %}#}
-{#{% if agent.license_type == "CORPORATION" %} - Real Estate Corporation{% endif %}#}
 {% endblock %}
 
 {% block extra_breadcrumb %}
@@ -57,9 +57,7 @@
 {% block extra_header %}
 <h1><small>{% if agent.first_name or agent.last_name %}
 {{ agent.first_name }} {{ agent.last_name }}{% else %}
-{{ agent.full_name }}{% endif %}{% if agent.license_type == "SALESPERSON" %} (Real Estate Agent){% endif %}
-{% if agent.license_type == "BROKER" %} (Real Estate Broker){% endif %}
-{% if agent.license_type == "CORPORATION" %} (Real Estate Corporation){% endif %}</small></h1>
+{{ agent.full_name }}{% endif %} (Real Estate {{ agent.get_data_for_license_type.license_type }})</small></h1>
 {% endblock %}
 
 {% block alert_header %}
@@ -98,92 +96,114 @@
 {% if agent.profile_image %}
 <div class="profile_image">
 <img src="{{ MEDIA_URL }}{% agent_thumbnail agent.profile_image 190 190 %}"
-     alt="{% if agent.first_name or agent.last_name %}{{ agent.first_name }}  {{ agent.last_name }}{% else %}{{ agent.full_name }}{% endif %} Real Estate {{ agent.license_type|title }}" />
+     alt="{% if agent.first_name or agent.last_name %}{{ agent.first_name }}  {{ agent.last_name }}{% else %}{{ agent.full_name }}{% endif %} Real Estate {{ agent.get_data_for_license_type.license_type|title }}" />
 </div>
 {% endif %}
 
 
 <div class="state_license_info">
-    <h2><small>{% if agent.first_name or agent.last_name %}{{ agent.first_name }}  {{ agent.last_name }}
-    {% else %}{{ agent.full_name }}{% endif %}</small></h2>
-    <h3><small>Location</small></h3>
+    <h1><small>{% if agent.first_name or agent.last_name %}
+    {{ agent.first_name }} {{ agent.last_name }}{% else %}
+    {{ agent.full_name }}{% endif %} - Real Estate {{ agent.get_data_for_license_type.license_type }}</small></h1>
+    <h2><small>Location</small></h2>
     <address>
-{#    {{ agent.mailing_address }}<br />#}
     {{ agent.mailing_city }}, {{ agent.mailing_state }} {{ agent.mailing_zip }}
     </address>
 
-    <h3><small>Real Estate License Information</small></h3>
+    <h2><small>Real Estate License Information</small></h2>
     <ul>
         <li>License Status: {{ agent.license_status }} {{ agent.license_type }}</li>
         <li>License ID: {{ agent.license_id }}</li>
-        <li>License Issue Date : {% if agent.license_type == "SALESPERSON" %}
-    {{ agent.salesperson_license_issue_date|truncatechars:11 }}
-    {% endif %}{% if agent.license_type == "BROKER" %}
-    {{ agent.broker_license_issue_date|truncatechars:11 }}
-    {% endif %}{% if agent.license_type == "CORPORATION" %}
-    {{ agent.corp_license_issue_date|truncatechars:11 }}
-    {% endif %}</li>
-        <li>License Expiration Date: {{ agent.license_expiration_date|truncatechars:11 }}</li>
+        <li>License Issue Date : {{ agent.license_issue_date|date:"D d M Y" }}</li>
+        <li>License Expiration Date: {{ agent.license_exp_date|date:"D d M Y" }}</li>
     </ul>
 
-    {% if agent.license_type == "SALESPERSON" %}
-        <h3><small>Addition Sales Agent Information</small></h3>
+    {% if agent.get_data_for_license_type.license_type == "Agent" %}
+        <h2><small>Additional Real Estate Agent Information</small></h2>
         {% if agent.get_clean_salesperson_employing_broker %}
-        <h5>Employing Broker</h5>
+        <h4>Employing Broker</h4>
         <a href="/{{ agent.get_clean_salesperson_employing_broker_url }}/">{{ agent.get_clean_salesperson_employing_broker|safe }}</a>
         {% endif %}
-        <h5>Public Comments about this Agent</h5>
+        <h4>Public Comments about this Agent</h4>
         {{ agent.get_clean_public_comments }}
     {% endif %}
 
-    {% if agent.license_type == "BROKER" %}
-        <h3><small>Addition Broker Information</small></h3>
-        <h5>Brokerage Main Office Address</h5>
+    {% if agent.get_data_for_license_type.license_type == "Officer" %}
+        <h2><small>Additional Real Estate Officer Information</small></h2>
+        {% if agent.get_clean_salesperson_employing_broker %}
+        <h4>Affiliated Corporation</h4>
+        <a href="/{{ agent.get_clean_salesperson_employing_broker_url }}/">{{ agent.get_clean_salesperson_employing_broker|safe }}</a>
+        {% endif %}
+        <h4>Public Comments about this Agent</h4>
+        {{ agent.get_clean_public_comments }}
+    {% endif %}
+
+    {% if agent.get_data_for_license_type.license_type == "Broker" %}
+        <h2><small>Additional Broker Information</small></h2>
+        {% if agent.get_clean_salesperson_employing_broker %}
+        <h4>Employing Broker</h4>
+        <a href="/{{ agent.get_clean_salesperson_employing_broker_url }}/">{{ agent.get_clean_salesperson_employing_broker|safe }}</a>
+        {% endif %}
+        <h4>Brokerage Main Office Address</h4>
         <address><small>{{agent.get_clean_main_office_address}}</small></address>
-        <h5>DBA (Doing Business As)</h5>
+        <h4>DBA (Doing Business As)</h4>
         {{ agent.get_clean_dba }}
-        <h5>Branches</h5>
+        {% if agent.get_agents_for_employing_broker %}
+            <h4>Agents with Brokerage</h4>
+            <ul>
+            {% for agent in agent.get_agents_for_employing_broker %}
+                <li><a href="{{ agent.get_absolute_url }}">{{ agent }}</a></li>
+            {% endfor %}
+            </ul>
+        {% endif %}
+        <h4>Branches</h4>
         {{ agent.get_clean_branches }}
-        <h5>Corporations Affiliated with this Broker</h5>
+        <h4>Corporations Affiliated with this Broker</h4>
         {{ agent.get_clean_affiliated_corps }}
-        <h5>Public Comments about this Broker</h5>
+        <h4>Public Comments about this Broker</h4>
         {{ agent.get_clean_public_comments }}
     {% endif %}
 
-    {% if agent.license_type == "CORPORATION" %}
-        <h3><small>Addition Corporation Information</small></h3>
-        <h5>Brokerage Main Office Address</h5>
-        <address><small>{{agent.get_clean_main_office_address}}</small></address>
-        <h5>DBA (Doing Business As)</h5>
+    {% if agent.get_data_for_license_type.license_type == "Corporation" %}
+        <h2><small>Additional Corporation Information</small></h2>
+        <h4>Designated Officer</h4>
+        {{agent.licensed_officers}}
+        <h4>DBA (Doing Business As)</h4>
         {{ agent.get_clean_dba }}
-        <h5>Branches</h5>
+        {% if agent.get_agents_for_employing_broker %}
+            <h4>Agents with Brokerage</h4>
+            <ul>
+            {% for agent in agent.get_agents_for_employing_broker %}
+                <li><a href="{{ agent.get_absolute_url }}">{{ agent }}</a></li>
+            {% endfor %}
+            </ul>
+        {% endif %}
+        <h4>Branches</h4>
         {{ agent.get_clean_branches }}
-    {#    <h5>Salespersons</h5>#}
-    {#    {{ agent.salespersons_employed }}#}
-        <h5>Public Comments about this Broker</h5>
+        <h4>Public Comments about this Broker</h4>
         {{ agent.get_clean_public_comments }}
     {% endif %}
 
-    <h5>About Me</h5>
+    <h4>About Me</h4>
     {% if agent.about_me %}
           <p>{{ agent.about_me }}</p>
     {% else %}
-          <p><em>About Me</em> data not yet provided by {{ agent.license_type|title }}, {{ agent.full_name }}.</p>
+          <p><em>About Me</em> data not yet provided by {{ agent.get_data_for_license_type.license_type|title }}, {{ agent.full_name }}.</p>
     {% endif %}
 
-    <h5>Specialties</h5>
+    <h4>Specialties</h4>
     {% if agent.specialties %}
           <p>{{ agent.specialties }}</p>
     {% else %}
           <p><em>Specialties</em> not added.</p>
     {% endif %}
 
-    <h5>Website and Social Media Profiles</h5>
+    <h4>Website and Social Media Profiles</h4>
     <ul>
     {% if agent.website %}
           <li><a href="{{ agent.website }}" target="_blank">My Website</a></li>
     {% else %}
-          <li><em>Website</em> not added.</li>
+          <li><em>Website URL</em> not added.</li>
     {% endif %}
 
     {% if agent.youtube %}
@@ -217,14 +237,14 @@
     {% endif %}
     </ul>
 
-    <h5>Certifications and Awards</h5>
+    <h4>Certifications and Awards</h4>
     {% if agent.certifications_awards %}
           <p>{{ agent.certifications_awards }}</p>
     {% else %}
           <p><em>Certifications and Awards</em> not added.</p>
     {% endif %}
 
-    <h5>MLS / Association</h5>
+    <h4>MLS / Association</h4>
     {% if agent.mls_association %}
           <p>{{ agent.mls_association }}</p>
     {% else %}

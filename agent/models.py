@@ -36,11 +36,15 @@ class Agent(Displayable):
     license_type = models.CharField(max_length=400, verbose_name="License Type", blank=True, null=True)
     license_status = models.CharField(max_length=400, verbose_name="License Status", blank=True, null=True)
 
+    # OLD
     license_expiration_date = models.CharField(max_length=400, verbose_name="License Expiration Date", blank=True, null=True)
     salesperson_license_issue_date = models.CharField(max_length=400, verbose_name="Salesperson License Issue Date", blank=True, null=True)
     broker_license_issue_date = models.CharField(max_length=400, verbose_name="Broker License Issue Date", blank=True, null=True)
     corp_license_issue_date = models.CharField(max_length=400, verbose_name="Corporate License Issue Date", blank=True, null=True)
-    
+    # END OLD
+
+    license_issue_date = models.DateTimeField(blank=True, null=True)
+    license_exp_date = models.DateTimeField(blank=True, null=True)
     main_office_address = models.CharField(max_length=400, verbose_name="Main Office Address", blank=True, null=True)
     employing_broker = models.CharField(max_length=400, verbose_name="Employing Broker", blank=True, null=True)
     branches = models.TextField(verbose_name="Branches", blank=True, null=True)
@@ -106,16 +110,29 @@ class Agent(Displayable):
     def get_clean_salesperson_employing_broker(self):
         if self.employing_broker:
             employing_broker_data = Agent.objects.get(license_id=self.employing_broker)
-            clean_employing_broker = employing_broker_data.dba\
-                .replace("[[u'",'[')\
-                .replace("']]", "]").replace("u'","")
-            return "{0}: DBA {1}"\
-                .format(employing_broker_data.full_name, clean_employing_broker)
+            return "{0}: License ID {1}"\
+                .format(employing_broker_data.full_name, employing_broker_data.license_id)
            
     def get_clean_salesperson_employing_broker_url(self):
         if self.employing_broker:
             employing_broker_data = Agent.objects.get(license_id=self.employing_broker)
             return "agent/{0}/{1}".format(employing_broker_data.slug, employing_broker_data.license_id)
+
+    def get_data_for_license_type(self):
+
+        if self.license_type == "SALESPERSON" or self.license_type == "Salesperson":
+            license_type_dict = {'license_type': 'Agent'}
+        if self.license_type == "BROKER" or self.license_type == "Broker":
+            license_type_dict = {'license_type': 'Broker'}
+        if self.license_type == "CORPORATION" or self.license_type == "Corporation":
+            license_type_dict = {'license_type': 'Corporation'}
+        if self.license_type == "Officer":
+            license_type_dict = {'license_type': 'Officer'}
+
+        return license_type_dict
+
+    def get_agents_for_employing_broker(self):
+        return Agent.objects.filter(employing_broker=self.license_id)
 
     @models.permalink
     def get_absolute_url(self):
