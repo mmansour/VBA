@@ -103,6 +103,7 @@ class Command(BaseCommand):
                     license_issue_date=dt_lic_effective_date,
                     license_exp_date=dt_lic_expiration_date,
                     employing_broker=unicode(employer).encode("utf-8"),
+                    in_sitemap=False,
 
 
             #        # affiliated_corporations= col[34],
