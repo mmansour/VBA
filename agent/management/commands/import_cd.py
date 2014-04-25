@@ -116,9 +116,9 @@ class Command(BaseCommand):
             #         # public_comment = col[38],
 
                 )
-                print "Created Agent: {0}".format(unicode(agent).encode("utf-8"))
+                # print "Created Agent: {0}".format(unicode(agent).encode("utf-8"))
 
-        print 'Finished importing agents'
+        # print 'Finished importing agents'
 
 
 
