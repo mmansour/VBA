@@ -15,20 +15,19 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         '''
-        RETS Prod URL: http://carets.retscure.com:6103/platinum/login
-        UserID: CARMANSOURMATT
-        Password: carets1121
-        User Agent: MRIS Conduit/2.0
-
-        CARETS Test (PTEST) URL: http://ptest.mris.com:6103/ptest/login
-        Security Credentials to the Test Server (PTEST) are as follows:
-        UserID: CARETSTEST
-        Password: PCARETSTEST
-        User Agent: MRIS Conduit/2.0
+        Vendor:       Mansour, Matt
+        Name:         CARMANSOURMATT
+        Password:     carets7CTNe5wm
+        Permission:   IDX/Public Feed
+        User Agent:   CARETS-General/1.0
+        RETS Version: RETS/1.7
+        Re-Enabled:   28-Apr-2014
+        URL:          http://carets.retscure.com:6103/platinum/login
 
         '''
 
-        test_mls = requests.get('http://ptest.mris.com:6103/ptest/login',
+        test_mls = requests.get('http://carets.retscure.com:6103/platinum/login',
+                                auth=('CARMANSOURMATT', 'carets7CTNe5wm'),
                                 headers={'User-Agent': 'CARETS-General/1.0'})
 
 
