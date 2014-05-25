@@ -14,7 +14,7 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
 
-        reader = csv.reader(open('{0}/docs/agents/CurrList_Comma_Delimited2.txt'.format(PROJECT_ROOT), 'rU'), delimiter=',')
+        reader = csv.reader(open('{0}/docs/agents/CurrList_Comma_Delimited6.txt'.format(PROJECT_ROOT), 'r'), delimiter=',')
 #         reader = csv.reader(open('/home/mattym/webapps/vba/docs/CurrList_Comma_Delimited.txt', 'rU'), delimiter=',')
 #         reader = csv.reader(open(TEMPLATE_DIRS[0] + '/agents.csv', 'rU'), delimiter=',')
         reader.next() # Skip first line
