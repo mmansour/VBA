@@ -80,10 +80,39 @@ def is_profile_claimed(request_user):
     return profile_claimed, profile_id
 
 
+import gc
+def queryset_iterator(queryset, chunksize=50000):
+    '''
+    Iterate over a Django Queryset ordered by the primary key
+
+    This method loads a maximum of chunksize (default: 1000) rows in it's
+    memory at the same time while django normally would load all rows in it's
+    memory. Using the iterator() method only causes it to not preload all the
+    classes.
+
+    Note that the implementation of the iterator does not support ordered query sets.
+    '''
+    pk = 0
+    last_pk = queryset.order_by('-pk')[0].pk
+    queryset = queryset.order_by('pk')
+    while pk < last_pk:
+        for row in queryset.filter(pk__gt=pk)[:chunksize]:
+            pk = row.pk
+            yield row
+        gc.collect()
+
+
 def agents(request, agent_state_slug, agent_city_slug):
-    agents = get_list_or_404(Agent, slugged_state=abbreviate_slugged_state(agent_state_slug),
-                             slugged_city=agent_city_slug)
-    agents = paginate(agents,
+    agents = queryset_iterator(Agent.objects.filter(slugged_state=abbreviate_slugged_state(agent_state_slug),
+                               slugged_city=agent_city_slug))
+    # agents = get_list_or_404(Agent, slugged_state=abbreviate_slugged_state(agent_state_slug),
+    #                          slugged_city=agent_city_slug)
+
+    agent_list = []
+    for ag in agents:
+        agent_list.append(ag)
+
+    agents = paginate(agent_list,
                       request.GET.get("page", 1),
                       300, 10)
 
