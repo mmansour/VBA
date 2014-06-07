@@ -114,7 +114,7 @@ def agents(request, agent_state_slug, agent_city_slug):
 
     agents = paginate(agent_list,
                       request.GET.get("page", 1),
-                      300, 10)
+                      100, 10)
 
     profile_claimed = is_profile_claimed(request.user)
 
@@ -260,9 +260,10 @@ def home(request):
 
     profile_claimed = is_profile_claimed(request.user)
 
-    return render_to_response('index.html',{'active_region':active_region, 'most_recent_agents':most_recent_agents,
-                                            'profile_claimed':profile_claimed},
-                context_instance=RequestContext(request))
+    return render_to_response('index.html', {'active_region': active_region,
+                                             'most_recent_agents': most_recent_agents,
+                                             'profile_claimed': profile_claimed},
+                              context_instance=RequestContext(request))
 
 
 
