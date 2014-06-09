@@ -72,8 +72,9 @@
     <a class="close" href="#" onclick="$(this).parent().fadeOut('fast'); return false;">×</a>{{ message }}
 </div>
 {% endfor %}
-{% block alert_header %}{% endblock %}
 {% endnevercache %}
+
+{% block alert_header %}{% endblock %}
 
 
 <h1>{% block title %}{% endblock %}</h1>
