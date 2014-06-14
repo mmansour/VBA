@@ -19,12 +19,19 @@ from django.db import IntegrityError
 
 from django.utils.translation import ugettext_lazy as _
 
+from haystack.forms import SearchForm
+
 from mezzanine.utils.views import paginate
 
 
 # FORMS
 class ClaimForm(forms.Form):
     license_id = forms.CharField(required=True,)
+
+
+class NotesSearchForm(SearchForm):
+    def no_query_found(self):
+        return self.searchqueryset.all()
 
 
 class AgentProfileEditForm(forms.Form):

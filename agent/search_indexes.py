@@ -13,4 +13,4 @@ class AgentIndex(indexes.SearchIndex, indexes.Indexable):
 
     def index_queryset(self, using=None):
         """Used when the entire index for model is updated."""
-        return self.get_model().objects.filter(license_exp_date__gte=datetime.datetime.now())
+        return self.get_model().objects.filter(publish_date__lte=datetime.datetime.now())
