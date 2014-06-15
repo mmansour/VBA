@@ -6,7 +6,6 @@ from models import Agent
 class AgentIndex(indexes.SearchIndex, indexes.Indexable):
     text = indexes.CharField(document=True, use_template=True)
     agent = indexes.CharField(model_attr='full_name')
-    license_issue_date = indexes.DateTimeField(model_attr='license_issue_date')
 
     def get_model(self):
         return Agent
