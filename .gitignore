@@ -9,14 +9,12 @@
 github-public.rtf
 manage.py
 fabfile.py
-settings.py
 local_settings.py
-urls.py
 docs/
 notes/
 .idea/
 log/
 migrations/
 static/media/
-!agent/urls.py
+
 
