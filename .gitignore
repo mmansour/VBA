@@ -5,9 +5,9 @@
 *.swp
 *.sql
 *.db
+*.sh
 .idea/
 github-public.rtf
-manage.py
 fabfile.py
 local_settings.py
 docs/
