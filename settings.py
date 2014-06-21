@@ -332,10 +332,6 @@ MIDDLEWARE_CLASSES = (
 PACKAGE_NAME_FILEBROWSER = "filebrowser_safe"
 PACKAGE_NAME_GRAPPELLI = "grappelli_safe"
 
-GEOS_LIBRARY_PATH = '/Library/Frameworks/GEOS.framework/GEOS'
-GDAL_LIBRARY_PATH = '/Library/Frameworks/GDAL.framework/GDAL'
-GEOIP_LIBRARY_PATH = '/usr/local/Cellar/geoip/1.6.0/lib/libGeoIP.dylib'
-
 #########################
 # OPTIONAL APPLICATIONS #
 #########################
