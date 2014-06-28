@@ -234,8 +234,9 @@ def agent_details(request, agent_data, license_id):
     profile_claimed = is_profile_claimed(request.user)
     
     active_region = ActiveRegion.objects.get(slugged_region_abbr=agent.slugged_state)
-    return render_to_response('pages/agent.html',{'agent':agent, 'active_region':active_region,
-                                                  'profile_claimed':profile_claimed},
+    return render_to_response('pages/agent_theme1.html',
+                              {'agent': agent, 'active_region': active_region,
+                               'profile_claimed': profile_claimed},
                 context_instance=RequestContext(request))
 
 

@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load pages_tags mezzanine_tags i18n future staticfiles %}
+	<head>
+        <title>Advante - Responsive HTML5 Personal Page</title>
+        <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+        <meta name="description" content="Advante Responsive HTML5 Personal Page">
+        <meta name="keywords" content="responsive, html5, css3, personal page, website, template, themeforest">
+        <meta name="author" content="The Graphicgeeks">
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
+        <!--[if IE]><meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'><![endif]-->
+        
+        <!-- Bootstrap -->
+        <link href="{% static "css/bootstrap-agents.css" %}" rel="stylesheet" media="screen">
+        <link href="{% static "css/bootstrap-glyphicons.css" %}" rel="stylesheet">
+        <link href="{% static "css/normalize.css" %}" rel="stylesheet" media="screen">
+        
+        <!-- CSS -->
+        <link href="{% static "css/style.css" %}" rel="stylesheet" media="screen">
+        <link href="{% static "css/color.css" %}" rel="stylesheet" media="screen">
+        <link rel="stylesheet" type="text/css" href="{% static "js/fancybox/jquery.fancybox-1.3.4.css" %}" media="screen" />
+        <!-- Google Font -->
+        <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700' rel='stylesheet' type='text/css'>
+        <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=true"></script>
+        <script src="{% static "js/modernizr.custom.js" %}"></script>
+	</head>
+    
+	<body>
+		<!-- START HERE -->    
+        <div class="container tab-container" id="tab-container" >
+			<!-- HEADER -->
+            <header>
+   				<div class="cover" style="background-image:url({% static "img/demo-cover.jpg" %});">
+           			<div class="coverOverlay"></div>
+                	<!-- profile picture - change your profile picture here -->
+              		<div class="profilePicture">
+                		<img src="{% static "img/profilePicture.jpg" %}" alt="profilepicture" title="profilepicture" />
+                   	</div
+                 	<!-- profile name - change profile name here -->
+                	<div class="profileName">
+                		<h1>Thomas Buddyman</h1>
+                       	<p>Graphic Designer</p>
+                  	</div>
+        		</div>
+       			<nav>
+           			<ul class="etabs">
+               			<li class="tab"><a href="#about"><span class="tabIcon glyphicon glyphicon-user"></span><span class="tabText">About</span></a></li>
+                    	<li class="tab"><a href="#portfolio"><span class="tabIcon glyphicon glyphicon-briefcase"></span><span class="tabText">Portfolio</span></a></li>
+                      	<li class="tab"><a href="#blog"><span class="tabIcon glyphicon glyphicon-pencil"></span><span class="tabText">Blog</span></a></li>
+                       	<li class="tab"><a href="#contact"><span class="tabIcon glyphicon glyphicon-envelope"></span><span class="tabText">Contact</span></a></li>
+             		</ul> 
+              	</nav>
+            </header>
+            <!-- HEADER -->
+            
+            <!-- MAIN CONTENT -->
+          	<div class="content">
+            	<!-- ABOUT TAB -->
+                <div id="about">
+               		<div class="row">
+                    	<!-- About - Left Side -->
+                        <div class="col-lg-4">
+                            <!-- Personal Info -->
+                        	<div class="panel">
+								<div class="panel-heading">Personal Info</div>
+                          		<ul class="personalInfo">
+                           			<li><span class="icon glyphicon glyphicon-briefcase"></span><span class="text">Job : Web Designer, Web Developer, HTML5 Expert, Css3 Master</span><div class="clearfix"></div></li>
+                              		<li><span class="icon glyphicon glyphicon-map-marker"></span><span class="text">From : Jakarta, Indonesia</span><div class="clearfix"></div></li>
+                               		<li><span class="icon glyphicon glyphicon-phone"></span><span class="text">Phone : +1 234 5 678</span><div class="clearfix"></div></li>
+                                 	<li><span class="icon glyphicon glyphicon-envelope"></span><span class="text">Email : thomasbudiman@hotmail.com</span><div class="clearfix"></div></li>
+                           			<li><span class="icon glyphicon glyphicon-globe"></span><span class="text">Website : <a href="#">www.graphicgeeks.net</a></span><div class="clearfix"></div></li>
+                               	</ul>
+                            </div>
+                            <!-- Personal Info -->
+                            
+                            <!-- Skill - Progress bar -->
+                            <div class="panel">
+								<div class="panel-heading">Development Skills</div>
+								<div class="progressSkill">
+                      				<p>Web Design</p>
+                            		<div class="progress">
+                                   		<div class="progress-bar progress-bar-info" style="width: 20%"></div>
+                                 	</div>
+                       			</div>
+                                
+                                <div class="progressSkill">
+                      				<p>Web Development</p>
+                            		<div class="progress">
+                                   		<div class="progress-bar progress-bar-info" style="width: 40%"></div>
+                                 	</div>
+                       			</div>
+                                
+                                <div class="progressSkill">
+                      				<p>Logo Design</p>
+                            		<div class="progress">
+                                   		<div class="progress-bar progress-bar-info" style="width: 50%"></div>
+                                 	</div>
+                       			</div>
+                                
+                                <div class="progressSkill">
+                      				<p>Illustration</p>
+                            		<div class="progress">
+                                   		<div class="progress-bar progress-bar-info" style="width: 30%"></div>
+                                 	</div>
+                       			</div>    
+                                
+                            </div>
+                            <!-- Skill - Progress bar -->
+                            
+                            <!-- Testimonial -->
+                            <div class="panel">
+								<div class="panel-heading">Testimonials</div>
+								<div class="media testimonial">
+                           			<a class="pull-left" href="#">
+                                 		<img alt="people" class="media-object" src="demo/people1.jpg" style="width:32px; height:32px;">
+
+                               		</a>
+                               		<div class="media-body">
+                                		<h6 class="media-heading">Mila Nova<br/><span class="testimonialCompany">CEO of Soul of Youth Pte Ltd.</span></h6>
+                                   		<p>Really responsive and professional. Their codes really clean and the website template is so good. Thumbs up!</p>
+                                	</div>
+                         		</div>
+                                    
+                                <div class="media testimonial">
+                           			<a class="pull-left" href="#">
+                                 		<img  alt="people2" class="media-object" src="demo/people2.jpg" style="width:32px; height:32px;">
+                               		</a>
+                               		<div class="media-body">
+                                		<h6 class="media-heading">John Doe <br/><span class="testimonialCompany">CEO of Soul of Youth Pte Ltd.</span></h6>
+                                   		<p>Really responsive and professional. Thumbs up!</p>
+                                	</div>
+                         		</div>
+                            </div>
+                        	<!-- Testimonial -->
+                        </div>
+                        <!-- About - Left Side End-->
+                        
+                        <!-- About - Right Side -->
+                        <div class="col-lg-8">
+                            <!-- Your Introduction Goes Here -->
+                            <div class="panel">
+								<div class="panel-heading">Hi, My name Thomas Buddyman</div>
+								<p>This is my personal website. I built this website using Advante, Responsive HTML5 Personal Page Template. This template easy to customize and really modern to fit your needs. This HTML Template supports HTML5 and CSS3. And also it is built using bootstrap. I believe this would be a HTML Template that you are searching for. Well, just let me know if you want to know more about this website template.</p>
+                            </div>
+                            <!-- Your Introduction Goes Here -->
+                            
+                            <!-- Education -->
+                            <div class="panel">
+								<div class="panel-heading">Education Background</div>
+                                
+                                <div class="media history">
+                          			<div class="media-body">
+                      					<div class="historyTop">
+                               				<div class="media-object historyDate"> 2011 - 2013</div>
+                          					<h6 class="media-heading historyHeading">Bachelor's Degree in Engineering</h6>
+                                		</div>
+                           				<span class="icon glyphicon glyphicon-map-marker historyLocationicon"></span>
+                       					<p class="historyLocationtext">Minneapolis College of Art and Design</p>
+                                      	<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin tincidunt diam ac lectus tristique scelerisque.  Current GPA 3.43 on a 4.00 scale</p>
+                             		</div>
+								</div>
+                                  
+                                <div class="media history">
+                          			<div class="media-body">
+                      					<div class="historyTop">
+                               				<div class="media-object historyDate"> 2011 - 2013</div>
+                          					<h6 class="media-heading historyHeading">Bachelor's Degree in Engineering </h6>
+                                		</div>
+                           				<span class="icon glyphicon glyphicon-map-marker historyLocationicon"></span>
+                       					<p class="historyLocationtext">Minneapolis College of Art and Design</p>
+                                      	<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin tincidunt diam ac lectus tristique scelerisque.  Current GPA 3.43 on a 4.00 scale</p>
+                             		</div>
+								</div>
+                                
+                                <div class="media history">
+                          			<div class="media-body">
+                      					<div class="historyTop">
+                               				<div class="media-object historyDate"> 2011 - 2013</div>
+                          					<h6 class="media-heading historyHeading">Bachelor's Degree in Engineering</h6>
+                                		</div>
+                           				<span class="icon glyphicon glyphicon-map-marker historyLocationicon"></span>
+                       					<p class="historyLocationtext">Minneapolis College of Art and Design</p>
+                                      	<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin tincidunt diam ac lectus tristique scelerisque.  Current GPA 3.43 on a 4.00 scale</p>
+                             		</div>
+								</div>
+                                
+                                <div class="media history">
+                          			<div class="media-body">
+                      					<div class="historyTop">
+                               				<div class="media-object historyDate"> 2011 - 2013</div>
+                          					<h6 class="media-heading historyHeading">Bachelor's Degree in Engineering</h6>
+                                		</div>
+                           				<span class="icon glyphicon glyphicon-map-marker historyLocationicon"></span>
+                       					<p class="historyLocationtext">Minneapolis College of Art and Design</p>
+                                      	<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin tincidunt diam ac lectus tristique scelerisque.  Current GPA 3.43 on a 4.00 scale</p>
+                             		</div>
+								</div>
+                                
+                            </div>
+                            <!-- Education Background --> 
+                            
+                            <!-- Work -->
+                            <div class="panel">
+								<div class="panel-heading">Education Background</div>
+                                
+                                <div class="media history">
+                          			<div class="media-body">
+                      					<div class="historyTop">
+                               				<div class="media-object historyDate"> 2011 - 2013</div>
+                          					<h6 class="media-heading historyHeading">Bachelor's Degree in Engineering</h6>
+                                		</div>
+                           				<span class="icon glyphicon glyphicon-map-marker historyLocationicon"></span>
+                       					<p class="historyLocationtext">Minneapolis College of Art and Design</p>
+                                      	<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin tincidunt diam ac lectus tristique scelerisque.  Current GPA 3.43 on a 4.00 scale</p>
+                             		</div>
+								</div>
+                                  
+                                <div class="media history">
+                          			<div class="media-body">
+                      					<div class="historyTop">
+                               				<div class="media-object historyDate"> 2011 - 2013</div>
+                          					<h6 class="media-heading historyHeading">Bachelor's Degree in Engineering</h6>
+                                		</div>
+                           				<span class="icon glyphicon glyphicon-map-marker historyLocationicon"></span>
+                       					<p class="historyLocationtext">Minneapolis College of Art and Design</p>
+                                      	<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin tincidunt diam ac lectus tristique scelerisque.  Current GPA 3.43 on a 4.00 scale</p>
+                             		</div>
+								</div>
+                                
+                                <div class="media history">
+                          			<div class="media-body">
+                      					<div class="historyTop">
+                               				<div class="media-object historyDate"> 2011 - 2013</div>
+                          					<h6 class="media-heading historyHeading">Bachelor's Degree in Engineering</h6>
+                                		</div>
+                           				<span class="icon glyphicon glyphicon-map-marker historyLocationicon"></span>
+                       					<p class="historyLocationtext">Minneapolis College of Art and Design</p>
+                                      	<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin tincidunt diam ac lectus tristique scelerisque.  Current GPA 3.43 on a 4.00 scale</p>
+                             		</div>
+								</div>
+                                
+                                <div class="media history">
+                          			<div class="media-body">
+                      					<div class="historyTop">
+                               				<div class="media-object historyDate"> 2011 - 2013</div>
+                          					<h6 class="media-heading historyHeading">Bachelor's Degree in Engineering</h6>
+                                		</div>
+                           				<span class="icon glyphicon glyphicon-map-marker historyLocationicon"></span>
+                       					<p class="historyLocationtext">Minneapolis College of Art and Design</p>
+                                      	<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin tincidunt diam ac lectus tristique scelerisque.  Current GPA 3.43 on a 4.00 scale</p>
+                             		</div>
+								</div>
+                                
+                            </div>
+                            <!-- Work--> 
+                            
+        				</div>
+                        <!-- About - Right Side End -->
+  					</div>
+              	</div>
+                <!-- ABOUT TAB -->
+                
+                <!-- PORTFOLIO TAB -->	
+               	<div id="portfolio">
+                
+                	<!-- add this line to add big/highlight portfolio  -->
+                	<div class="row">
+                    	<div class="col-lg-12">
+                        	<div class="panel">
+                            	<div class="panel-heading">Recent Portfolio</div>
+                            	<div class="portfolioHighlightImage"><a id="example1" href="demo/port7b.jpg"><img alt="people" src="demo/port7.jpg"/></a></div>
+                                <div class="portfolioHighlight">
+                                	<h5>A Crazy Little Thing Called 'Love'</h5>
+                                    <div class="description">
+                                    	<div class="descriptionSingle"><span class="icon glyphicon glyphicon-calendar"></span><span>17 August 2013</span></div>
+                                        <div class="descriptionSingle"><span class="icon glyphicon glyphicon-tag"></span><span>Web Design, Branding</span></div>
+                                        <div class="descriptionSingle"><span class="icon glyphicon glyphicon-globe"></span><span><a href="#">www.crazylove.com</a></span></div>
+                                    </div>
+                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div> 
+                   <!-- add this line to add big/highlight portfolio  -->
+                   
+                    <div class="row">
+                    
+                    	<!-- add this line to add small portfolio  -->
+                    	<div class="col-lg-4">
+                        	<div class="panel">
+                                <div class="portfolioThumbnail">
+                                	<a id="example2" href="demo/port1b.jpg"><img alt="people" src="demo/port1.jpg"/></a>
+                                </div>
+                                <div class="portfolioThumbnailText">
+                                	<h5>Steampunk of Mike</h5>
+                                    <p>on : web design<p>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- add this line to add small portfolio  -->
+                        
+                        <div class="col-lg-4">
+                        	<div class="panel">
+                            	<div class="portfolioThumbnail">
+                                	<a id="example3" href="demo/port2b.jpg"><img alt="people again" src="demo/port2.jpg"/></a>
+                                </div>
+                                <div class="portfolioThumbnailText">
+                                	<h5>Team :) by Mike</h5>
+                                    <p>on : web design<p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="col-lg-4">
+                        	<div class="panel">
+                            	<div class="portfolioThumbnail">
+                                	<a id="example4" href="demo/port3b.jpg"><img  alt="people again again" src="demo/port3.jpg"/></a>
+                                </div>
+                                <div class="portfolioThumbnailText">
+                                	<h5>Jumper by Mike</h5>
+                                    <p>on : web design<p>
+                                </div>
+                            </div>
+                        </div>
+                    </div> 
+                    
+                    <div class="row">
+                    	<div class="col-lg-4">
+                        	<div class="panel">
+                            	<div class="portfolioThumbnail">
+                                	<a id="example5" href="demo/port4b.jpg"><img alt="people" src="demo/port4.jpg"/></a>
+                                </div>
+                                <div class="portfolioThumbnailText">
+                                	<h5>Bird by Mike</h5>
+                                    <p>on : web design<p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="col-lg-4">
+                        	<div class="panel">
+                            	<div class="portfolioThumbnail">
+                                	<a id="example6" href="demo/port5b.jpg"><img alt="people" src="demo/port5.jpg"/></a>
+                                </div>
+                                <div class="portfolioThumbnailText">
+                                	<h5>Mechanical Butterfly by Mike</h5>
+                                    <p>on : web design<p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="col-lg-4">
+                        	<div class="panel">
+                            	<div class="portfolioThumbnail">
+                                	<a id="example7" href="demo/port6b.jpg"><img alt="people" src="demo/port6.jpg"/></a>
+                                </div>
+                                <div class="portfolioThumbnailText">
+                                	<h5>Chaps | 2 by Mike</h5>
+                                    <p>on : web design<p>
+                                </div>
+                            </div>
+                        </div>
+                    </div> 
+ 
+              	</div>
+                <!-- PORTFOLIO TAB -->	
+                
+                <!-- BLOG TAB -->	
+      			<div id="blog">
+                	<div class="row">
+                    	<div class="col-lg-8">
+                        	<div class="panel">
+                    			<div class="panel-heading">Blog</div>
+                                
+                                <!-- Duplicate by copy &amp; paste This line Single Post-->
+                                <div class="singlePost">
+                                	<h5><a href="blogpost.html">How To Deal With A Love Feeling? A Crazy Little Thing Called 'Love'</a></h5>
+                                    <div class="headerImage"><img  alt="blog" src="demo/blog1.jpg"/></div>
+                                    <div class="description">
+                                    	<div class="descriptionSingle"><span class="icon glyphicon glyphicon-user"></span><span>Thomas Buddyman</span></div>
+                                        <div class="descriptionSingle"><span class="icon glyphicon glyphicon-tag"></span><span>Web Design</span></div>
+                                        <div class="descriptionSingle"><span class="icon glyphicon glyphicon-comment"></span><span>100 comments</span></div>
+                                    </div>
+                                    <p>Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec ullamcorper nulla non metus auctor fringilla. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Donec ullamcorper nulla non metus auctor fringilla.</p>
+                                    <a href="#" class="readmore">readmore &#x2192;</a>
+                                </div>
+                                <!-- Duplicate by copy &amp; paste This line Single Post-->
+                                
+                                <!-- Single Post-->
+                                <div class="singlePost">
+                                	<h5><a href="blogpost.html">How To Deal With A Love Feeling? A Crazy Little Thing Called 'Love'</a></h5>
+                                    <div class="headerImage"><img alt="blog 2" src="demo/blog2.jpg"/></div>
+                                    <div class="description">
+                                    	<div class="descriptionSingle"><span class="icon glyphicon glyphicon-user"></span><span>Thomas Buddyman</span></div>
+                                        <div class="descriptionSingle"><span class="icon glyphicon glyphicon-tag"></span><span>Web Design</span></div>
+                                        <div class="descriptionSingle"><span class="icon glyphicon glyphicon-comment"></span><span>100 comments</span></div>
+                                    </div>
+                                    <p>Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec ullamcorper nulla non metus auctor fringilla. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Donec ullamcorper nulla non metus auctor fringilla.</p>
+                                    <a href="#" class="readmore">readmore &#x2192;</a>
+                                </div>
+                                
+                                <!-- Single Post-->
+                                <div class="singlePost">
+                                	<h5><a href="blogpost.html">How To Deal With A Love Feeling? A Crazy Little Thing Called 'Love'</a></h5>
+                                    <div class="headerImage"><img alt="blog3" src="demo/blog3.jpg"/></div>
+                                    <div class="description">
+                                    	<div class="descriptionSingle"><span class="icon glyphicon glyphicon-user"></span><span>Thomas Buddyman</span></div>
+                                        <div class="descriptionSingle"><span class="icon glyphicon glyphicon-tag"></span><span>Web Design</span></div>
+                                        <div class="descriptionSingle"><span class="icon glyphicon glyphicon-comment"></span><span>100 comments</span></div>
+                                    </div>
+                                    <p>Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec ullamcorper nulla non metus auctor fringilla. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Donec ullamcorper nulla non metus auctor fringilla.</p>
+                                    <a href="#" class="readmore">readmore &#x2192;</a>
+                                </div>
+                                
+                                <!-- Single Post-->
+                                <div class="singlePost">
+                                	<h5><a href="blogpost.html">How To Deal With A Love Feeling? A Crazy Little Thing Called 'Love'</a></h5>
+                                    <div class="headerImage"><img alt="blog4" src="demo/blog4.jpg"/></div>
+                                    <div class="description">
+                                    	<div class="descriptionSingle"><span class="icon glyphicon glyphicon-user"></span><span>Thomas Buddyman</span></div>
+                                        <div class="descriptionSingle"><span class="icon glyphicon glyphicon-tag"></span><span>Web Design</span></div>
+                                        <div class="descriptionSingle"><span class="icon glyphicon glyphicon-comment"></span><span>100 comments</span></div>
+                                    </div>
+                                    <p>Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec ullamcorper nulla non metus auctor fringilla. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Donec ullamcorper nulla non metus auctor fringilla.</p>
+                                    <a href="#" class="readmore">readmore &#x2192;</a>
+                                </div>
+                                
+                                <!-- Pagination -->
+                                <div>
+                                	<ul class="pager blogPagination">
+                                      <li class="previous"><a href="#">&larr; Older</a></li>
+                                      <li class="next"><a href="#">Newer &rarr;</a></li>
+                                    </ul>
+                                </div>
+                                <div class="clearfix"></div>
+                            </div>            
+                        </div>
+                        
+                        <div class="col-lg-4">
+							<div class="panel">
+                				<div class="panel-heading">Categories</div>
+                                <ul class="blogCategory">
+                           			<li><span class="icon glyphicon glyphicon-chevron-right"></span><span class="text"><a href="#">Fresh Inspirations</a></span><div class="clearfix"></div></li>
+                              		<li><span class="icon glyphicon glyphicon-chevron-right"></span><span class="text"><a href="#">Programming Corner</a></span><div class="clearfix"></div></li>
+                              		<li><span class="icon glyphicon glyphicon-chevron-right"></span><span class="text"><a href="#">Daily Life</a></span><div class="clearfix"></div></li>
+                              		<li><span class="icon glyphicon glyphicon-chevron-right"></span><span class="text"><a href="#">Random Post</a></span><div class="clearfix"></div></li>
+                                    <li><span class="icon glyphicon glyphicon-chevron-right"></span><span class="text"><a href="#">Freebies Inside</a></span><div class="clearfix"></div></li>
+                               	</ul>
+                   			</div>
+                            
+                            <!-- Tweet -->	
+                            <div class="panel">
+                				<div class="panel-heading">Latest Tweet</div>
+                                <span class="twitter-author"><a href="http://twitter.com/thegraphicgeeks" target="_blank">@thegraphicgeeks</a></span>
+                        		<div id="lasttweet"></div>
+                   			</div>
+                            <!-- Tweet -->	
+                        </div>
+                    </div>   
+              	</div>
+                <!-- BLOG -->	
+                
+                <!-- CONTACT -->	
+        		<div id="contact">
+                	<div class="row">
+                    	<div class="col-lg-12">
+                        	<div class="panel">
+								<div class="panel-heading">Find Me On!</div>
+                          		<iframe class="googlemap" src="http://maps.google.co.id/?ie=UTF8&amp;ll=40.790278,-73.959722&amp;spn=0.300999,0.616608&amp;t=m&amp;z=15&amp;output=embed"></iframe>
+                        	</div>                
+                        </div>
+                    </div>
+                    <div class="row">
+                    	<div class="col-lg-4">
+                        	<div class="panel">
+								<div class="panel-heading">Contact Info!</div>
+                          		<ul class="personalInfo">
+                           			<li><span class="icon glyphicon glyphicon-map-marker"></span><span class="text">From : Jakarta, Indonesia</span><div class="clearfix"></div></li>
+                               		<li><span class="icon glyphicon glyphicon-phone"></span><span class="text">Phone : +1 234 5 678</span><div class="clearfix"></div></li>
+                                 	<li><span class="icon glyphicon glyphicon-envelope"></span><span class="text">Email : thomasbudiman@hotmail.com</span><div class="clearfix"></div></li>
+                           			<li><span class="icon glyphicon glyphicon-globe"></span><span class="text">Website : <a href="#">www.graphicgeeks.net</a></span><div class="clearfix"></div></li>
+                               	</ul>
+                        	</div> 
+                            <div class="panel">
+                            <a href="#" class="socialIcon iconFacebook">&#62220;</a>
+                            <a href="#" class="socialIcon iconTwitter">&#62217;</a>
+                            <a href="#" class="socialIcon iconInstagram">&#62253;</a>
+                            <a href="#" class="socialIcon iconDribbble">&#62235;</a>
+                            <div class="clearfix"></div>
+							</div>          
+                        </div>
+                        <div class="col-lg-8">
+                        	<div class="panel">
+								<div class="panel-heading">Message Me!</div>
+                          		<form method="post" action="contact.php" name="contactform" id="contactform" class="form">
+                                    <div class="field">
+                                            <p>Name<span class="req">*</span></p>
+                                            <input type="text" name="name" id="name" class="text-label" placeholder="Your name"/>
+                                    </div>
+                                    <div class="field">
+                                            <p>Email</p>
+                                            <input type="text" name="email" id="email" class="text-label" placeholder="Your email"/>
+                                    </div>
+                                    <div class="field">
+                                            <p>Phone</p>
+                                            <input type="text" name="phone" id="phone" class="text-label" placeholder="Your phone"/>
+                                    </div>
+                                    <div class="field">
+                                            <p>Subject</p>
+                                            <input type="text" name="subject" id="subject" class="text-label" placeholder="Your subject"/>
+                                    </div>
+                           
+                                    <div class="field">
+                                        <p>Message</p>
+                                        <textarea name="message" id="message" class="textarea-label" placeholder="Your message"></textarea>
+                                    </div>
+                                    
+                                    <div class="success-message">
+                                        <strong>Success!</strong> You successfully send an email for us.
+                                    </div>
+                                    
+                                    <div class="field">
+                                        <button type="button" id="send" class="btn btnBasic">Send</button>
+                                        <div class="loading-contact"><img alt="loader" src="images/loader.gif" /></div>
+                                    </div>
+                      
+                                    <div class="clear"></div>
+                            	</form>
+                        	</div>                
+                        </div>
+                    </div>    
+             	</div>
+                <!-- CONTACT -->		 
+            </div>
+            <!-- MAIN CONTENT -->
+            
+            <!-- FOOTER -->
+            <footer>
+            	&copy; 2013 Advante Responsive HTML5 Personal Page. All rights resevered. Designed by <a href="http://www.graphicgeeks.net">graphicgeeks</a>
+            </footer>
+            <!-- FOOTER -->
+            
+		</div>
+		<!-- END -->
+        
+        
+        <!-- JavaScript plugins (requires jQuery) -->
+        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js"></script>
+        <!-- Include all compiled plugins (below), or include individual files as needed -->
+        <script src="{% static "js/bootstrap.min.js" %}"></script>
+    	
+        <!-- Optionally enable responsive features in IE8 -->
+        <script src="{% static "js/jquery.respond.min.js" %}"></script>
+        
+        <script src="{% static "js/jquery.easytabs.js" %}"></script>
+        <script src="{% static "js/jquery.hashchange.min.js" %}"></script>
+        
+        <script src="{% static "js/jquery.response.js" %}"></script>
+        
+        <!-- twitter -->
+		<script src="{% static "js/twitter/jquery.tweet.js" %}"></script>
+		<script src="{% static "js/twitter-options.js" %}"></script>
+        <script type="text/javascript" src="{% static "js/fancybox/jquery.mousewheel-3.0.4.pack.js" %}"></script>
+		<script type="text/javascript" src="{% static "js/fancybox/jquery.fancybox-1.3.4.pack.js" %}"></script>
+
+        
+        <script src="{% static "js/toucheffects.js" %}"></script>
+      	<script src="{% static "js/custom.js" %}"></script>
+        
+        <script type="text/javascript">
+		$(document).ready(function() {
+		
+			$("a#example1").fancybox();
+            $("a#example2").fancybox();
+            $("a#example3").fancybox();
+            $("a#example4").fancybox();
+            $("a#example5").fancybox();
+            $("a#example6").fancybox();
+            $("a#example7").fancybox();
+
+		});
+		</script>
+        
+	</body>
+</html>
