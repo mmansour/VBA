@@ -1,168 +1,58 @@
+<!DOCTYPE html>
 <html lang="{{ LANGUAGE_CODE }}"{% if LANGUAGE_BIDI %} dir="rtl"{% endif %}>
 {% load pages_tags mezzanine_tags i18n future staticfiles %}
 
 <head>
-    <title>Advante - Responsive HTML5 Personal Page</title>
+    <title>{% block meta_title %}{% endblock %}{% if settings.SITE_TITLE %} | {{ settings.SITE_TITLE }}{% endif %}</title>
     <meta http-equiv="Content-type" content="text/html; charset=utf-8">
-    <meta name="description" content="Advante Responsive HTML5 Personal Page">
-    <meta name="keywords" content="responsive, html5, css3, personal page, website, template, themeforest">
-    <meta name="author" content="The Graphicgeeks">
+    <meta name="description" content="{% block meta_description %}{% endblock %}">
+    <meta name="keywords" content="{% block meta_keywords %}{% endblock %}">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
     <!--[if IE]><meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'><![endif]-->
 
+    {% ifinstalled mezzanine.blog %}
+    <link rel="alternate" type="application/rss+xml" title="RSS" href="{% url "blog_post_feed" "rss" %}">
+    <link rel="alternate" type="application/atom+xml" title="Atom" href="{% url "blog_post_feed" "atom" %}">
+    {% endifinstalled %}
+
     <!-- Bootstrap -->
+    {% compress css %}
     <link href="{% static "css/bootstrap-agents.css" %}" rel="stylesheet" media="screen">
     <link href="{% static "css/bootstrap-glyphicons.css" %}" rel="stylesheet">
     <link href="{% static "css/normalize.css" %}" rel="stylesheet" media="screen">
-
     <!-- CSS -->
     <link href="{% static "css/style.css" %}" rel="stylesheet" media="screen">
     <link href="{% static "css/color.css" %}" rel="stylesheet" media="screen">
     <link rel="stylesheet" type="text/css" href="{% static "js/fancybox/jquery.fancybox-1.3.4.css" %}" media="screen" />
+    <style type="text/css">
+    .coverOverlay{background-image:url({% static "img/coverShadow.png" %});height:348px;width:940px;position:absolute;}
+    </style>
+    {% endcompress %}
+
+
     <!-- Google Font -->
     <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700' rel='stylesheet' type='text/css'>
-    <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=true"></script>
-    <script src="{% static "js/modernizr.custom.js" %}"></script>
 </head>
+
+<body>
+<div class="container tab-container" id="tab-container-navs">
+    <div>
+    <ul class="breadcrumb" style="background-color: #323a44"><a href="/">Real Estate Agent Lookup</a> | <em>Agent search, reviews and information</em></ul>
+    <form action="/search-hs/" class="navbar-search pull-right input-append hidden-sm">
+        <input class="search-query" placeholder="Search" type="text" name="q" value="{{ request.REQUEST.q }}">
+        <input type="submit" class="btn btnBasic" value="Go">
+    </form>
+    </div>
+    <ul class="breadcrumb">
+    {% spaceless %}
+    {% block extra_breadcrumb %}{% endblock %}
+    {% endspaceless %}
+    </ul>
+</div>
+
 
 {% block main %}{% endblock %}
-
+{% block extra_js %}{% endblock %}
+</body>
 </html>
 
-{% comment %}<!doctype html>
-<html lang="{{ LANGUAGE_CODE }}"{% if LANGUAGE_BIDI %} dir="rtl"{% endif %}>
-{% load pages_tags mezzanine_tags i18n future staticfiles %}
-<head>
-
-<meta http-equiv="Content-type" content="text/html; charset=utf-8">
-<meta name="viewport" content="width=device-width">
-<meta name="keywords" content="{% block meta_keywords %}{% endblock %}">
-<meta name="description" content="{% block meta_description %}{% endblock %}">
-<title>{% block meta_title %}{% endblock %}{% if settings.SITE_TITLE %} | {{ settings.SITE_TITLE }}{% endif %}</title>
-<link rel="shortcut icon" href="{% static "img/favicon.ico" %}">
-
-{% ifinstalled mezzanine.blog %}
-<link rel="alternate" type="application/rss+xml" title="RSS" href="{% url "blog_post_feed" "rss" %}">
-<link rel="alternate" type="application/atom+xml" title="Atom" href="{% url "blog_post_feed" "atom" %}">
-{% endifinstalled %}
-
-{% compress css %}
-<link rel="stylesheet" href="{% static "css/bootstrap.css" %}">
-<link rel="stylesheet" href="{% static "css/mezzanine.css" %}">
-<link rel="stylesheet" href="{% static "css/bootstrap-responsive.css" %}">
-{% if LANGUAGE_BIDI %}
-<link rel="stylesheet" href="{% static "css/rtl.css" %}">
-{% endif %}
-{% ifinstalled cartridge.shop %}
-<link rel="stylesheet" href="{% static "css/cartridge.css" %}">
-{% if LANGUAGE_BIDI %}
-<link rel="stylesheet" href="{% static "css/cartridge.rtl.css" %}">
-{% endif %}
-{% endifinstalled %}
-{% block extra_css %}{% endblock %}
-{% endcompress %}
-
-{% compress js %}
-<script src="{% static "mezzanine/js/"|add:settings.JQUERY_FILENAME %}"></script>
-<script src="{% static "js/bootstrap.js" %}"></script>
-<script src="{% static "js/bootstrap-extras.js" %}"></script>
-{% block extra_js %}{% endblock %}
-{% endcompress %}
-<!--[if lt IE 9]>
-<script src="{% static "js/html5shiv.js" %}"></script>
-<![endif]-->
-
-{% block extra_head %}{% endblock %}
-
-</head>
-<body id="{% block body_id %}body{% endblock %}">
-
-<div class="navbar navbar-fixed-top">
-<div class="navbar-inner">
-<div class="container">
-    <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-    </a>
-    {% if settings.SITE_TITLE %}<a class="brand" href="/">{{ settings.SITE_TITLE }}</a>{% endif %}
-    {% if settings.SITE_TAGLINE %}<p class="navbar-text">{{ settings.SITE_TAGLINE }}</p>{% endif %}
-    <div class="nav-collapse collapse">
-        {% search_form "agent.Agent" %}
-        {% page_menu "pages/menus/dropdown.html" %}
-    </div>
-</div>
-</div>
-</div>
-
-<div class="container">
-
-{% nevercache %}
-{% for message in messages %}
-<div class="alert alert-{{ message.tags }}" data-alert="alert">
-    <a class="close" href="#" onclick="$(this).parent().fadeOut('fast'); return false;">×</a>{{ message }}
-</div>
-{% endfor %}
-{% endnevercache %}
-
-{% block alert_header %}{% endblock %}
-
-
-<h1>{% block title %}{% endblock %}</h1>
-
-<ul class="breadcrumb">
-{% spaceless %}
-{% block breadcrumb_menu %}{% page_menu "pages/menus/breadcrumb.html" %}{% endblock %}{% block extra_breadcrumb %}{% endblock %}
-{% endspaceless %}
-</ul>
-
-</div>
-
-<div class="container">
-<div class="row">
-
-{% endcomment %}{% comment %}<div class="span2 left">
-    {% block left_panel %}
-    <div class="panel tree">{% page_menu "pages/menus/tree.html" %}</div>
-    {% endblock %}
-    {% block extra_left_panel %}{% endblock %}
-</div>{% endcomment %}{% comment %}
-
-<div class="span12 middle">
-    {% block main %}{% endblock %}
-</div>
-
-{% endcomment %}{% comment %}<div class="span3 right">
-    {% nevercache %}
-    {% include "includes/user_panel.html" %}
-    {% endnevercache %}
-    <div class="panel">
-    {% block right_panel %}
-    {% ifinstalled mezzanine.twitter %}
-    {% include "twitter/tweets.html" %}
-    {% endifinstalled %}
-    {% endblock %}
-    </div>
-</div>{% endcomment %}{% comment %}
-
-</div>
-</div>
-
-<footer>
-<div class="container">
-{% block extra_footer %}{% endblock %}
-<br style="clear:both">
-<p>
-    <a href="/">Home</a>
-    <span class="separator">|</span>
-    <a href="/contact/">Contact</a>
-    <span class="separator">|</span>
-    <a href="/privacy-policy/">Privacy Policy</a>
-</p>
-</div>
-</footer>
-
-{% include "includes/footer_scripts.html" %}
-
-</body>
-</html>{% endcomment %}
