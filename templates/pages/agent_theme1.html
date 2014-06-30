@@ -26,6 +26,14 @@
 {% block title %}
 {% endblock %}
 
+{% block extra_css %}
+<style type="text/css">
+    .coverOverlay{background-image:url({% static "img/coverShadow.png" %});height:348px;width:940px;position:absolute;}
+    .header_title{font-size: 12px; margin: 0 0 10px;}
+    h2{font-size: 13px; color: #FFF;}
+</style>
+{% endblock %}
+
 {% block extra_breadcrumb %}
 <li id="breadcrumb-menu-home">
     <a href="{% url "home" %}">Home</a>
@@ -62,15 +70,19 @@
                 </div
                 <!-- profile name - change profile name here -->
                 <div class="profileName">
-                    <h1>Thomas Buddyman</h1>
-                    <p>Graphic Designer</p>
+                    <h1>{% if agent.first_name or agent.last_name %}
+                        {{ agent.first_name }} {{ agent.last_name }}{% else %}
+                        {{ agent.full_name }}{% endif %}
+                    <span class="header_title">Real Estate {{ agent.get_data_for_license_type.license_type }}</span>
+                    </h1>
+{#                   <p>Real Estate {{ agent.get_data_for_license_type.license_type }}</p>#}
                 </div>
             </div>
             <nav>
                 <ul class="etabs">
                     <li class="tab"><a href="#about"><span class="tabIcon glyphicon glyphicon-user"></span><span class="tabText">About</span></a></li>
-                    <li class="tab"><a href="#portfolio"><span class="tabIcon glyphicon glyphicon-briefcase"></span><span class="tabText">Portfolio</span></a></li>
-                    <li class="tab"><a href="#blog"><span class="tabIcon glyphicon glyphicon-pencil"></span><span class="tabText">Blog</span></a></li>
+{#                    <li class="tab"><a href="#portfolio"><span class="tabIcon glyphicon glyphicon-briefcase"></span><span class="tabText">Portfolio</span></a></li>#}
+{#                    <li class="tab"><a href="#blog"><span class="tabIcon glyphicon glyphicon-pencil"></span><span class="tabText">Blog</span></a></li>#}
                     <li class="tab"><a href="#contact"><span class="tabIcon glyphicon glyphicon-envelope"></span><span class="tabText">Contact</span></a></li>
                 </ul>
             </nav>
@@ -86,18 +98,50 @@
                     <div class="col-lg-4">
                         <!-- Personal Info -->
                         <div class="panel">
-                            <div class="panel-heading">Personal Info</div>
+                            <h2 class="panel-heading">License Info</h2>
                             <ul class="personalInfo">
-                                <li><span class="icon glyphicon glyphicon-briefcase"></span><span class="text">Job : Web Designer, Web Developer, HTML5 Expert, Css3 Master</span><div class="clearfix"></div></li>
-                                <li><span class="icon glyphicon glyphicon-map-marker"></span><span class="text">From : Jakarta, Indonesia</span><div class="clearfix"></div></li>
-                                <li><span class="icon glyphicon glyphicon-phone"></span><span class="text">Phone : +1 234 5 678</span><div class="clearfix"></div></li>
-                                <li><span class="icon glyphicon glyphicon-envelope"></span><span class="text">Email : thomasbudiman@hotmail.com</span><div class="clearfix"></div></li>
+                                <li><span class="icon glyphicon glyphicon-briefcase"></span><span class="text">License Status: {{ agent.license_status }} {{ agent.license_type }}</span><div class="clearfix"></div></li>
+                                <li><span class="icon glyphicon glyphicon-map-marker"></span><span class="text">License ID: {{ agent.license_id }}</span><div class="clearfix"></div></li>
+                                <li><span class="icon glyphicon glyphicon-phone"></span><span class="text">License Issue Date : {{ agent.license_issue_date|date:"l, F d, Y" }}</span><div class="clearfix"></div></li>
+                                <li><span class="icon glyphicon glyphicon-envelope"></span><span class="text">License Expiration Date: {{ agent.license_exp_date|date:"l, F d, Y" }}</span><div class="clearfix"></div></li>
                                 <li><span class="icon glyphicon glyphicon-globe"></span><span class="text">Website : <a href="#">www.graphicgeeks.net</a></span><div class="clearfix"></div></li>
                             </ul>
                         </div>
                         <!-- Personal Info -->
 
-                        <!-- Skill - Progress bar -->
+                        <div class="panel">
+                            <h2 class="panel-heading">Contact Me</h2>
+                            <div class="progressSkill">
+                                <p>Web Design</p>
+                                <div class="progress">
+                                    <div class="progress-bar progress-bar-info" style="width: 20%"></div>
+                                </div>
+                            </div>
+
+                            <div class="progressSkill">
+                                <p>Web Development</p>
+                                <div class="progress">
+                                    <div class="progress-bar progress-bar-info" style="width: 40%"></div>
+                                </div>
+                            </div>
+
+                            <div class="progressSkill">
+                                <p>Logo Design</p>
+                                <div class="progress">
+                                    <div class="progress-bar progress-bar-info" style="width: 50%"></div>
+                                </div>
+                            </div>
+
+                            <div class="progressSkill">
+                                <p>Illustration</p>
+                                <div class="progress">
+                                    <div class="progress-bar progress-bar-info" style="width: 30%"></div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        {% comment %}<!-- Skill - Progress bar -->
                         <div class="panel">
                             <div class="panel-heading">Development Skills</div>
                             <div class="progressSkill">
@@ -154,7 +198,7 @@
                                     <p>Really responsive and professional. Thumbs up!</p>
                                 </div>
                             </div>
-                        </div>
+                        </div>{% endcomment %}
                         <!-- Testimonial -->
                     </div>
                     <!-- About - Left Side End-->
@@ -163,14 +207,14 @@
                     <div class="col-lg-8">
                         <!-- Your Introduction Goes Here -->
                         <div class="panel">
-                            <div class="panel-heading">Hi, My name Thomas Buddyman</div>
+                            <h2 class="panel-heading">About</h2>
                             <p>This is my personal website. I built this website using Advante, Responsive HTML5 Personal Page Template. This template easy to customize and really modern to fit your needs. This HTML Template supports HTML5 and CSS3. And also it is built using bootstrap. I believe this would be a HTML Template that you are searching for. Well, just let me know if you want to know more about this website template.</p>
                         </div>
                         <!-- Your Introduction Goes Here -->
 
                         <!-- Education -->
                         <div class="panel">
-                            <div class="panel-heading">Education Background</div>
+                            <div class="panel-heading">Listings and Transactions</div>
 
                             <div class="media history">
                                 <div class="media-body">
@@ -285,7 +329,7 @@
             <!-- ABOUT TAB -->
 
             <!-- PORTFOLIO TAB -->
-            <div id="portfolio">
+            {% comment %}<div id="portfolio">
 
                 <!-- add this line to add big/highlight portfolio  -->
                 <div class="row">
@@ -481,7 +525,7 @@
                         <!-- Tweet -->
                     </div>
                 </div>
-            </div>
+            </div>{% endcomment %}
             <!-- BLOG -->
 
             <!-- CONTACT -->
