@@ -96,9 +96,9 @@
                 <div class="row">
                     <!-- About - Left Side -->
                     <div class="col-lg-4">
-                        <!-- Personal Info -->
+                        <!-- License Info -->
                         <div class="panel">
-                            <h2 class="panel-heading">License Info</h2>
+                            <h2 class="panel-heading">Real Estate License Info</h2>
                             <ul class="personalInfo">
                                 <li><span class="icon glyphicon glyphicon-briefcase"></span><span class="text">License Status: {{ agent.license_status }} {{ agent.license_type }}</span><div class="clearfix"></div></li>
                                 <li><span class="icon glyphicon glyphicon-map-marker"></span><span class="text">License ID: {{ agent.license_id }}</span><div class="clearfix"></div></li>
@@ -107,7 +107,23 @@
                                 <li><span class="icon glyphicon glyphicon-globe"></span><span class="text">Website : <a href="#">www.graphicgeeks.net</a></span><div class="clearfix"></div></li>
                             </ul>
                         </div>
-                        <!-- Personal Info -->
+                        <!-- License Info -->
+
+                        <!-- Additional Info -->
+                        <div class="panel">
+                            <h2 class="panel-heading">Addition Real Estate {{ agent.get_data_for_license_type.license_type }} Info</h2>
+                            <ul class="personalInfo">
+                                {% if agent.get_data_for_license_type.license_type == "Agent" %}
+                                <li><span class="icon glyphicon glyphicon-chevron-right"></span>
+                                    <span class="text">Employing Broker: </span> <a href="/{{ agent.get_clean_salesperson_employing_broker_url }}/">{{ agent.get_clean_salesperson_employing_broker|safe }}</a><div class="clearfix"></div></li>
+                                {% endif %}
+                                <li><span class="icon glyphicon glyphicon-chevron-right"></span><span class="text">License ID: {{ agent.license_id }}</span><div class="clearfix"></div></li>
+                                <li><span class="icon glyphicon glyphicon-chevron-right"></span><span class="text">License Issue Date : {{ agent.license_issue_date|date:"l, F d, Y" }}</span><div class="clearfix"></div></li>
+                                <li><span class="icon glyphicon glyphicon-chevron-right"></span><span class="text">License Expiration Date: {{ agent.license_exp_date|date:"l, F d, Y" }}</span><div class="clearfix"></div></li>
+                                <li><span class="icon glyphicon glyphicon-chevron-right"></span><span class="text">Website : <a href="#">www.graphicgeeks.net</a></span><div class="clearfix"></div></li>
+                            </ul>
+                        </div>
+                        <!-- Additional Info -->
 
                         <div class="panel">
                             <h2 class="panel-heading">Contact Me</h2>
