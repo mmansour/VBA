@@ -100,62 +100,46 @@
                         <div class="panel">
                             <h2 class="panel-heading">Real Estate License Info</h2>
                             <ul class="personalInfo">
-                                <li><span class="icon glyphicon glyphicon-briefcase"></span><span class="text">License Status: {{ agent.license_status }} {{ agent.license_type }}</span><div class="clearfix"></div></li>
+                                <li><span class="icon glyphicon glyphicon-ok"></span><span class="text">License Status: {{ agent.license_status }} {{ agent.license_type }}</span><div class="clearfix"></div></li>
                                 <li><span class="icon glyphicon glyphicon-map-marker"></span><span class="text">License ID: {{ agent.license_id }}</span><div class="clearfix"></div></li>
-                                <li><span class="icon glyphicon glyphicon-phone"></span><span class="text">License Issue Date : {{ agent.license_issue_date|date:"l, F d, Y" }}</span><div class="clearfix"></div></li>
-                                <li><span class="icon glyphicon glyphicon-envelope"></span><span class="text">License Expiration Date: {{ agent.license_exp_date|date:"l, F d, Y" }}</span><div class="clearfix"></div></li>
-                                <li><span class="icon glyphicon glyphicon-globe"></span><span class="text">Website : <a href="#">www.graphicgeeks.net</a></span><div class="clearfix"></div></li>
+                                <li><span class="icon glyphicon glyphicon-calendar"></span><span class="text">License Issue Date : {{ agent.license_issue_date|date:"l, F d, Y" }}</span><div class="clearfix"></div></li>
+                                <li><span class="icon glyphicon glyphicon-calendar"></span><span class="text">License Expiration Date: {{ agent.license_exp_date|date:"l, F d, Y" }}</span><div class="clearfix"></div></li>
+{#                                <li><span class="icon glyphicon glyphicon-globe"></span><span class="text">Website : <a href="#">www.graphicgeeks.net</a></span><div class="clearfix"></div></li>#}
                             </ul>
                         </div>
                         <!-- License Info -->
-
-                        <!-- Additional Info -->
+                        <!-- SKILLS -->
                         <div class="panel">
-                            <h2 class="panel-heading">Addition Real Estate {{ agent.get_data_for_license_type.license_type }} Info</h2>
-                            <ul class="personalInfo">
-                                {% if agent.get_data_for_license_type.license_type == "Agent" %}
-                                <li><span class="icon glyphicon glyphicon-chevron-right"></span>
-                                    <span class="text">Employing Broker: </span> <a href="/{{ agent.get_clean_salesperson_employing_broker_url }}/">{{ agent.get_clean_salesperson_employing_broker|safe }}</a><div class="clearfix"></div></li>
-                                {% endif %}
-                                <li><span class="icon glyphicon glyphicon-chevron-right"></span><span class="text">License ID: {{ agent.license_id }}</span><div class="clearfix"></div></li>
-                                <li><span class="icon glyphicon glyphicon-chevron-right"></span><span class="text">License Issue Date : {{ agent.license_issue_date|date:"l, F d, Y" }}</span><div class="clearfix"></div></li>
-                                <li><span class="icon glyphicon glyphicon-chevron-right"></span><span class="text">License Expiration Date: {{ agent.license_exp_date|date:"l, F d, Y" }}</span><div class="clearfix"></div></li>
-                                <li><span class="icon glyphicon glyphicon-chevron-right"></span><span class="text">Website : <a href="#">www.graphicgeeks.net</a></span><div class="clearfix"></div></li>
-                            </ul>
-                        </div>
-                        <!-- Additional Info -->
-
-                        <div class="panel">
-                            <h2 class="panel-heading">Contact Me</h2>
+                            <h2 class="panel-heading">Real Estate Skills & Specialties</h2>
                             <div class="progressSkill">
-                                <p>Web Design</p>
-                                <div class="progress">
-                                    <div class="progress-bar progress-bar-info" style="width: 20%"></div>
-                                </div>
-                            </div>
-
-                            <div class="progressSkill">
-                                <p>Web Development</p>
-                                <div class="progress">
-                                    <div class="progress-bar progress-bar-info" style="width: 40%"></div>
-                                </div>
-                            </div>
-
-                            <div class="progressSkill">
-                                <p>Logo Design</p>
+                                <p>Residential</p>
                                 <div class="progress">
                                     <div class="progress-bar progress-bar-info" style="width: 50%"></div>
                                 </div>
                             </div>
 
                             <div class="progressSkill">
-                                <p>Illustration</p>
+                                <p>Commercial</p>
                                 <div class="progress">
-                                    <div class="progress-bar progress-bar-info" style="width: 30%"></div>
+                                    <div class="progress-bar progress-bar-info" style="width: 50%"></div>
                                 </div>
                             </div>
 
+                            <div class="progressSkill">
+                                <p>Land</p>
+                                <div class="progress">
+                                    <div class="progress-bar progress-bar-info" style="width: 50%"></div>
+                                </div>
+                            </div>
+
+                            <div class="progressSkill">
+                                <p>Investors</p>
+                                <div class="progress">
+                                    <div class="progress-bar progress-bar-info" style="width: 50%"></div>
+                                </div>
+                            </div>
                         </div>
+                        <!-- SKILLS -->
 
                         {% comment %}<!-- Skill - Progress bar -->
                         <div class="panel">
