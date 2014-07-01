@@ -71,8 +71,10 @@ class Agent(Displayable):
 
     def get_clean_main_office_address(self):
         if self.main_office_address:
-            return self.main_office_address.replace('u','')\
-                .replace('[','').replace("'",'').replace(']','')
+            return "<address><small>{0}</small></address>".format(self.main_office_address.replace('u', '')
+                                                          .replace('[', '').replace("'", '').replace(']', ''))
+        else:
+            return "N/A"
 
     def get_clean_dba(self):
         if self.dba:

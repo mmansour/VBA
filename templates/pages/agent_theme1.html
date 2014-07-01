@@ -31,6 +31,7 @@
     .coverOverlay{background-image:url({% static "img/coverShadow.png" %});height:348px;width:940px;position:absolute;}
     .header_title{font-size: 12px; margin: 0 0 10px;}
     h2{font-size: 13px; color: #FFF;}
+    h4{font-size:12px;line-height:18px;}
 </style>
 {% endblock %}
 
@@ -141,41 +142,8 @@
                         </div>
                         <!-- SKILLS -->
 
-                        {% comment %}<!-- Skill - Progress bar -->
-                        <div class="panel">
-                            <div class="panel-heading">Development Skills</div>
-                            <div class="progressSkill">
-                                <p>Web Design</p>
-                                <div class="progress">
-                                    <div class="progress-bar progress-bar-info" style="width: 20%"></div>
-                                </div>
-                            </div>
-
-                            <div class="progressSkill">
-                                <p>Web Development</p>
-                                <div class="progress">
-                                    <div class="progress-bar progress-bar-info" style="width: 40%"></div>
-                                </div>
-                            </div>
-
-                            <div class="progressSkill">
-                                <p>Logo Design</p>
-                                <div class="progress">
-                                    <div class="progress-bar progress-bar-info" style="width: 50%"></div>
-                                </div>
-                            </div>
-
-                            <div class="progressSkill">
-                                <p>Illustration</p>
-                                <div class="progress">
-                                    <div class="progress-bar progress-bar-info" style="width: 30%"></div>
-                                </div>
-                            </div>
-
-                        </div>
-                        <!-- Skill - Progress bar -->
-
-                        <!-- Testimonial -->
+                        {% comment %}
+                        <!-- Testimonial User for NEARYBY AGENTS - GEO BABY -->
                         <div class="panel">
                             <div class="panel-heading">Testimonials</div>
                             <div class="media testimonial">
@@ -205,6 +173,79 @@
 
                     <!-- About - Right Side -->
                     <div class="col-lg-8">
+                        <!-- DRE ABOUT Goes Here -->
+                        <div class="panel">
+                            <h2 class="panel-heading">Additional Info About Real Estate {{ agent.get_data_for_license_type.license_type }} {% if agent.first_name or agent.last_name %}
+                            {{ agent.first_name }} {{ agent.last_name }}{% else %}
+                            {{ agent.full_name }}{% endif %}</h2>
+                            {% if agent.get_data_for_license_type.license_type == "Agent" %}
+                                {% if agent.get_clean_salesperson_employing_broker %}
+                                    <h4>Employing Broker</h4>
+                                    <a href="/{{ agent.get_clean_salesperson_employing_broker_url }}/">{{ agent.get_clean_salesperson_employing_broker|safe }}</a>
+                                {% endif %}
+                            {% endif %}
+
+                            {% if agent.get_data_for_license_type.license_type == "Officer" %}
+                                {% if agent.get_clean_salesperson_employing_broker %}
+                                    <h4>Affiliated Corporation</h4>
+                                    <a href="/{{ agent.get_clean_salesperson_employing_broker_url }}/">{{ agent.get_clean_salesperson_employing_broker|safe }}</a>
+                                {% endif %}
+                            {% endif %}
+
+                            {% if agent.get_data_for_license_type.license_type == "Broker" %}
+
+                                {% if agent.get_clean_salesperson_employing_broker %}
+                                    <div class="media history">
+                                    <h4>Employing Broker</h4>
+                                    <a href="/{{ agent.get_clean_salesperson_employing_broker_url }}/">{{ agent.get_clean_salesperson_employing_broker|safe }}</a>
+                                    </div>
+                                {% endif %}
+
+{#                                {% if agent.main_office_address %}#}
+                                <div class="media history">
+                                    <h4>Brokerage Main Office Address</h4>
+                                    {{agent.get_clean_main_office_address}}
+                                </div>
+{#                                {% endif %}#}
+
+{#                                {% if agent.dba %}#}
+                                <div class="media history">
+                                    <h4>DBA (Doing Business As)</h4>
+                                    {{ agent.get_clean_dba }}
+                                </div>
+{#                                {% endif %}#}
+
+{#                                {% if agent.get_agents_for_employing_broker %}#}
+                                <div class="media history">
+                                    <h4>Agents with Brokerage</h4>
+                                    <ul>
+                                    {% for agent in agent.get_agents_for_employing_broker %}
+                                        <li><a href="{{ agent.get_absolute_url }}">{{ agent }}</a></li>
+                                    {% endfor %}
+                                    </ul>
+                                </div>
+{#                                {% endif %}#}
+
+{#                                {% if agent.branches %}#}
+                                <div class="media history">
+                                    <h4>Branches</h4>
+                                    {{ agent.get_clean_branches }}
+                                </div>
+{#                                {% endif %}#}
+
+{#                                {% if agent.affiliated_corporations %}#}
+                                <div class="media history">
+                                    <h4>Corporations Affiliated with this Broker</h4>
+                                    {{ agent.get_clean_affiliated_corps }}
+{#                                {% endif %}#}
+                                </div>
+                            {% endif %}
+
+                            <h4>Public Comments about this {{ agent.get_data_for_license_type.license_type }}</h4>
+                                {{ agent.get_clean_public_comments }}
+                        </div>
+                        <!-- DRE ABOUT Goes Here -->
+
                         <!-- Your Introduction Goes Here -->
                         <div class="panel">
                             <h2 class="panel-heading">About</h2>
