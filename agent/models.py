@@ -74,22 +74,26 @@ class Agent(Displayable):
             return "<address><small>{0}</small></address>".format(self.main_office_address.replace('u', '')
                                                           .replace('[', '').replace("'", '').replace(']', ''))
         else:
-            return "N/A"
+            return "No office address reported for this licensee"
 
     def get_clean_dba(self):
         if self.dba:
             return self.dba\
                 .replace("[[u'",'[')\
                 .replace("']]", "]").replace("u'","")
+        else:
+            return "No DBAs reported for this licensee."
 
     def get_clean_branches(self):
         if self.branches:
             thebranches = self.branches\
-                .replace("[[u'",'[')\
-                .replace("']]", "]").replace("u'","")
+                .replace("[[u'", '[')\
+                .replace("']]", "]").replace("u'", "")
             if thebranches == "[NO CURRENT BRANCHES']":
                 thebranches = "No branches reported for this licensee."
             return thebranches
+        else:
+            return "No branches reported for this licensee."
 
     def get_clean_affiliated_corps(self):
         if self.affiliated_corporations:
@@ -104,10 +108,13 @@ class Agent(Displayable):
         if self.public_comment:
             pub_com = self.public_comment\
                 .replace("[[u'",'[')\
-                .replace("']]", "]").replace("u'","")
+                .replace("']]", "]").replace("u'", "")
             if pub_com == "[NO DISCIPLINARY ACTION'], [>>>> Public information request complete <<<<]":
                 pub_com = "No public comments or public disciplinary action reported"
             return pub_com
+        else:
+            return "No public / state department comments or public disciplinary action reported"
+
 
     def get_clean_salesperson_employing_broker(self):
         if self.employing_broker:

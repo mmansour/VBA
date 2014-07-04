@@ -58,6 +58,27 @@
 </li>
 {% endblock %}
 
+{% block alert_header %}
+{% comment %}    {% if request.user.is_authenticated %}
+        {% if not profile_claimed.0 %}
+            <div class="alert" data-alert="alert">
+                <a class="close" href="#" onclick="$(this).parent().fadeOut('fast'); return false;">×</a> To finish claiming your profile copy your license id from your profile below then <a href="/agent/claimprofile/">click here!</a> That's the last step!
+            </div>
+        {% else %}
+           <div class="alert" data-alert="alert">
+                <a class="close" href="#" onclick="$(this).parent().fadeOut('fast'); return false;">×</a> <a href="/agent/profile/edit/{{ profile_claimed.1 }}/">Edit your profile!</a>
+            </div>
+        {% endif %}
+    {% else %}
+        {% if not agent.profile_claimed %}
+            <div class="alert" data-alert="alert">
+                <a class="close" href="#" onclick="$(this).parent().fadeOut('fast'); return false;">×</a> Are you Real Estate {{ agent.get_data_for_license_type.license_type }}, {% if agent.first_name or agent.last_name %}{{ agent.first_name }}  {{ agent.last_name }}{% else %}{{ agent.full_name }}{% endif %}?
+                <a href="/account/signup/?next={{ agent.get_absolute_url }}">Claim and edit your profile!</a>
+            </div>
+        {% endif %}
+    {% endif %}{% endcomment %}
+{% endblock %}
+
 {% block main %}
     <!-- START HERE -->
     <div class="container tab-container" id="tab-container">
@@ -167,94 +188,130 @@
                                 </div>
                             </div>
                         </div>{% endcomment %}
-                        <!-- Testimonial -->
+                        <!-- END NEARY BY AGENTS - GEO BABY -->
                     </div>
-                    <!-- About - Left Side End-->
+                    <!-- Left Side End-->
 
-                    <!-- About - Right Side -->
+                    <!-- Right Side -->
                     <div class="col-lg-8">
+                        <!-- Your Introduction Goes Here -->
+                        <div class="panel">
+                            <h2 class="panel-heading">About Real Estate {{ agent.get_data_for_license_type.license_type }} {% if agent.first_name or agent.last_name %}
+                            {{ agent.first_name }} {{ agent.last_name }}{% else %}
+                            {{ agent.full_name }}{% endif %}</h2>
+                            <p>This section has not been updated by Real Estate {{ agent.get_data_for_license_type.license_type }} {% if agent.first_name or agent.last_name %}
+                            {{ agent.first_name }} {{ agent.last_name }}{% else %}
+                            {{ agent.full_name }}{% endif %}</p>
+                        </div>
+                        <!-- Your Introduction Goes Here -->
+
+                        {% if request.user.is_authenticated %}
+                            {% if not profile_claimed.0 %}
+                                <div class="alert" data-alert="alert">
+                                    <a class="close" href="#" onclick="$(this).parent().fadeOut('fast'); return false;">×</a> To finish claiming your profile copy your license id from your profile below then <a href="/agent/claimprofile/">click here!</a> That's the last step!
+                                </div>
+                            {% else %}
+                               <div class="alert" data-alert="alert">
+                                    <a class="close" href="#" onclick="$(this).parent().fadeOut('fast'); return false;">×</a> <a href="/agent/profile/edit/{{ profile_claimed.1 }}/">Edit your profile!</a>
+                                </div>
+                            {% endif %}
+                        {% else %}
+                            {% if not agent.profile_claimed %}
+                                <div class="alert" data-alert="alert">
+                                    <a class="close" href="#" onclick="$(this).parent().fadeOut('fast'); return false;">×</a> Are you Real Estate {{ agent.get_data_for_license_type.license_type }}, {% if agent.first_name or agent.last_name %}{{ agent.first_name }}  {{ agent.last_name }}{% else %}{{ agent.full_name }}{% endif %}?
+                                    <a href="/account/signup/?next={{ agent.get_absolute_url }}">Claim and edit your profile!</a>
+                                </div>
+                            {% endif %}
+                        {% endif %}
+
+                        <!-- CERTS AND AWARDS -->
+                        <div class="panel">
+                            <h2 class="panel-heading">Certifications and Awards</h2>
+                            <p>Certifications and Awards not added by {% if agent.first_name or agent.last_name %}
+                            {{ agent.first_name }} {{ agent.last_name }}{% else %}
+                            {{ agent.full_name }}{% endif %}</p>
+                        </div>
+                        <!-- CERTS AND AWARDS -->
+
+                        <!-- MLS ASSOCIATION -->
+                        <div class="panel">
+                            <h2 class="panel-heading">MLS / Association</h2>
+                            <p>MLS / Association not added by {% if agent.first_name or agent.last_name %}
+                            {{ agent.first_name }} {{ agent.last_name }}{% else %}
+                            {{ agent.full_name }}{% endif %}</p>
+                        </div>
+                        <!--  MLS ASSOCIATION -->
+
                         <!-- DRE ABOUT Goes Here -->
                         <div class="panel">
                             <h2 class="panel-heading">Additional Info About Real Estate {{ agent.get_data_for_license_type.license_type }} {% if agent.first_name or agent.last_name %}
                             {{ agent.first_name }} {{ agent.last_name }}{% else %}
                             {{ agent.full_name }}{% endif %}</h2>
-                            {% if agent.get_data_for_license_type.license_type == "Agent" %}
-                                {% if agent.get_clean_salesperson_employing_broker %}
-                                    <h4>Employing Broker</h4>
-                                    <a href="/{{ agent.get_clean_salesperson_employing_broker_url }}/">{{ agent.get_clean_salesperson_employing_broker|safe }}</a>
-                                {% endif %}
-                            {% endif %}
 
-                            {% if agent.get_data_for_license_type.license_type == "Officer" %}
+                            {% if agent.get_data_for_license_type.license_type != "Corporation" %}
                                 {% if agent.get_clean_salesperson_employing_broker %}
-                                    <h4>Affiliated Corporation</h4>
-                                    <a href="/{{ agent.get_clean_salesperson_employing_broker_url }}/">{{ agent.get_clean_salesperson_employing_broker|safe }}</a>
+                                    <div class="media history">
+                                        <h4>{% if agent.get_data_for_license_type.license_type == "Officer" %}
+                                                Affiliated Corporation
+                                            {% else %}
+                                                Employing Broker
+                                            {% endif %}</h4>
+                                        <span class="icon glyphicon glyphicon-envelope historyLocationicon"></span>
+                                        <p class="historyLocationtext"><a href="/{{ agent.get_clean_salesperson_employing_broker_url }}/">{{ agent.get_clean_salesperson_employing_broker|safe }}</a></p>
+                                    </div>
                                 {% endif %}
                             {% endif %}
 
                             {% if agent.get_data_for_license_type.license_type == "Broker" %}
 
-                                {% if agent.get_clean_salesperson_employing_broker %}
-                                    <div class="media history">
-                                    <h4>Employing Broker</h4>
-                                    <a href="/{{ agent.get_clean_salesperson_employing_broker_url }}/">{{ agent.get_clean_salesperson_employing_broker|safe }}</a>
-                                    </div>
-                                {% endif %}
-
-{#                                {% if agent.main_office_address %}#}
                                 <div class="media history">
                                     <h4>Brokerage Main Office Address</h4>
-                                    {{agent.get_clean_main_office_address}}
+                                    <span class="icon glyphicon glyphicon-envelope historyLocationicon"></span>
+                                    <p class="historyLocationtext">{{agent.get_clean_main_office_address}}</p>
                                 </div>
-{#                                {% endif %}#}
 
-{#                                {% if agent.dba %}#}
                                 <div class="media history">
                                     <h4>DBA (Doing Business As)</h4>
-                                    {{ agent.get_clean_dba }}
+                                    <span class="icon glyphicon glyphicon-info-sign historyLocationicon"></span>
+                                    <p class="historyLocationtext">{{ agent.get_clean_dba }}</p>
                                 </div>
-{#                                {% endif %}#}
 
-{#                                {% if agent.get_agents_for_employing_broker %}#}
                                 <div class="media history">
                                     <h4>Agents with Brokerage</h4>
-                                    <ul>
-                                    {% for agent in agent.get_agents_for_employing_broker %}
-                                        <li><a href="{{ agent.get_absolute_url }}">{{ agent }}</a></li>
-                                    {% endfor %}
-                                    </ul>
+                                    {% if agent.get_agents_for_employing_broker %}
+                                        <ul>
+                                        {% for agent in agent.get_agents_for_employing_broker %}
+                                            <li><a href="{{ agent.get_absolute_url }}">{{ agent }}</a></li>
+                                        {% endfor %}
+                                        </ul>
+                                    {% else %}
+                                        <span class="icon glyphicon glyphicon-list historyLocationicon"></span>
+                                        <p class="historyLocationtext">No agents reported for this licensee.</p>
+                                    {% endif %}
                                 </div>
-{#                                {% endif %}#}
 
-{#                                {% if agent.branches %}#}
+
                                 <div class="media history">
                                     <h4>Branches</h4>
-                                    {{ agent.get_clean_branches }}
+                                    <span class="icon glyphicon glyphicon-list historyLocationicon"></span>
+                                    <p class="historyLocationtext">{{ agent.get_clean_branches }}</p>
                                 </div>
-{#                                {% endif %}#}
 
-{#                                {% if agent.affiliated_corporations %}#}
                                 <div class="media history">
                                     <h4>Corporations Affiliated with this Broker</h4>
-                                    {{ agent.get_clean_affiliated_corps }}
-{#                                {% endif %}#}
+                                    <span class="icon glyphicon glyphicon-list historyLocationicon"></span>
+                                    <p class="historyLocationtext">{{ agent.get_clean_affiliated_corps }}</p>
                                 </div>
                             {% endif %}
 
                             <h4>Public Comments about this {{ agent.get_data_for_license_type.license_type }}</h4>
-                                {{ agent.get_clean_public_comments }}
+                                <span class="icon glyphicon glyphicon-comment historyLocationicon"></span>
+                                <p class="historyLocationtext">{{ agent.get_clean_public_comments }}</p>
                         </div>
-                        <!-- DRE ABOUT Goes Here -->
+                        <!-- DRE ABOUT  -->
 
-                        <!-- Your Introduction Goes Here -->
-                        <div class="panel">
-                            <h2 class="panel-heading">About</h2>
-                            <p>This is my personal website. I built this website using Advante, Responsive HTML5 Personal Page Template. This template easy to customize and really modern to fit your needs. This HTML Template supports HTML5 and CSS3. And also it is built using bootstrap. I believe this would be a HTML Template that you are searching for. Well, just let me know if you want to know more about this website template.</p>
-                        </div>
-                        <!-- Your Introduction Goes Here -->
-
-                        <!-- Education -->
-                        <div class="panel">
+                        <!-- LISTINGS -->
+                        {% comment %}<div class="panel">
                             <div class="panel-heading">Listings and Transactions</div>
 
                             <div class="media history">
@@ -269,102 +326,33 @@
                                 </div>
                             </div>
 
-                            <div class="media history">
-                                <div class="media-body">
-                                    <div class="historyTop">
-                                        <div class="media-object historyDate"> 2011 - 2013</div>
-                                        <h6 class="media-heading historyHeading">Bachelor's Degree in Engineering </h6>
-                                    </div>
-                                    <span class="icon glyphicon glyphicon-map-marker historyLocationicon"></span>
-                                    <p class="historyLocationtext">Minneapolis College of Art and Design</p>
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin tincidunt diam ac lectus tristique scelerisque.  Current GPA 3.43 on a 4.00 scale</p>
-                                </div>
-                            </div>
+                        </div>{% endcomment %}
+                        <!-- LISTINGS -->
 
-                            <div class="media history">
-                                <div class="media-body">
-                                    <div class="historyTop">
-                                        <div class="media-object historyDate"> 2011 - 2013</div>
-                                        <h6 class="media-heading historyHeading">Bachelor's Degree in Engineering</h6>
-                                    </div>
-                                    <span class="icon glyphicon glyphicon-map-marker historyLocationicon"></span>
-                                    <p class="historyLocationtext">Minneapolis College of Art and Design</p>
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin tincidunt diam ac lectus tristique scelerisque.  Current GPA 3.43 on a 4.00 scale</p>
-                                </div>
-                            </div>
-
-                            <div class="media history">
-                                <div class="media-body">
-                                    <div class="historyTop">
-                                        <div class="media-object historyDate"> 2011 - 2013</div>
-                                        <h6 class="media-heading historyHeading">Bachelor's Degree in Engineering</h6>
-                                    </div>
-                                    <span class="icon glyphicon glyphicon-map-marker historyLocationicon"></span>
-                                    <p class="historyLocationtext">Minneapolis College of Art and Design</p>
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin tincidunt diam ac lectus tristique scelerisque.  Current GPA 3.43 on a 4.00 scale</p>
-                                </div>
-                            </div>
-
-                        </div>
-                        <!-- Education Background -->
-
-                        <!-- Work -->
+                        {% if agent.get_data_for_license_type.license_type != "Corporation" %}
+                        <!-- EDUCATION -->
                         <div class="panel">
                             <div class="panel-heading">Education Background</div>
 
                             <div class="media history">
                                 <div class="media-body">
                                     <div class="historyTop">
-                                        <div class="media-object historyDate"> 2011 - 2013</div>
-                                        <h6 class="media-heading historyHeading">Bachelor's Degree in Engineering</h6>
+                                        <div class="media-object historyDate"> 2011 - 2014</div>
+                                        <h6 class="media-heading historyHeading">University and Date Range</h6>
                                     </div>
                                     <span class="icon glyphicon glyphicon-map-marker historyLocationicon"></span>
-                                    <p class="historyLocationtext">Minneapolis College of Art and Design</p>
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin tincidunt diam ac lectus tristique scelerisque.  Current GPA 3.43 on a 4.00 scale</p>
-                                </div>
-                            </div>
-
-                            <div class="media history">
-                                <div class="media-body">
-                                    <div class="historyTop">
-                                        <div class="media-object historyDate"> 2011 - 2013</div>
-                                        <h6 class="media-heading historyHeading">Bachelor's Degree in Engineering</h6>
-                                    </div>
-                                    <span class="icon glyphicon glyphicon-map-marker historyLocationicon"></span>
-                                    <p class="historyLocationtext">Minneapolis College of Art and Design</p>
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin tincidunt diam ac lectus tristique scelerisque.  Current GPA 3.43 on a 4.00 scale</p>
-                                </div>
-                            </div>
-
-                            <div class="media history">
-                                <div class="media-body">
-                                    <div class="historyTop">
-                                        <div class="media-object historyDate"> 2011 - 2013</div>
-                                        <h6 class="media-heading historyHeading">Bachelor's Degree in Engineering</h6>
-                                    </div>
-                                    <span class="icon glyphicon glyphicon-map-marker historyLocationicon"></span>
-                                    <p class="historyLocationtext">Minneapolis College of Art and Design</p>
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin tincidunt diam ac lectus tristique scelerisque.  Current GPA 3.43 on a 4.00 scale</p>
-                                </div>
-                            </div>
-
-                            <div class="media history">
-                                <div class="media-body">
-                                    <div class="historyTop">
-                                        <div class="media-object historyDate"> 2011 - 2013</div>
-                                        <h6 class="media-heading historyHeading">Bachelor's Degree in Engineering</h6>
-                                    </div>
-                                    <span class="icon glyphicon glyphicon-map-marker historyLocationicon"></span>
-                                    <p class="historyLocationtext">Minneapolis College of Art and Design</p>
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin tincidunt diam ac lectus tristique scelerisque.  Current GPA 3.43 on a 4.00 scale</p>
+                                    <p class="historyLocationtext">University Name Here</p>
+                                    <p>Education Background not added by {% if agent.first_name or agent.last_name %}
+                                    {{ agent.first_name }} {{ agent.last_name }}{% else %}
+                                    {{ agent.full_name }}{% endif %}</p>
                                 </div>
                             </div>
 
                         </div>
-                        <!-- Work-->
-
+                        <!--EDUCATION-->
+                        {% endif %}
                     </div>
-                    <!-- About - Right Side End -->
+                    <!-- Right Side End -->
                 </div>
             </div>
             <!-- ABOUT TAB -->
@@ -645,7 +633,7 @@
 
         <!-- FOOTER -->
         <footer>
-            &copy; 2013 Advante Responsive HTML5 Personal Page. All rights resevered. Designed by <a href="http://www.graphicgeeks.net">graphicgeeks</a>
+            &copy; 2014 Real Estate Agent Lookup. All rights resevered.
         </footer>
         <!-- FOOTER -->
 
