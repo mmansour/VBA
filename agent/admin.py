@@ -17,7 +17,8 @@ class AgentAdmin(DisplayableAdmin):
                                          'affiliated_corporations','former_names',
                                          'licensed_officers', 'salespersons_employed','public_comment',
                                          'profile_image', 'about_me','specialties','certifications_awards','mls_association',
-                                         'website', 'facebook', 'twitter', 'linkedin']}),
+                                         'website', 'facebook', 'twitter', 'linkedin',
+                                         'bar_graph_one', 'bar_graph_two', 'bar_graph_three', 'bar_graph_four']}),
     ]
 
 

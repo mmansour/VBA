@@ -136,28 +136,28 @@
                             <div class="progressSkill">
                                 <p>Residential</p>
                                 <div class="progress">
-                                    <div class="progress-bar progress-bar-info" style="width: 50%"></div>
+                                    <div class="progress-bar progress-bar-info" style="width: {{ percent_residential }}%"></div>
                                 </div>
                             </div>
 
                             <div class="progressSkill">
                                 <p>Commercial</p>
                                 <div class="progress">
-                                    <div class="progress-bar progress-bar-info" style="width: 50%"></div>
+                                    <div class="progress-bar progress-bar-info" style="width: {{ percent_commercial }}%"></div>
                                 </div>
                             </div>
 
                             <div class="progressSkill">
                                 <p>Land</p>
                                 <div class="progress">
-                                    <div class="progress-bar progress-bar-info" style="width: 50%"></div>
+                                    <div class="progress-bar progress-bar-info" style="width: {{ percent_land}}%"></div>
                                 </div>
                             </div>
 
                             <div class="progressSkill">
                                 <p>Investors</p>
                                 <div class="progress">
-                                    <div class="progress-bar progress-bar-info" style="width: 50%"></div>
+                                    <div class="progress-bar progress-bar-info" style="width: {{ percent_investors}}%"></div>
                                 </div>
                             </div>
                         </div>
@@ -244,7 +244,7 @@
 
                         <!-- DRE ABOUT Goes Here -->
                         <div class="panel">
-                            <h2 class="panel-heading">Additional Info About Real Estate {{ agent.get_data_for_license_type.license_type }} {% if agent.first_name or agent.last_name %}
+                            <h2 class="panel-heading">State Reported Info About Real Estate {{ agent.get_data_for_license_type.license_type }} {% if agent.first_name or agent.last_name %}
                             {{ agent.first_name }} {{ agent.last_name }}{% else %}
                             {{ agent.full_name }}{% endif %}</h2>
 

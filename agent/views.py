@@ -164,8 +164,8 @@ def agent_claim(request):
 
 @login_required
 def agent_claim_error(request):
-    return render_to_response('integrityerror.html',{},
-                context_instance=RequestContext(request))
+    return render_to_response('integrityerror.html', {},
+                              context_instance=RequestContext(request))
 
 
 @login_required
@@ -228,16 +228,31 @@ def agent_edit_profile(request, agent_id):
                 context_instance=RequestContext(request))
 
 
+def get_percentage(number):
+    return int((float(number) / float(10)) * 100)
+
+
 def agent_details(request, agent_data, license_id):
     agent = get_object_or_404(Agent, slug=agent_data, license_id=license_id)
+
+    percent_residential = get_percentage(agent.bar_graph_one)
+    percent_commercial = get_percentage(agent.bar_graph_two)
+    percent_land = get_percentage(agent.bar_graph_three)
+    percent_investors = get_percentage(agent.bar_graph_four)
+
+    print percent_residential
 
     profile_claimed = is_profile_claimed(request.user)
     
     active_region = ActiveRegion.objects.get(slugged_region_abbr=agent.slugged_state)
     return render_to_response('pages/agent_theme1.html',
                               {'agent': agent, 'active_region': active_region,
-                               'profile_claimed': profile_claimed},
-                context_instance=RequestContext(request))
+                               'profile_claimed': profile_claimed,
+                               'percent_residential': percent_residential,
+                               'percent_commercial': percent_commercial,
+                               'percent_land': percent_land,
+                               'percent_investors': percent_investors},
+                              context_instance=RequestContext(request))
 
 
 def states(request):
@@ -260,6 +275,10 @@ def cities(request, agent_state_slug):
                               {'agent': agent,
                                'active_region': active_region,
                                'profile_claimed': profile_claimed}, context_instance=RequestContext(request))
+
+
+def get_percentage(number):
+    return (float(number) / float(10)) * 100
 
 
 def home(request):
