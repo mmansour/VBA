@@ -46,7 +46,18 @@ class AgentProfileEditForm(forms.Form):
     twitter = forms.URLField(required=False,)
     linkedin = forms.URLField(required=False,)
     pinterest = forms.URLField(required=False,)
-
+    residential_skills = forms.IntegerField(required=False, min_value=1, max_value=10,
+                                            help_text="From 1 to 10 rate your skill level in residential real estate. "
+                                            "10 indicates the most skilled.")
+    commercial_skills = forms.IntegerField(required=False, min_value=1, max_value=10,
+                                           help_text="From 1 to 10 rate your skill level in commercial real estate. "
+                                           "10 indicates the most skilled.")
+    land_skills = forms.IntegerField(required=False, min_value=1, max_value=10,
+                                     help_text="From 1 to 10 rate your skill level in land transactions. "
+                                     "10 indicates the most skilled.")
+    investor_skills = forms.IntegerField(required=False, min_value=1, max_value=10,
+                                         help_text="From 1 to 10 rate your skill level in working with "
+                                                   "real estate investors. 10 indicates the most skilled.")
 
 
 # New Email Function
@@ -178,16 +189,20 @@ def agent_edit_profile(request, agent_id):
 
     init_data = {
         'profile_image': agent.profile_image,
-        'about_me':agent.about_me,
-        'specialties':agent.specialties,
-        'certifications_awards':agent.certifications_awards,
-        'mls_association':agent.mls_association,
-        'website':agent.website,
-        'facebook':agent.facebook,
-        'youtube':agent.youtube,
-        'twitter':agent.twitter,
-        'linkedin':agent.linkedin,
-        'pinterest':agent.pinterest,
+        'about_me': agent.about_me,
+        'specialties': agent.specialties,
+        'certifications_awards': agent.certifications_awards,
+        'mls_association': agent.mls_association,
+        'website': agent.website,
+        'facebook': agent.facebook,
+        'youtube': agent.youtube,
+        'twitter': agent.twitter,
+        'linkedin': agent.linkedin,
+        'pinterest': agent.pinterest,
+        'residential_skills': agent.bar_graph_one,
+        'commercial_skills': agent.bar_graph_two,
+        'land_skills': agent.bar_graph_three,
+        'investor_skills': agent.bar_graph_four,
     }
 
     form = AgentProfileEditForm(auto_id=True, initial=init_data)
@@ -207,6 +222,10 @@ def agent_edit_profile(request, agent_id):
             twitter = form.cleaned_data['twitter']
             linkedin = form.cleaned_data['linkedin']
             pinterest = form.cleaned_data['pinterest']
+            residential_skills = form.cleaned_data['residential_skills']
+            commercial_skills = form.cleaned_data['commercial_skills']
+            land_skills = form.cleaned_data['land_skills']
+            investor_skills = form.cleaned_data['investor_skills']
 
             agent.profile_image = profile_image
             agent.about_me = about_me
@@ -219,13 +238,18 @@ def agent_edit_profile(request, agent_id):
             agent.twitter = twitter
             agent.linkedin = linkedin
             agent.pinterest = pinterest
+            agent.bar_graph_one = residential_skills
+            agent.bar_graph_two = commercial_skills
+            agent.bar_graph_three = land_skills
+            agent.bar_graph_four = investor_skills
 
             agent.save()
             redirect = agent.get_absolute_url()
             return HttpResponseRedirect(redirect)
 
-    return render_to_response('pages/agent_edit_profile.html',{'agent':agent, 'form':form,},
-                context_instance=RequestContext(request))
+    return render_to_response('pages/agent_edit_profile.html',
+                              {'agent': agent, 'form': form, },
+                              context_instance=RequestContext(request))
 
 
 def get_percentage(number):
