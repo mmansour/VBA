@@ -78,6 +78,11 @@ class Agent(Displayable):
     bar_graph_four = models.IntegerField(verbose_name="Investors", blank=True, default=5,
                                          help_text="Rate your skill level from 1 to 10. 10 is the most skilled")
 
+    show_education = models.BooleanField(default=True)
+    show_bar_graph_skillset = models.BooleanField(default=True)
+    show_state_reported_comments = models.BooleanField(default=True)
+    show_certification_and_awards = models.BooleanField(default=True)
+
     def get_clean_main_office_address(self):
         if self.main_office_address:
             return "<address><small>{0}</small></address>".format(self.main_office_address.replace('u', '')

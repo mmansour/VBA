@@ -58,6 +58,10 @@ class AgentProfileEditForm(forms.Form):
     investor_skills = forms.IntegerField(required=False, min_value=1, max_value=10,
                                          help_text="From 1 to 10 rate your skill level in working with "
                                                    "real estate investors. 10 indicates the most skilled.")
+    show_education = forms.BooleanField(initial=True, required=False)
+    show_bar_graph_skillset = forms.BooleanField(initial=True, required=False)
+    show_state_reported_comments = forms.BooleanField(initial=True, required=False)
+    show_certification_and_awards = forms.BooleanField(initial=True, required=False)
 
 
 # New Email Function
@@ -203,6 +207,10 @@ def agent_edit_profile(request, agent_id):
         'commercial_skills': agent.bar_graph_two,
         'land_skills': agent.bar_graph_three,
         'investor_skills': agent.bar_graph_four,
+        'show_education': agent.show_education,
+        'show_bar_graph_skillset': agent.show_bar_graph_skillset,
+        'show_state_reported_comments': agent.show_state_reported_comments,
+        'show_certification_and_awards': agent.show_certification_and_awards
     }
 
     form = AgentProfileEditForm(auto_id=True, initial=init_data)
@@ -226,6 +234,10 @@ def agent_edit_profile(request, agent_id):
             commercial_skills = form.cleaned_data['commercial_skills']
             land_skills = form.cleaned_data['land_skills']
             investor_skills = form.cleaned_data['investor_skills']
+            show_education = form.cleaned_data['show_education']
+            show_bar_graph_skillset = form.cleaned_data['show_bar_graph_skillset']
+            show_state_reported_comments = form.cleaned_data['show_state_reported_comments']
+            show_certification_and_awards = form.cleaned_data['show_certification_and_awards']
 
             agent.profile_image = profile_image
             agent.about_me = about_me
@@ -242,6 +254,10 @@ def agent_edit_profile(request, agent_id):
             agent.bar_graph_two = commercial_skills
             agent.bar_graph_three = land_skills
             agent.bar_graph_four = investor_skills
+            agent.show_education = show_education
+            agent.show_bar_graph_skillset = show_bar_graph_skillset
+            agent.show_state_reported_comments = show_state_reported_comments
+            agent.show_certification_and_awards = show_certification_and_awards
 
             agent.save()
             redirect = agent.get_absolute_url()

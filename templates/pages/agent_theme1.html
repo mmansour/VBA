@@ -130,6 +130,8 @@
                             </ul>
                         </div>
                         <!-- License Info -->
+
+                        {% if agent.show_bar_graph_skillset %}
                         <!-- SKILLS -->
                         <div class="panel">
                             <h2 class="panel-heading">Real Estate Skills & Specialties</h2>
@@ -162,6 +164,7 @@
                             </div>
                         </div>
                         <!-- SKILLS -->
+                        {% endif %}
 
                         {% comment %}
                         <!-- Testimonial User for NEARYBY AGENTS - GEO BABY -->
@@ -303,10 +306,11 @@
                                     <p class="historyLocationtext">{{ agent.get_clean_affiliated_corps }}</p>
                                 </div>
                             {% endif %}
-
-                            <h4>Public Comments about this {{ agent.get_data_for_license_type.license_type }}</h4>
-                                <span class="icon glyphicon glyphicon-comment historyLocationicon"></span>
-                                <p class="historyLocationtext">{{ agent.get_clean_public_comments }}</p>
+                            {% if agent.show_state_reported_comments %}
+                                <h4>Public Comments about this {{ agent.get_data_for_license_type.license_type }}</h4>
+                                    <span class="icon glyphicon glyphicon-comment historyLocationicon"></span>
+                                    <p class="historyLocationtext">{{ agent.get_clean_public_comments }}</p>
+                            {% endif %}
                         </div>
                         <!-- DRE ABOUT  -->
 
@@ -328,28 +332,29 @@
 
                         </div>{% endcomment %}
                         <!-- LISTINGS -->
+                        {% if agent.show_education %}
+                            {% if agent.get_data_for_license_type.license_type != "Corporation" %}
+                            <!-- EDUCATION -->
+                            <div class="panel">
+                                <div class="panel-heading">Education Background</div>
 
-                        {% if agent.get_data_for_license_type.license_type != "Corporation" %}
-                        <!-- EDUCATION -->
-                        <div class="panel">
-                            <div class="panel-heading">Education Background</div>
-
-                            <div class="media history">
-                                <div class="media-body">
-                                    <div class="historyTop">
-                                        <div class="media-object historyDate"> 2011 - 2014</div>
-                                        <h6 class="media-heading historyHeading">University and Date Range</h6>
+                                <div class="media history">
+                                    <div class="media-body">
+                                        <div class="historyTop">
+                                            <div class="media-object historyDate"> 20XX - 20XX</div>
+                                            <h6 class="media-heading historyHeading">University / College</h6>
+                                        </div>
+                                        <span class="icon glyphicon glyphicon-map-marker historyLocationicon"></span>
+                                        <p class="historyLocationtext">This {{ agent.get_data_for_license_type.license_type }} has not added University / College information</p>
+                                        <p>Education Background not added by {% if agent.first_name or agent.last_name %}
+                                        {{ agent.first_name }} {{ agent.last_name }}{% else %}
+                                        {{ agent.full_name }}{% endif %}</p>
                                     </div>
-                                    <span class="icon glyphicon glyphicon-map-marker historyLocationicon"></span>
-                                    <p class="historyLocationtext">University Name Here</p>
-                                    <p>Education Background not added by {% if agent.first_name or agent.last_name %}
-                                    {{ agent.first_name }} {{ agent.last_name }}{% else %}
-                                    {{ agent.full_name }}{% endif %}</p>
                                 </div>
-                            </div>
 
-                        </div>
-                        <!--EDUCATION-->
+                            </div>
+                            <!--EDUCATION-->
+                            {% endif %}
                         {% endif %}
                     </div>
                     <!-- Right Side End -->
