@@ -1,87 +1,102 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="{{ LANGUAGE_CODE }}"{% if LANGUAGE_BIDI %} dir="rtl"{% endif %}>
 {% load pages_tags mezzanine_tags i18n future staticfiles %}
+
 <head>
+    <title>{% block meta_title %}{% endblock %}{% if settings.SITE_TITLE %} | {{ settings.SITE_TITLE }}{% endif %}</title>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+    <meta name="description" content="{% block meta_description %}{% endblock %}">
+    <meta name="keywords" content="{% block meta_keywords %}{% endblock %}">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
+    <!--[if IE]><meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'><![endif]-->
 
-<meta http-equiv="Content-type" content="text/html; charset=utf-8">
-<meta name="viewport" content="width=device-width">
-<meta name="keywords" content="{% block meta_keywords %}{% endblock %}">
-<meta name="description" content="{% block meta_description %}{% endblock %}">
-<title>{% block meta_title %}{% endblock %}{% if settings.SITE_TITLE %} | {{ settings.SITE_TITLE }}{% endif %}</title>
-<link rel="shortcut icon" href="{% static "img/favicon.ico" %}">
+    {% ifinstalled mezzanine.blog %}
+    <link rel="alternate" type="application/rss+xml" title="RSS" href="{% url "blog_post_feed" "rss" %}">
+    <link rel="alternate" type="application/atom+xml" title="Atom" href="{% url "blog_post_feed" "atom" %}">
+    {% endifinstalled %}
 
-{% ifinstalled mezzanine.blog %}
-<link rel="alternate" type="application/rss+xml" title="RSS" href="{% url "blog_post_feed" "rss" %}">
-<link rel="alternate" type="application/atom+xml" title="Atom" href="{% url "blog_post_feed" "atom" %}">
-{% endifinstalled %}
+    <!-- Bootstrap -->
+    {% compress css %}
+    <link href="{% static "css/bootstrap-agents.css" %}" rel="stylesheet" media="screen">
+    <link href="{% static "css/bootstrap-glyphicons.css" %}" rel="stylesheet">
+    <link href="{% static "css/normalize.css" %}" rel="stylesheet" media="screen">
+    <!-- CSS -->
+    <link href="{% static "css/style.css" %}" rel="stylesheet" media="screen">
+    <link href="{% static "css/color.css" %}" rel="stylesheet" media="screen">
+    <link rel="stylesheet" type="text/css" href="{% static "js/fancybox/jquery.fancybox-1.3.4.css" %}" media="screen" />
+    {% block extra_css %}{% endblock %}
+    {% endcompress %}
 
-{% compress css %}
-<link rel="stylesheet" href="{% static "css/bootstrap.css" %}">
-<link rel="stylesheet" href="{% static "css/mezzanine.css" %}">
-<link rel="stylesheet" href="{% static "css/bootstrap-responsive.css" %}">
-{% if LANGUAGE_BIDI %}
-<link rel="stylesheet" href="{% static "css/rtl.css" %}">
-{% endif %}
-{% ifinstalled cartridge.shop %}
-<link rel="stylesheet" href="{% static "css/cartridge.css" %}">
-{% if LANGUAGE_BIDI %}
-<link rel="stylesheet" href="{% static "css/cartridge.rtl.css" %}">
-{% endif %}
-{% endifinstalled %}
-{% block extra_css %}{% endblock %}
-{% endcompress %}
 
-{% compress js %}
-<script src="{% static "mezzanine/js/"|add:settings.JQUERY_FILENAME %}"></script>
-<script src="{% static "js/bootstrap.js" %}"></script>
-<script src="{% static "js/bootstrap-extras.js" %}"></script>
-{% block extra_js %}{% endblock %}
-{% endcompress %}
-<!--[if lt IE 9]>
-<script src="{% static "js/html5shiv.js" %}"></script>
-<![endif]-->
-
-{% block extra_head %}{% endblock %}
-
+    <!-- Google Font -->
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700' rel='stylesheet' type='text/css'>
 </head>
-<body id="{% block body_id %}body{% endblock %}">
 
-<div class="navbar navbar-fixed-top">
-<div class="navbar-inner">
-<div class="container">
-    <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-    </a>
-    {% if settings.SITE_TITLE %}<a class="brand" href="/">{{ settings.SITE_TITLE }}</a>{% endif %}
-    {% if settings.SITE_TAGLINE %}<p class="navbar-text">{{ settings.SITE_TAGLINE }}</p>{% endif %}
-    <div class="nav-collapse collapse">
-        {% search_form "agent.Agent" %}
-        {% page_menu "pages/menus/dropdown.html" %}
+<body>
+<div class="container tab-container" id="tab-container-navs">
+    <div>
+    <ul class="breadcrumb" style="background-color: #323a44"><a href="/">Real Estate Agent Lookup</a> | <em>Agent search, reviews and information</em></ul>
+    <form action="/search-hs/" class="navbar-search pull-right input-append hidden-sm">
+        <input class="search-query" placeholder="Search" type="text" name="q" value="{{ request.REQUEST.q }}">
+        <input type="submit" class="btn btnBasic" value="Go">
+    </form>
     </div>
-</div>
-</div>
+    <ul class="breadcrumb">
+    {% spaceless %}
+    {% block breadcrumb_menu %}{% page_menu "pages/menus/breadcrumb.html" %}{% endblock %}{% block extra_breadcrumb %}{% endblock %}
+    {% endspaceless %}
+    </ul>
+{#    <ul class="breadcrumb">#}
+{#    {% spaceless %}#}
+{#    {% block extra_breadcrumb %}{% endblock %}#}
+{#    {% endspaceless %}#}
+{#    </ul>#}
+    {% nevercache %}
+    <div>
+    {% for message in messages %}
+        <div class="alert alert-{{ message.tags }}" data-alert="alert">
+            <a class="close" href="#" onclick="$(this).parent().fadeOut('fast'); return false;">×</a>{{ message }}
+        </div>
+    {% endfor %}
+    </div>
+    {% endnevercache %}
 </div>
 
 <div class="container">
 
-{% nevercache %}
-{% for message in messages %}
-<div class="alert alert-{{ message.tags }}" data-alert="alert">
-    <a class="close" href="#" onclick="$(this).parent().fadeOut('fast'); return false;">×</a>{{ message }}
-</div>
-{% endfor %}
-{% endnevercache %}
+    {% nevercache %}
+    {% for message in messages %}
+    <div class="alert alert-{{ message.tags }}" data-alert="alert">
+        <a class="close" href="#" onclick="$(this).parent().fadeOut('fast'); return false;">×</a>{{ message }}
+    </div>
+    {% endfor %}
+    {% endnevercache %}
 
 
-<h1>{% block title %}{% endblock %}</h1>
+    {#<h1>{% block title %}{% endblock %}</h1>#}
 
-<ul class="breadcrumb">
-{% spaceless %}
-{% block breadcrumb_menu %}{% page_menu "pages/menus/breadcrumb.html" %}{% endblock %}{% block extra_breadcrumb %}{% endblock %}
-{% endspaceless %}
-</ul>
+    <header>
+        <div class="cover" style="background-image:url({% static "img/demo-cover.jpg" %});">
+            <div class="coverOverlay"></div>
+            <!-- profile picture - change your profile picture here -->
+            <div class="profilePicture">
+                <img src="{% static "img/profilePicture.jpg" %}" alt="profilepicture" title="profilepicture" />
+            </div
+            <!-- profile name - change profile name here -->
+            <div class="profileName">
+                <h1>{% block title %}{% endblock %}</h1>
+                <p>Agent search, review and information</p>
+            </div>
+        </div>
+        <nav>
+            <ul class="etabs">
+                <li class="tab"><a href="#about"><span class="tabIcon glyphicon glyphicon-user"></span><span class="tabText">About</span></a></li>
+                <li class="tab"><a href="#portfolio"><span class="tabIcon glyphicon glyphicon-briefcase"></span><span class="tabText">Portfolio</span></a></li>
+                <li class="tab"><a href="#blog"><span class="tabIcon glyphicon glyphicon-pencil"></span><span class="tabText">Blog</span></a></li>
+                <li class="tab"><a href="#contact"><span class="tabIcon glyphicon glyphicon-envelope"></span><span class="tabText">Contact</span></a></li>
+            </ul>
+        </nav>
+    </header>
 
 </div>
 
