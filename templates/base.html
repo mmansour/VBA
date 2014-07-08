@@ -24,12 +24,26 @@
     <link href="{% static "css/style.css" %}" rel="stylesheet" media="screen">
     <link href="{% static "css/color.css" %}" rel="stylesheet" media="screen">
     <link rel="stylesheet" type="text/css" href="{% static "js/fancybox/jquery.fancybox-1.3.4.css" %}" media="screen" />
-    {% block extra_css %}{% endblock %}
+    {% block extra_css %}
+    <style type="text/css">
+        .coverOverlay{background-image:url({% static "img/coverShadow.png" %});height:348px;width:940px;position:absolute;}
+        .header_title{font-size: 12px; margin: 0 0 10px;}
+        h2{font-size: 13px; color: #FFF;}
+        h4{font-size:12px;line-height:18px;}
+    </style>
+    {% endblock %}
     {% endcompress %}
 
 
     <!-- Google Font -->
     <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700' rel='stylesheet' type='text/css'>
+
+    {% compress js %}
+    <script src="{% static "mezzanine/js/"|add:settings.JQUERY_FILENAME %}"></script>
+    {#<script src="{% static "js/bootstrap.js" %}"></script>#}
+    {#<script src="{% static "js/bootstrap-extras.js" %}"></script>#}
+    {% block extra_js %}{% endblock %}
+    {% endcompress %}
 </head>
 
 <body>
@@ -46,11 +60,6 @@
     {% block breadcrumb_menu %}{% page_menu "pages/menus/breadcrumb.html" %}{% endblock %}{% block extra_breadcrumb %}{% endblock %}
     {% endspaceless %}
     </ul>
-{#    <ul class="breadcrumb">#}
-{#    {% spaceless %}#}
-{#    {% block extra_breadcrumb %}{% endblock %}#}
-{#    {% endspaceless %}#}
-{#    </ul>#}
     {% nevercache %}
     <div>
     {% for message in messages %}
@@ -63,37 +72,23 @@
 </div>
 
 <div class="container">
-
-    {% nevercache %}
-    {% for message in messages %}
-    <div class="alert alert-{{ message.tags }}" data-alert="alert">
-        <a class="close" href="#" onclick="$(this).parent().fadeOut('fast'); return false;">×</a>{{ message }}
-    </div>
-    {% endfor %}
-    {% endnevercache %}
-
-
-    {#<h1>{% block title %}{% endblock %}</h1>#}
-
     <header>
         <div class="cover" style="background-image:url({% static "img/demo-cover.jpg" %});">
             <div class="coverOverlay"></div>
             <!-- profile picture - change your profile picture here -->
             <div class="profilePicture">
                 <img src="{% static "img/profilePicture.jpg" %}" alt="profilepicture" title="profilepicture" />
-            </div
+            </div>
             <!-- profile name - change profile name here -->
             <div class="profileName">
                 <h1>{% block title %}{% endblock %}</h1>
-                <p>Agent search, review and information</p>
+                <p>Search for Real Estate Agents</p>
             </div>
         </div>
         <nav>
             <ul class="etabs">
-                <li class="tab"><a href="#about"><span class="tabIcon glyphicon glyphicon-user"></span><span class="tabText">About</span></a></li>
-                <li class="tab"><a href="#portfolio"><span class="tabIcon glyphicon glyphicon-briefcase"></span><span class="tabText">Portfolio</span></a></li>
-                <li class="tab"><a href="#blog"><span class="tabIcon glyphicon glyphicon-pencil"></span><span class="tabText">Blog</span></a></li>
-                <li class="tab"><a href="#contact"><span class="tabIcon glyphicon glyphicon-envelope"></span><span class="tabText">Contact</span></a></li>
+                <li class="tab"><a href="/"><span class="tabIcon glyphicon glyphicon-user"></span><span class="tabText">Home</span></a></li>
+                <li class="tab"><a href="/agent_lookup/"><span class="tabIcon glyphicon glyphicon-briefcase"></span><span class="tabText">Agents by Region</span></a></li>
             </ul>
         </nav>
     </header>
@@ -103,29 +98,34 @@
 <div class="container">
 <div class="row">
 
-<div class="span2 left">
-    {% block left_panel %}
-    <div class="panel tree">{% page_menu "pages/menus/tree.html" %}</div>
-    {% endblock %}
-    {% block extra_left_panel %}{% endblock %}
+{#<div class="col-lg-2">#}
+{#    {% block left_panel %}#}
+{#    <div class="panel tree">{% page_menu "pages/menus/tree.html" %}</div>#}
+{#    {% endblock %}#}
+{#    {% block extra_left_panel %}{% endblock %}#}
+{#</div>#}
+
+<div class="col-lg-4">
+    <div class="panel">
+        <h2 class="panel-heading">Login / Edit Profile</h2>
+        {% nevercache %}
+        {% include "includes/user_panel.html" %}
+        {% endnevercache %}
+        {% comment %}<div class="panel">
+        {% block right_panel %}
+        {% ifinstalled mezzanine.twitter %}
+        {% include "twitter/tweets.html" %}
+        {% endifinstalled %}
+        {% endblock %}
+    </div>{% endcomment %}
+    </div>
 </div>
 
-<div class="span7 middle">
+<div class="col-lg-8">
     {% block main %}{% endblock %}
 </div>
 
-<div class="span3 right">
-    {% nevercache %}
-    {% include "includes/user_panel.html" %}
-    {% endnevercache %}
-    {% comment %}<div class="panel">
-    {% block right_panel %}
-    {% ifinstalled mezzanine.twitter %}
-    {% include "twitter/tweets.html" %}
-    {% endifinstalled %}
-    {% endblock %}
-    </div>{% endcomment %}
-</div>
+
 
 </div>
 </div>
