@@ -33,16 +33,27 @@
 {% endblock %}
 
 {% block main %}
-{% trans "Welcome to Real Estate Agent Lookup. Our database holds millions of real estate agents, brokers and corporations. The one you're looking for is probably in here. If not he or she might be soon. You can search by city below. Or use the search box above. Best of luck in your search!" %}
+<div class="col-lg-9">
+    <div class="panel">
+        <h2  class="panel-heading">Welcome to Real Estate Agent Lookup</h2>
+        <p>
+        Our database holds millions of real estate agents, brokers and corporations. The one you're looking for is probably in here. If not he or she might be soon. You can search by city below. Or use the search box above. Best of luck in your search!
+        </p>
+    </div>
+</div>
 
-<h2><small>{% trans "Ten Most Recently Added Real Estate Agents" %}</small></h2>
-<ul>
-{% for agt in most_recent_agents %}
-{% if agt.first_name or agt.last_name %}
-<li><a href="{{ agt.get_absolute_url }}">{{ agt.first_name }} {{ agt.last_name }}{% if agt.mailing_city %} - {{ agt.mailing_city|title }}{% endif %}</a></li>
-{% endif %}
-{% endfor %}
-</ul>
+<div class="col-lg-9">
+    <div class="panel">
+        <h2  class="panel-heading">Ten Most Recently Added Real Estate Agents</h2>
+        <ul>
+        {% for agt in most_recent_agents %}
+        {% if agt.first_name or agt.last_name %}
+        <li><a href="{{ agt.get_absolute_url }}">{{ agt.first_name }} {{ agt.last_name }}{% if agt.mailing_city %} - {{ agt.mailing_city|title }}{% endif %}</a></li>
+        {% endif %}
+        {% endfor %}
+        </ul>
+    </div>
+</div>
 {% endblock %}
 
 {% block extra_footer %}{% endblock %}

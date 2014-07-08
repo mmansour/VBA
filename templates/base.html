@@ -92,42 +92,29 @@
             </ul>
         </nav>
     </header>
-
 </div>
 
 <div class="container">
-<div class="row">
-
-{#<div class="col-lg-2">#}
-{#    {% block left_panel %}#}
-{#    <div class="panel tree">{% page_menu "pages/menus/tree.html" %}</div>#}
-{#    {% endblock %}#}
-{#    {% block extra_left_panel %}{% endblock %}#}
-{#</div>#}
-
-<div class="col-lg-4">
-    <div class="panel">
-        <h2 class="panel-heading">Login / Edit Profile</h2>
-        {% nevercache %}
-        {% include "includes/user_panel.html" %}
-        {% endnevercache %}
-        {% comment %}<div class="panel">
-        {% block right_panel %}
-        {% ifinstalled mezzanine.twitter %}
-        {% include "twitter/tweets.html" %}
-        {% endifinstalled %}
-        {% endblock %}
-    </div>{% endcomment %}
+    <div class="content">
+        <div class="row">
+            <div class="col-lg-3">
+                <div class="panel">
+                    <h2 class="panel-heading">Login / Edit Profile</h2>
+                    {% nevercache %}
+                    {% include "includes/user_panel.html" %}
+                    {% endnevercache %}
+                    {% comment %}<div class="panel">
+                    {% block right_panel %}
+                    {% ifinstalled mezzanine.twitter %}
+                    {% include "twitter/tweets.html" %}
+                    {% endifinstalled %}
+                    {% endblock %}
+                </div>{% endcomment %}
+                </div>
+            </div>
+            {% block main %}{% endblock %}
+        </div>
     </div>
-</div>
-
-<div class="col-lg-8">
-    {% block main %}{% endblock %}
-</div>
-
-
-
-</div>
 </div>
 
 <footer>
