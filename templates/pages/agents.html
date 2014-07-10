@@ -21,14 +21,16 @@ Real Estate Agents in {{ agents.0.mailing_city|title }}, {{ agents.0.mailing_sta
 Real Estate Agents in {{ agents.0.mailing_city|title }}, {{ agents.0.mailing_state }}
 {% endblock %}
 
+{% block extra_css %}{% endblock %}
+
 {% block extra_breadcrumb %}
 <li>
 <a href="/agent_lookup/">Agents by Region</a>
-<span class="divider">/</span>
+{#<span class="divider">/</span>#}
 </li>
 <li>
 <a href="/agent_lookup/{{ agent_state_slug }}/">{{ agent_state_slug|title }}</a>
-<span class="divider">/</span>
+{#<span class="divider">/</span>#}
 </li>
 <li class="active">
 {{ agent_city_slug|title }}
@@ -59,12 +61,21 @@ Real Estate Agents in {{ agents.0.mailing_city|title }}, {{ agents.0.mailing_sta
 {% endblock %}
 
 {% block main %}
-<ul>
-{% for agent in agents %}
-    <li><a href="{{ agent.get_absolute_url }}">{{ agent.title }}</a></li>
-{% endfor %}
-</ul>
-<div id="pagination">
-    {% pagination_for agents %}
+<div class="col-lg-9">
+    <div class="panel">
+        <h2  class="panel-heading">{{ agents.0.mailing_city|title }}, {{ agents.0.mailing_state }} Real Estate Agents, Brokers, Officers and Corporations</h2>
+        <ul>
+        {% for agent in agents %}
+            <li><a href="{{ agent.get_absolute_url }}">{{ agent.title }}</a></li>
+        {% endfor %}
+        </ul>
+    </div>
+    <div class="panel">
+        <div id="pagination">
+            {% pagination_for agents %}
+        </div>
+    </div>
 </div>
+
+
 {% endblock %}

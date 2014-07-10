@@ -5,38 +5,49 @@
 {% block title %}{{ title }}{% endblock %}
 {% block body_id %}account{% endblock %}
 
+{% block extra_js %}
+<script type="text/javascript">
+$( document ).ready(function() {
+    $('input').each(function(){
+           $(this).addClass('text-label');
+    });
+});
+</script>
+{% endblock %}
+
+{% block extra_css %}
+    <style>
+    label{color:#888}
+    </style>
+{% endblock %}
+
 {% block breadcrumb_menu %}
 {{ block.super }}
 <li>Claim Your Profile</li>
 {% endblock %}
 
 {% block main %}
-    <h2>Once you claim your profile you can:</h2>
-    <ul>
+    <div class="col-lg-9">
+        <div class="panel">
+            <h2  class="panel-heading">Claim and edit your profile! Edit options include the following:</h2>
+            <ul class="blogCategory">
+                <li><span class="icon glyphicon glyphicon-chevron-right"></span><span class="text"><a href="#">Upload your headshot!</a></span><div class="clearfix"></div></li>
+                <li><span class="icon glyphicon glyphicon-chevron-right"></span><span class="text"><a href="#">Option to change header image!</a></span><div class="clearfix"></div></li>
+                <li><span class="icon glyphicon glyphicon-chevron-right"></span><span class="text"><a href="#">Add a link to your real estate website!</a></span><div class="clearfix"></div></li>
+                <li><span class="icon glyphicon glyphicon-chevron-right"></span><span class="text"><a href="#">Add links to your social media pages: Twitter, YouTube, LinkedIn, Facebook, Pinterest!</a></span><div class="clearfix"></div></li>
+                <li><span class="icon glyphicon glyphicon-chevron-right"></span><span class="text"><a href="#">Easily edit your skill set Bar Graph!</a></span><div class="clearfix"></div></li>
+                <li><span class="icon glyphicon glyphicon-chevron-right"></span><span class="text"><a href="#">Add additional specialties, awards and MLS Association information!</a></span><div class="clearfix"></div></li>
+            </ul>
+            <hr />
+            <form method="post" class="form">
+                <div class="field">
+                {% fields_for form %}
+                </div>
+                <input class="btn btnBasic" type="submit" value="{{ title }}">
+            </form>
 
-    <li>Add a link to your website from your profile page</li>
-    <li>Add links to your social media pages:
-        <ul>
-            <li>Youtube</li>
-            <li>Linkedin</li>
-            <li>Facebook</li>
-            <li>Twitter</li>
-            <li>Pinterest</li>
-        </ul>
-    </li>
-    <li>Upload a profile picture</li>
-    <li>Add specialties, awards and association information to your profile!</li>
-    </ul>
-
-<fieldset>
-    <legend>Sign up below to claim your profile.</legend>
-    <form method="post">
-    {% fields_for form %}
-    <div class="form-actions">
-        <input class="btn btn-primary btn-large" type="submit" value="{{ title }}">
+        </div>
     </div>
-    </form>
-</fieldset>
 {% endblock %}
 
 

@@ -10,24 +10,29 @@ $(function() {$('.middle :input:visible:enabled:first').focus();});
 {% endblock %}
 
 {% block main %}
-{{ block.super }}
-{% if request.GET.sent %}
-    {% editable page.form.response %}
-    {{ page.form.response|richtext_filters|safe }}
-    {% endeditable %}
-{% else %}
-    {% with page.form as page_form %}
-    {% editable page_form.content %}
-    {{ page_form.content|richtext_filters|safe }}
-    {% endeditable %}
-    {% endwith %}
-    <form method="post"{% if form.is_multipart %} enctype="multipart/form-data"{% endif %}>
-        {% fields_for form %}
-        <div class="form-actions">
-            <input class="btn btn-primary btn-large" type="submit" value="{{ page.form.button_text }}">
-        </div>
-    </form>
-{% endif %}
+<div class="col-lg-9">
+    <div class="panel">
+        <h2  class="panel-heading">{{ page.title }}</h2>
+        {{ block.super }}
+        {% if request.GET.sent %}
+            {% editable page.form.response %}
+            {{ page.form.response|richtext_filters|safe }}
+            {% endeditable %}
+        {% else %}
+            {% with page.form as page_form %}
+            {% editable page_form.content %}
+            {{ page_form.content|richtext_filters|safe }}
+            {% endeditable %}
+            {% endwith %}
+            <form method="post"{% if form.is_multipart %} enctype="multipart/form-data"{% endif %}>
+                {% fields_for form %}
+                <div class="form-actions">
+                    <input class="btn btn-primary" type="submit" value="{{ page.form.button_text }}">
+                </div>
+            </form>
+        {% endif %}
+    </div>
+</div>
 
 {% endblock %}
 
