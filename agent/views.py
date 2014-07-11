@@ -63,6 +63,14 @@ class AgentProfileEditForm(forms.Form):
     show_state_reported_comments = forms.BooleanField(initial=True, required=False)
     show_certification_and_awards = forms.BooleanField(initial=True, required=False)
 
+    education_start_year = forms.CharField(required=False,
+                                           help_text="Enter year you started university. 4 digits e.g. 1995")
+    education_end_year = forms.CharField(required=False,
+                                         help_text="Enter year you graduated. 4 digits e.g. 1999")
+    university = forms.CharField(required=False,)
+    degree = forms.CharField(required=False,)
+    awards = forms.CharField(required=False, help_text="Enter accolades, GPA, scholarships, etc...")
+
 
 # New Email Function
 def email_profile_claimed(request_user, agent_title, agent_url):
@@ -210,7 +218,12 @@ def agent_edit_profile(request, agent_id):
         'show_education': agent.show_education,
         'show_bar_graph_skillset': agent.show_bar_graph_skillset,
         'show_state_reported_comments': agent.show_state_reported_comments,
-        'show_certification_and_awards': agent.show_certification_and_awards
+        'show_certification_and_awards': agent.show_certification_and_awards,
+        'education_start_year': agent.education_start_year,
+        'education_end_year': agent.education_end_year,
+        'university': agent.education_University,
+        'degree': agent.education_degree,
+        'awards': agent.education_awards,
     }
 
     form = AgentProfileEditForm(auto_id=True, initial=init_data)
@@ -239,6 +252,12 @@ def agent_edit_profile(request, agent_id):
             show_state_reported_comments = form.cleaned_data['show_state_reported_comments']
             show_certification_and_awards = form.cleaned_data['show_certification_and_awards']
 
+            education_start_year = form.cleaned_data['education_start_year']
+            education_end_year = form.cleaned_data['education_end_year']
+            university = form.cleaned_data['university']
+            degree = form.cleaned_data['degree']
+            awards = form.cleaned_data['awards']
+
             agent.profile_image = profile_image
             agent.about_me = about_me
             agent.specialties = specialties
@@ -258,6 +277,11 @@ def agent_edit_profile(request, agent_id):
             agent.show_bar_graph_skillset = show_bar_graph_skillset
             agent.show_state_reported_comments = show_state_reported_comments
             agent.show_certification_and_awards = show_certification_and_awards
+            agent.education_start_year = education_start_year
+            agent.education_end_year = education_end_year
+            agent.education_University = university
+            agent.education_degree = degree
+            agent.education_awards = awards
 
             agent.save()
             redirect = agent.get_absolute_url()
