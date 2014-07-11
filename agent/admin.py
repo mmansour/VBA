@@ -18,6 +18,8 @@ class AgentAdmin(DisplayableAdmin):
                                          'licensed_officers', 'salespersons_employed','public_comment',
                                          'profile_image', 'about_me','specialties','certifications_awards','mls_association',
                                          'website', 'facebook', 'twitter', 'linkedin',
+                                         'education_start_year', 'education_end_year', 'education_University',
+                                         'education_degree', 'education_awards',
                                          'bar_graph_one', 'bar_graph_two', 'bar_graph_three', 'bar_graph_four']}),
     ]
 

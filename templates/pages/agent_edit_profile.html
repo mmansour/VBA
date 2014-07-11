@@ -27,16 +27,37 @@ Edit Your Profile
 </li>
 {% endblock %}
 
+{% block extra_js %}
+<script type="text/javascript">
+$( document ).ready(function() {
+    $('input').each(function(){
+           $(this).addClass('text-label');
+    });
+});
+</script>
+{% endblock %}
+
+{% block extra_css %}
+    <style>
+    label{color:#888}
+    </style>
+{% endblock %}
+
 {% block main %}
 
-<h3>Fill out the fields below to update your real estate profile</h3>
+<div class="col-lg-9">
+    <div class="panel">
+        <h2  class="panel-heading">Use the Fields Below to Edit Your Profile</h2>
+        <form enctype="multipart/form-data" action="/agent/profile/edit/{{ agent.id }}/" method="post" id="edit-profile" autocomplete="on">
+            {% csrf_token %}
+            <div class="field">
+            {{ form.as_p }}
+            </div>
+            <input type="submit" value="Submit Changes" />
+        </form>
+    </div>
+</div>
+
 {% comment %}<p>If you don't have your Real Estate License ID handy just enter your last name in the search box,
     top right of page, to find your profile. Your License ID is on your profile page.</p>{% endcomment %}
-
-<form enctype="multipart/form-data" action="/agent/profile/edit/{{ agent.id }}/" method="post" id="edit-profile" autocomplete="on">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <input type="submit" value="Submit Changes" />
-</form>
-
 {% endblock %}

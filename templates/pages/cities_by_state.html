@@ -46,16 +46,18 @@ Real Estate Licensee lookup by city in {{ active_region.region }}
 {% endblock %}
 
 {% block main %}
+<div class="col-lg-9">
+    <div class="panel">
+        <h2 class="panel-heading">{{ active_region.region }} Real Estate Agents Sorted by City</h2>
+        {% for agt in agent %}
+            {% if agt.mailing_city %}
+                {% if agt.mailing_city != 'N/A' %}
+                    <li><a href="/agent_lookup/{{ active_region.slugged_region }}/{{ agt.mailing_city|slugify }}/">{{ agt.mailing_city }}</a></li>
+                {% endif %}
+            {% endif %}
+        {% endfor %}
+    </div>
 <ul>
-
-{% for agt in agent %}
-    {% if agt.mailing_city %}
-        {% if agt.mailing_city != 'N/A' %}
-            <li><a href="/agent_lookup/{{ active_region.slugged_region }}/{{ agt.mailing_city|slugify }}/">{{ agt.mailing_city }}</a></li>
-        {% endif %}
-    {% endif %}
-{% endfor %}
-
 </ul>
 
 {% endblock %}

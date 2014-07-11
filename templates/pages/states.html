@@ -42,13 +42,14 @@ Agents by Region
 {% endblock %}
 
 {% block main %}
-<ul>
+<div class="col-lg-9">
+    <div class="panel">
+        <h2  class="panel-heading">Real Estate Agents by State or Region</h2>
+        <ul>
+            {% for st in active_regions %}
+            <li><a href="/agent_lookup/{{ st.slugged_region }}/">{{ st.region|title }}</a></li>
+            {% endfor %}
+        </ul>
+    </div>
 
-{% for st in active_regions %}
-
-<li><a href="/agent_lookup/{{ st.slugged_region }}/">{{ st.region|title }}</a></li>
-
-{% endfor %}
-
-</ul>
 {% endblock %}

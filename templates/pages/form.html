@@ -6,6 +6,17 @@
 {{ block.super }}
 <script>
 $(function() {$('.middle :input:visible:enabled:first').focus();});
+$( document ).ready(function() {
+    $('input').each(function(){
+           $(this).addClass('text-label');
+    });
+    $('select').each(function(){
+           $(this).addClass('text-label');
+    });
+     $('textarea').each(function(){
+           $(this).addClass('text-label');
+    });
+});
 </script>
 {% endblock %}
 

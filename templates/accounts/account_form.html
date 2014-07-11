@@ -29,7 +29,17 @@ $( document ).ready(function() {
 {% block main %}
     <div class="col-lg-9">
         <div class="panel">
-            <h2  class="panel-heading">Claim and edit your profile! Edit options include the following:</h2>
+            <h2  class="panel-heading">
+            {% if request.path == '/accounts/login/' %}
+                Login Below to Edit Your Profile
+            {% elif request.path == '/account/password/reset/'  %}
+                Enter Your Email or Username Below to Reset Your Password
+            {% elif request.path == '/account/update/'  %}
+                Edit Your Email Address Below
+            {% else%}
+                Claim and Edit your profile! Edit Options Include the Following:
+            {% endif %}
+            </h2>
             <ul class="blogCategory">
                 <li><span class="icon glyphicon glyphicon-chevron-right"></span><span class="text"><a href="#">Upload your headshot!</a></span><div class="clearfix"></div></li>
                 <li><span class="icon glyphicon glyphicon-chevron-right"></span><span class="text"><a href="#">Option to change header image!</a></span><div class="clearfix"></div></li>

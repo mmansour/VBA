@@ -10,6 +10,16 @@
             class="btn btn-small btn-account">{% trans "Update profile" %}</a>
     {% else %}
         <a href="{% url "profile_update" %}">{{ request.user|username_or:"email" }}</a>
+        {% if '/account/' not in request.path %}
+            {% if '/contact/' not in request.path %}
+                {% if '/search-hs/' not in request.path %}
+                    <br>
+                    <a href="/agent/profile/edit/{{ profile_claimed.1 }}/"
+                        class="btn btn-small btn-warning">{% trans "Update profile" %}</a>
+                {% endif %}
+            {% endif %}
+        {% endif %}
+
     {% endif %}
     <a href="{% url "logout" %}?next={{ request.path }}"
         class="btn btn-small btn-danger btn-account">{% trans "Log out" %}</a>

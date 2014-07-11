@@ -202,9 +202,13 @@
                             <h2 class="panel-heading">About Real Estate {{ agent.get_data_for_license_type.license_type }} {% if agent.first_name or agent.last_name %}
                             {{ agent.first_name }} {{ agent.last_name }}{% else %}
                             {{ agent.full_name }}{% endif %}</h2>
-                            <p>This section has not been updated by Real Estate {{ agent.get_data_for_license_type.license_type }} {% if agent.first_name or agent.last_name %}
-                            {{ agent.first_name }} {{ agent.last_name }}{% else %}
-                            {{ agent.full_name }}{% endif %}</p>
+                            {% if agent.about_me %}
+                                <p>{{ agent.about_me }}</p>
+                            {% else %}
+                                <p>This section has not been updated by Real Estate {{ agent.get_data_for_license_type.license_type }} {% if agent.first_name or agent.last_name %}
+                                {{ agent.first_name }} {{ agent.last_name }}{% else %}
+                                {{ agent.full_name }}{% endif %}</p>
+                            {% endif %}
                         </div>
                         <!-- Your Introduction Goes Here -->
 
@@ -230,18 +234,27 @@
                         <!-- CERTS AND AWARDS -->
                         <div class="panel">
                             <h2 class="panel-heading">Certifications and Awards</h2>
-                            <p>Certifications and Awards not added by {% if agent.first_name or agent.last_name %}
-                            {{ agent.first_name }} {{ agent.last_name }}{% else %}
-                            {{ agent.full_name }}{% endif %}</p>
+                            {% if agent.certifications_awards %}
+                                {{ agent.certifications_awards }}
+                            {% else %}
+                                <p>Certifications and Awards not added by {% if agent.first_name or agent.last_name %}
+                                {{ agent.first_name }} {{ agent.last_name }}{% else %}
+                                {{ agent.full_name }}{% endif %}</p>
+                            {% endif %}
                         </div>
                         <!-- CERTS AND AWARDS -->
 
                         <!-- MLS ASSOCIATION -->
                         <div class="panel">
                             <h2 class="panel-heading">MLS / Association</h2>
-                            <p>MLS / Association not added by {% if agent.first_name or agent.last_name %}
-                            {{ agent.first_name }} {{ agent.last_name }}{% else %}
-                            {{ agent.full_name }}{% endif %}</p>
+                            {% if agent.mls_association %}
+                                {{ agent.mls_association }}
+                            {% else %}
+                                <p>MLS / Association not added by {% if agent.first_name or agent.last_name %}
+                                {{ agent.first_name }} {{ agent.last_name }}{% else %}
+                                {{ agent.full_name }}{% endif %}</p>
+                            {% endif %}
+
                         </div>
                         <!--  MLS ASSOCIATION -->
 
@@ -266,7 +279,6 @@
                             {% endif %}
 
                             {% if agent.get_data_for_license_type.license_type == "Broker" %}
-
                                 <div class="media history">
                                     <h4>Brokerage Main Office Address</h4>
                                     <span class="icon glyphicon glyphicon-envelope historyLocationicon"></span>
@@ -337,20 +349,33 @@
                             <!-- EDUCATION -->
                             <div class="panel">
                                 <div class="panel-heading">Education Background</div>
-
-                                <div class="media history">
-                                    <div class="media-body">
-                                        <div class="historyTop">
-                                            <div class="media-object historyDate"> 20XX - 20XX</div>
-                                            <h6 class="media-heading historyHeading">University / College</h6>
+                                {% if agent.education_University %}
+                                    <div class="media history">
+                                        <div class="media-body">
+                                            <div class="historyTop">
+                                                <div class="media-object historyDate"> {{ agent.education_start_year }} - {{ agent.education_end_year }}</div>
+                                                <h6 class="media-heading historyHeading">{{ agent.education_degree }}</h6>
+                                            </div>
+                                            <span class="icon glyphicon glyphicon-map-marker historyLocationicon"></span>
+                                            <p class="historyLocationtext">{{ agent.education_University }}</p>
+                                            <p>{{ agent.education_awards }}</p>
                                         </div>
-                                        <span class="icon glyphicon glyphicon-map-marker historyLocationicon"></span>
-                                        <p class="historyLocationtext">This {{ agent.get_data_for_license_type.license_type }} has not added University / College information</p>
-                                        <p>Education Background not added by {% if agent.first_name or agent.last_name %}
-                                        {{ agent.first_name }} {{ agent.last_name }}{% else %}
-                                        {{ agent.full_name }}{% endif %}</p>
                                     </div>
-                                </div>
+                                {% else %}
+                                     <div class="media history">
+                                        <div class="media-body">
+                                            <div class="historyTop">
+                                                <div class="media-object historyDate"> 20XX - 20XX</div>
+                                                <h6 class="media-heading historyHeading">Degree Earned</h6>
+                                            </div>
+                                            <span class="icon glyphicon glyphicon-map-marker historyLocationicon"></span>
+                                            <p class="historyLocationtext">University: This {{ agent.get_data_for_license_type.license_type }} has not added University / College information</p>
+                                            <p>GPA, Awards, etc...Education Background not added by {% if agent.first_name or agent.last_name %}
+                                            {{ agent.first_name }} {{ agent.last_name }}{% else %}
+                                            {{ agent.full_name }}{% endif %}</p>
+                                        </div>
+                                    </div>
+                                {% endif %}
 
                             </div>
                             <!--EDUCATION-->
