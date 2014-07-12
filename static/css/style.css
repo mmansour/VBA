@@ -41,7 +41,7 @@ nav{width:100%;height:50px;border-radius:0px 0px 3px 3px;border:solid 1px;}
 
 /*Profile Picture*/
 .profilePicture{width:180px;height:180px;background-color:#FFF;position:absolute;margin-left:15px;margin-top:203px;padding-bottom: 20px;display: block;margin-bottom: 5px;padding:4px;border:solid 1px #ddd;-moz-border-radius:3px;border-radius: 3px;}
-.profilePicture img{width:170px;height:170px;}
+.profilePicture img{width:170px;height:170px; background: #323a44;}
 .profileName{color:#FFF;position:absolute;margin-left:210px;margin-top:283px;padding-bottom: 20px;display: block;}
 
 /*Section*/

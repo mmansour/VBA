@@ -23,6 +23,18 @@
 {% if agent.mailing_city %}, {{ agent.mailing_city|title }}, {{ agent.mailing_state }}{% endif %}
 {% endmetablock %}{% endblock %}
 
+{% block extra_meta %}
+{% comment %}<meta property="og:title" content="{% if agent.first_name or agent.last_name %}
+{{ agent.first_name }}  {{ agent.last_name }}
+{% else %}{{ agent.full_name }}
+{% endif %} - Real Estate {{ agent.get_data_for_license_type.license_type|title }}" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="http://{{ request.META.HTTP_HOST }}{{ agent.get_absolute_url|urlencode }}" />
+<meta property="og:image" content="https://{{ request.META.HTTP_HOST }}{{ MEDIA_URL }}{{ agent.profile_image|urlencode }}" />
+<meta property="og:site_name" content="Real Estate Agent Lookup" />
+<meta property="fb:admins" content="100001533349176" />{% endcomment %}
+{% endblock %}
+
 {% block title %}
 {% endblock %}
 
@@ -33,6 +45,16 @@
     h2{font-size: 13px; color: #FFF;}
     h4{font-size:12px;line-height:18px;}
 </style>
+{% endblock %}
+
+{% block header_js %}
+<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=true"></script>
+<!-- JavaScript plugins (requires jQuery) -->
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js"></script>
+
+<script type="text/javascript">var switchTo5x=true;</script>
+<script type="text/javascript" src="//ws.sharethis.com/button/buttons.js"></script>
+<script type="text/javascript">stLight.options({publisher: "e2f3c702-18ba-49ba-94f5-c1346c29e214", doNotHash: false, doNotCopy: false, hashAddressBar: false});</script>
 {% endblock %}
 
 {% block extra_breadcrumb %}
@@ -84,11 +106,13 @@
     <div class="container tab-container" id="tab-container">
         <!-- HEADER -->
         <header>
-            <div class="cover" style="background-image:url({% static "img/demo-cover.jpg" %});">
+            <div class="cover" style="background-image:url({{ MEDIA_URL }}{% agent_thumbnail agent.hero_image 940 348 %});">
                 <div class="coverOverlay"></div>
                 <!-- profile picture - change your profile picture here -->
                 <div class="profilePicture">
-                    <img src="{% static "img/profilePicture.jpg" %}" alt="profilepicture" title="profilepicture" />
+                    <img src="{{ MEDIA_URL }}{% agent_thumbnail agent.profile_image 170 170 %}"
+                    alt="{% if agent.first_name or agent.last_name %}{{ agent.first_name }}  {{ agent.last_name }}{% else %}{{ agent.full_name }}{% endif %} Real Estate {{ agent.get_data_for_license_type.license_type|title }}"
+                    title="{% if agent.first_name or agent.last_name %}{{ agent.first_name }}  {{ agent.last_name }}{% else %}{{ agent.full_name }}{% endif %} Real Estate {{ agent.get_data_for_license_type.license_type|title }}"/>
                 </div>
                 <!-- profile name - change profile name here -->
                 <div class="profileName">
@@ -130,6 +154,18 @@
                             </ul>
                         </div>
                         <!-- License Info -->
+
+                        <!-- SOCIAL SHARE -->
+                        <div class="panel">
+                            <h2 class="panel-heading">Share This Real Estate {{ agent.get_data_for_license_type.license_type }}</h2>
+                            <div class="text-center">
+                                <span class='st_facebook_large'></span>
+                                <span class='st_twitter_large'></span>
+                                <span class='st_googleplus_large'></span>
+                                <span class='st_email_large'></span>
+                            </div>
+                        </div>
+                        <!-- SOCIAL SHARE -->
 
                         {% if agent.show_bar_graph_skillset %}
                         <!-- SKILLS -->
@@ -593,32 +629,58 @@
                     <div class="col-lg-12">
                         <div class="panel">
                             <div class="panel-heading">Find Me On!</div>
-                            <iframe class="googlemap" src="http://maps.google.co.id/?ie=UTF8&amp;ll=40.790278,-73.959722&amp;spn=0.300999,0.616608&amp;t=m&amp;z=15&amp;output=embed"></iframe>
+                            <iframe class="googlemap" src="http://maps.google.co.id/?ie=UTF8&amp;q={{ agent.mailing_city }}+{{ agent.mailing_state }}&amp;spn=0.300999,0.616608&amp;t=m&amp;z=15&amp;output=embed"></iframe>
                         </div>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-lg-4">
                         <div class="panel">
-                            <div class="panel-heading">Contact Info!</div>
+                            <div class="panel-heading">Social Media For {% if agent.first_name or agent.last_name %}
+                                {{ agent.first_name }} {{ agent.last_name }}{% else %}
+                                {{ agent.full_name }}{% endif %}</div>
                             <ul class="personalInfo">
-                                <li><span class="icon glyphicon glyphicon-map-marker"></span><span class="text">From : Jakarta, Indonesia</span><div class="clearfix"></div></li>
-                                <li><span class="icon glyphicon glyphicon-phone"></span><span class="text">Phone : +1 234 5 678</span><div class="clearfix"></div></li>
-                                <li><span class="icon glyphicon glyphicon-envelope"></span><span class="text">Email : thomasbudiman@hotmail.com</span><div class="clearfix"></div></li>
-                                <li><span class="icon glyphicon glyphicon-globe"></span><span class="text">Website : <a href="#">www.graphicgeeks.net</a></span><div class="clearfix"></div></li>
+                                <li><span class="icon glyphicon glyphicon-ok"></span><span class="text">
+                                {% if agent.facebook %}
+                                    <a href="{{ agent.facebook }}">My Facebook</a>
+                                {% else %}
+                                    Facebook URL not added
+                                {% endif %}
+                                </span><div class="clearfix"></div></li>
+                                <li><span class="icon glyphicon glyphicon-ok"></span><span class="text">
+                                {% if agent.twitter %}
+                                    <a href="{{ agent.twitter }}">My Twitter</a>
+                                {% else %}
+                                    Twitter URL not added
+                                {% endif %}
+                                </span><div class="clearfix"></div></li>
+                                <li><span class="icon glyphicon glyphicon-ok"></span><span class="text">
+                                {% if agent.youtube %}
+                                    <a href="{{ agent.youtube }}">My Youtube Channel</a>
+                                {% else %}
+                                    YouTube URL not added
+                                {% endif %}
+                                </span><div class="clearfix"></div></li>
+                                <li><span class="icon glyphicon glyphicon-ok"></span><span class="text">
+                                {% if agent.website %}
+                                    <a href="{{ agent.website }}">My Website</a>
+                                {% else %}
+                                    Website URL not added
+                                {% endif %}
+                                </span><div class="clearfix"></div></li>
                             </ul>
                         </div>
-                        <div class="panel">
-                        <a href="#" class="socialIcon iconFacebook">&#62220;</a>
-                        <a href="#" class="socialIcon iconTwitter">&#62217;</a>
-                        <a href="#" class="socialIcon iconInstagram">&#62253;</a>
-                        <a href="#" class="socialIcon iconDribbble">&#62235;</a>
-                        <div class="clearfix"></div>
-                        </div>
+                        {% comment %}<div class="panel">
+                            <a href="#" class="socialIcon iconFacebook">&#62220;</a>
+                            <a href="#" class="socialIcon iconTwitter">&#62217;</a>
+                            <a href="#" class="socialIcon iconInstagram">&#62253;</a>
+                            <a href="#" class="socialIcon iconDribbble">&#62235;</a>
+                            <div class="clearfix"></div>
+                        </div>{% endcomment %}
                     </div>
                     <div class="col-lg-8">
                         <div class="panel">
-                            <div class="panel-heading">Message Me!</div>
+                            <div class="panel-heading">Contact</div>
                             <form method="post" action="contact.php" name="contactform" id="contactform" class="form">
                                 <div class="field">
                                         <p>Name<span class="req">*</span></p>
@@ -670,13 +732,7 @@
     </div>
     <!-- END -->
     {% block extra_js %}
-    <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=true"></script>
-    <script src="{% static "js/modernizr.custom.js" %}"></script>
-
-    <!-- JavaScript plugins (requires jQuery) -->
-    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
-    <script src="{% static "js/bootstrap.min.js" %}"></script>
 
     <!-- Optionally enable responsive features in IE8 -->
     <script src="{% static "js/jquery.respond.min.js" %}"></script>
@@ -685,6 +741,8 @@
     <script src="{% static "js/jquery.hashchange.min.js" %}"></script>
 
     <script src="{% static "js/jquery.response.js" %}"></script>
+
+    <script src="{% static "js/modernizr.custom.js" %}"></script>
 
     <!-- twitter -->
 {#    <script src="{% static "js/twitter/jquery.tweet.js" %}"></script>#}
@@ -695,6 +753,8 @@
 
     <script src="{% static "js/toucheffects.js" %}"></script>
     <script src="{% static "js/custom.js" %}"></script>
+
+{#    <script src="{% static "js/bootstrap.min.js" %}"></script>#}
 
     <script type="text/javascript">
     $(document).ready(function() {

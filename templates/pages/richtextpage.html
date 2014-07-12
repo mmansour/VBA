@@ -4,8 +4,12 @@
 
 {% block main %}{{ block.super }}
 
+<div class="col-lg-9">
+    <div class="panel">
+    <h2 class="panel-heading">{{ page.title }}</h2>
 {% editable page.richtextpage.content %}
 {{ page.richtextpage.content|richtext_filters|safe }}
 {% endeditable %}
-
+    </div>
+</div>
 {% endblock %}

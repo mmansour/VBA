@@ -35,7 +35,6 @@ class NotesSearchForm(SearchForm):
 
 
 class AgentProfileEditForm(forms.Form):
-    profile_image = forms.ImageField(required=False,)
     about_me = forms.CharField(widget=forms.Textarea, required=False,)
     specialties = forms.CharField(widget=forms.Textarea, required=False,)
     certifications_awards = forms.CharField(widget=forms.Textarea, required=False,)
@@ -70,6 +69,12 @@ class AgentProfileEditForm(forms.Form):
     university = forms.CharField(required=False,)
     degree = forms.CharField(required=False,)
     awards = forms.CharField(required=False, help_text="Enter accolades, GPA, scholarships, etc...")
+
+
+
+class AgentProfileImageForm(forms.Form):
+    profile_image = forms.ImageField(required=False,)
+    # profile_background_image = forms.ImageField(required=False,)
 
 
 # New Email Function
@@ -200,7 +205,8 @@ def agent_edit_profile(request, agent_id):
         return HttpResponseRedirect('/agent/claimprofile/error/?errortype=forbidden')
 
     init_data = {
-        'profile_image': agent.profile_image,
+        # 'profile_image': agent.profile_image,
+        # 'profile_background_image': agent.hero_image,
         'about_me': agent.about_me,
         'specialties': agent.specialties,
         'certifications_awards': agent.certifications_awards,
@@ -231,8 +237,8 @@ def agent_edit_profile(request, agent_id):
         form = AgentProfileEditForm(request.POST, request.FILES, auto_id=True)
 
         if form.is_valid():
-
-            profile_image = form.cleaned_data['profile_image']
+            # profile_image = form.cleaned_data['profile_image']
+            # profile_background_image = form.cleaned_data['profile_background_image']
             about_me = form.cleaned_data['about_me']
             specialties = form.cleaned_data['specialties']
             certifications_awards = form.cleaned_data['certifications_awards']
@@ -258,7 +264,8 @@ def agent_edit_profile(request, agent_id):
             degree = form.cleaned_data['degree']
             awards = form.cleaned_data['awards']
 
-            agent.profile_image = profile_image
+            # agent.profile_image = profile_image
+            # agent.profile_hero_image = profile_background_image
             agent.about_me = about_me
             agent.specialties = specialties
             agent.certifications_awards = certifications_awards
@@ -284,11 +291,35 @@ def agent_edit_profile(request, agent_id):
             agent.education_awards = awards
 
             agent.save()
-            redirect = agent.get_absolute_url()
-            return HttpResponseRedirect(redirect)
+            # redirect = agent.get_absolute_url()
+            return HttpResponseRedirect(reverse('agent.views.agent_edit_profile_headshot',
+                                                args=[agent_id]))
 
     return render_to_response('pages/agent_edit_profile.html',
                               {'agent': agent, 'form': form, },
+                              context_instance=RequestContext(request))
+
+
+@login_required
+def agent_edit_profile_headshot(request, agent_id):
+    agent = get_object_or_404(Agent, id=agent_id)
+
+    if request.user != agent.user:
+        return HttpResponse('Not authorized to edit this item')
+
+    init_data = {
+        'profile_image': agent.profile_image,
+    }
+    form = AgentProfileImageForm(auto_id=True, initial=init_data)
+    if request.method == "POST":
+        form = AgentProfileImageForm(request.POST, request.FILES, auto_id=True)
+        if form.is_valid():
+            agent.profile_image = form.cleaned_data['profile_image']
+            agent.save()
+            redirect = agent.get_absolute_url()
+            return HttpResponseRedirect(redirect)
+    return render_to_response('pages/agent_edit_profile_image.html',
+                              {'form': form, 'agent': agent},
                               context_instance=RequestContext(request))
 
 

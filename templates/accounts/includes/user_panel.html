@@ -1,5 +1,12 @@
 {% load i18n future mezzanine_tags accounts_tags %}
 
+{% block extra_css %}
+    <style>
+    a#update {color:#323a44}
+    a#update:hover {color: #FFDD00;}
+    </style>
+{% endblock %}
+
 {% if request.user.is_authenticated %}
     {% trans "Logged in as: " %}
     {% url "profile" request.user.username as profile_url %}
@@ -14,7 +21,7 @@
             {% if '/contact/' not in request.path %}
                 {% if '/search-hs/' not in request.path %}
                     <br>
-                    <a href="/agent/profile/edit/{{ profile_claimed.1 }}/"
+                    <a id="update" href="/agent/profile/edit/{{ profile_claimed.1 }}/"
                         class="btn btn-small btn-warning">{% trans "Update profile" %}</a>
                 {% endif %}
             {% endif %}

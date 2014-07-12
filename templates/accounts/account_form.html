@@ -23,7 +23,15 @@ $( document ).ready(function() {
 
 {% block breadcrumb_menu %}
 {{ block.super }}
-<li>Claim Your Profile</li>
+<li>{% if request.path == '/accounts/login/' %}
+        Login
+    {% elif request.path == '/account/password/reset/'  %}
+        Reset Your Password
+    {% elif request.path == '/account/update/'  %}
+        Account Settings
+    {% else%}
+        Sign Up
+    {% endif %}</li>
 {% endblock %}
 
 {% block main %}

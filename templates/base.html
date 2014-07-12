@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="{{ LANGUAGE_CODE }}"{% if LANGUAGE_BIDI %} dir="rtl"{% endif %}>
-{% load pages_tags mezzanine_tags i18n future staticfiles %}
+{% load pages_tags mezzanine_tags i18n future staticfiles agent_tags %}
 
 <head>
     <title>{% block meta_title %}{% endblock %}{% if settings.SITE_TITLE %} | {{ settings.SITE_TITLE }}{% endif %}</title>
@@ -74,11 +74,13 @@
 
 <div class="container">
     <header>
-        <div class="cover" style="background-image:url({% static "img/demo-cover.jpg" %});">
+        <div class="cover" style="background-image:url({{ MEDIA_URL }}{% agent_thumbnail "uploads/default-real-estate-hero.jpg" 940 348 %});">
             <div class="coverOverlay"></div>
             <!-- profile picture - change your profile picture here -->
             <div class="profilePicture">
-                <img src="{% static "img/profilePicture.jpg" %}" alt="profilepicture" title="profilepicture" />
+            {% block profile_headshot %}
+                <img src="{% static "img/default.png" %}" alt="profilepicture" title="profilepicture" />
+            {% endblock %}
             </div>
             <!-- profile name - change profile name here -->
             <div class="profileName">

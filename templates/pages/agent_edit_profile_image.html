@@ -14,16 +14,16 @@ Edit Your Real Estate Profile
 {% endmetablock %}{% endblock %}{% endcomment %}
 
 {% block meta_description %}{% metablock %}
-Form to Edit your real estate agent profile
+Form to Edit your real estate agent profile headshot
 {% endmetablock %}{% endblock %}
 
 {% block title %}
-Edit Your Real Estate Profile
+Edit Your Real Estate Profile Headshot
 {% endblock %}
 
 {% block extra_breadcrumb %}
 <li class="active">
-Edit Your Profile
+Edit Your Profile Headshot
 </li>
 {% endblock %}
 
@@ -40,6 +40,7 @@ $( document ).ready(function() {
 {% block extra_css %}
     <style>
     label{color:#888}
+    a#cancel:hover {color: #FFDD00;}
     </style>
 {% endblock %}
 
@@ -53,14 +54,23 @@ title="{% if agent.first_name or agent.last_name %}{{ agent.first_name }}  {{ ag
 
 <div class="col-lg-9">
     <div class="panel">
-        <h2  class="panel-heading">Use the Fields Below to Edit Your Profile</h2>
-        <form enctype="multipart/form-data" action="{% url 'agent.views.agent_edit_profile' agent.id %}" method="post" id="edit-profile" autocomplete="on">
+        <h2  class="panel-heading">Use the Fields Below to Edit Your Profile Headshot</h2>
+        <div style="">
+            <img src="{{ MEDIA_URL }}{% agent_thumbnail agent.profile_image 170 170 %}"
+            alt="{% if agent.first_name or agent.last_name %}{{ agent.first_name }}  {{ agent.last_name }}{% else %}{{ agent.full_name }}{% endif %} Real Estate {{ agent.get_data_for_license_type.license_type|title }}"
+            title="{% if agent.first_name or agent.last_name %}{{ agent.first_name }}  {{ agent.last_name }}{% else %}{{ agent.full_name }}{% endif %} Real Estate {{ agent.get_data_for_license_type.license_type|title }}"/>
+        </div>
+
+        <form enctype="multipart/form-data" action="{% url 'agent.views.agent_edit_profile_headshot' agent.id %}" method="post" id="edit-profile" autocomplete="on">
             {% csrf_token %}
             <div class="field">
             {{ form.as_p }}
             </div>
-            <input type="submit" value="Submit Changes - Edit Headshot >" class="btn btnBasic" />
+            <a href="{{ agent.get_absolute_url }}" value="Cancel" class="btn btn-default" id="cancel"/>Cancel / Keep This Headshot</a>
+            <input type="submit" value="Submit Changes" class="btn btn-info"/>
         </form>
+
+
     </div>
 </div>
 
