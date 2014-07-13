@@ -283,20 +283,20 @@ def agent_details(request, agent_data, license_id):
     profile_claimed = is_profile_claimed(request.user)
 
     form = AgentLeadCaptureForm(auto_id=True,)
-    if request.method == "POST":
-        form = AgentLeadCaptureForm(request.POST, request.FILES, auto_id=True)
-        if form.is_valid():
-            agent_lead = AgentLead(
-                agent=agent,
-                name=form.cleaned_data['name'],
-                phone_number=form.cleaned_data['phone_number'],
-                email_address=form.cleaned_data['email_address'],
-                subject=form.cleaned_data['subject'],
-                message=form.cleaned_data['message'],
-            )
-            agent_lead.save()
-            redirect = "{0}?success=true".format(agent.get_absolute_url())
-            return HttpResponseRedirect(redirect)
+    # if request.method == "POST":
+    #     form = AgentLeadCaptureForm(request.POST, request.FILES, auto_id=True)
+    #     if form.is_valid():
+    #         agent_lead = AgentLead(
+    #             agent=agent,
+    #             name=form.cleaned_data['name'],
+    #             phone_number=form.cleaned_data['phone_number'],
+    #             email_address=form.cleaned_data['email_address'],
+    #             subject=form.cleaned_data['subject'],
+    #             message=form.cleaned_data['message'],
+    #         )
+    #         agent_lead.save()
+    #         redirect = "{0}?success=true".format(agent.get_absolute_url())
+    #         return HttpResponseRedirect(redirect)
     
     active_region = ActiveRegion.objects.get(slugged_region_abbr=agent.slugged_state)
 

@@ -89,7 +89,7 @@ class Agent(Displayable):
     education_end_year = models.CharField(max_length=4, verbose_name="End Year", blank=True, null=True)
     education_University = models.CharField(max_length=100, verbose_name="College / University", blank=True, null=True)
     education_degree = models.CharField(max_length=100, verbose_name="Degree Earned", blank=True, null=True)
-    education_awards = models.CharField(max_length=100, verbose_name="Awards / Accolades", blank=True, null=True)
+    # education_awards = models.CharField(max_length=100, verbose_name="Awards / Accolades", blank=True, null=True)
 
     def get_clean_main_office_address(self):
         if self.main_office_address:
@@ -173,13 +173,13 @@ class Agent(Displayable):
         return self.title
 
 
-class AgentLead(models.Model):
-    agent = models.ForeignKey(Agent, null=True, blank=True)
-    name = models.CharField(max_length=40)
-    phone_number = models.CharField(max_length=20, null=True, blank=True)
-    email_address = models.EmailField(max_length=100, null=True, blank=True)
-    subject = models.CharField(max_length=500, default='Lead from Real Estate Agent Lookup')
-    message = models.TextField(null=True, blank=True)
-
-    def __unicode__(self):
-        return self.subject
+# class AgentLead(models.Model):
+#     agent = models.ForeignKey(Agent, null=True, blank=True)
+#     name = models.CharField(max_length=40)
+#     phone_number = models.CharField(max_length=20, null=True, blank=True)
+#     email_address = models.EmailField(max_length=100, null=True, blank=True)
+#     subject = models.CharField(max_length=500, default='Lead from Real Estate Agent Lookup')
+#     message = models.TextField(null=True, blank=True)
+#
+#     def __unicode__(self):
+#         return self.subject
