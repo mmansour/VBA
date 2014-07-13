@@ -71,14 +71,14 @@ class Agent(Displayable):
     pinterest = models.URLField(max_length=400, verbose_name="Youtube Channel", blank=True, null=True)
     profile_claimed = models.BooleanField(verbose_name="Agent claimed profile?", blank=True, default=False)
 
-    # bar_graph_one = models.IntegerField(verbose_name="Residential", blank=True, default=5,
-    #                                     help_text="Rate your skill level from 1 to 10. 10 is the most skilled")
-    # bar_graph_two = models.IntegerField(verbose_name="Commercial", blank=True, default=5,
-    #                                     help_text="Rate your skill level from 1 to 10. 10 is the most skilled")
-    # bar_graph_three = models.IntegerField(verbose_name="Land", blank=True, default=5,
-    #                                       help_text="Rate your skill level from 1 to 10. 10 is the most skilled")
-    # bar_graph_four = models.IntegerField(verbose_name="Investors", blank=True, default=5,
-    #                                      help_text="Rate your skill level from 1 to 10. 10 is the most skilled")
+    bar_graph_one = models.IntegerField(verbose_name="Residential", blank=True, default=5,
+                                        help_text="Rate your skill level from 1 to 10. 10 is the most skilled")
+    bar_graph_two = models.IntegerField(verbose_name="Commercial", blank=True, default=5,
+                                        help_text="Rate your skill level from 1 to 10. 10 is the most skilled")
+    bar_graph_three = models.IntegerField(verbose_name="Land", blank=True, default=5,
+                                          help_text="Rate your skill level from 1 to 10. 10 is the most skilled")
+    bar_graph_four = models.IntegerField(verbose_name="Investors", blank=True, default=5,
+                                         help_text="Rate your skill level from 1 to 10. 10 is the most skilled")
     #
     # show_education = models.BooleanField(default=True)
     # show_bar_graph_skillset = models.BooleanField(default=True)
