@@ -1,11 +1,6 @@
 {% load i18n future mezzanine_tags accounts_tags %}
 
-{% block extra_css %}
-    <style type="text/css">
-    a#update {color:#323a44}
-    a#update:hover {color: #FFDD00;}
-    </style>
-{% endblock %}
+{% block extra_css %}{% endblock %}
 
 {% if request.user.is_authenticated %}
     {% trans "Logged in as: " %}
