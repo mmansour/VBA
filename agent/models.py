@@ -57,8 +57,8 @@ class Agent(Displayable):
     public_comment = models.TextField(verbose_name="Public Comments", blank=True, null=True)
 
 #    Fields that can be modified by agents:
-    profile_image = models.ImageField(upload_to="uploads", blank=True, default='uploads/default.png')
-    hero_image = models.ImageField(upload_to="uploads", blank=True, default='uploads/default-real-estate-hero.jpg')
+#     profile_image = models.ImageField(upload_to="uploads", blank=True, default='uploads/default.png')
+#     hero_image = models.ImageField(upload_to="uploads", blank=True, default='uploads/default-real-estate-hero.jpg')
     about_me = models.TextField(verbose_name="About Me", blank=True, null=True)
     specialties = models.TextField(verbose_name="Specialties", blank=True, null=True)
     certifications_awards = models.TextField(verbose_name="Certifications and Awards", blank=True, null=True)
