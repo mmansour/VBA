@@ -85,11 +85,11 @@ class Agent(Displayable):
     show_state_reported_comments = models.BooleanField(default=True)
     show_certification_and_awards = models.BooleanField(default=True)
     #
-    # education_start_year = models.CharField(max_length=4, verbose_name="Start Year", blank=True, null=True)
-    # education_end_year = models.CharField(max_length=4, verbose_name="End Year", blank=True, null=True)
-    # education_University = models.CharField(max_length=100, verbose_name="College / University", blank=True, null=True)
-    # education_degree = models.CharField(max_length=100, verbose_name="Degree Earned", blank=True, null=True)
-    # education_awards = models.CharField(max_length=100, verbose_name="Awards / Accolades", blank=True, null=True)
+    education_start_year = models.CharField(max_length=4, verbose_name="Start Year", blank=True, null=True)
+    education_end_year = models.CharField(max_length=4, verbose_name="End Year", blank=True, null=True)
+    education_University = models.CharField(max_length=100, verbose_name="College / University", blank=True, null=True)
+    education_degree = models.CharField(max_length=100, verbose_name="Degree Earned", blank=True, null=True)
+    education_awards = models.CharField(max_length=100, verbose_name="Awards / Accolades", blank=True, null=True)
 
     def get_clean_main_office_address(self):
         if self.main_office_address:
