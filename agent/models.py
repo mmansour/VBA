@@ -80,10 +80,10 @@ class Agent(Displayable):
     bar_graph_four = models.IntegerField(verbose_name="Investors", blank=True, default=5,
                                          help_text="Rate your skill level from 1 to 10. 10 is the most skilled")
     #
-    # show_education = models.BooleanField(default=True)
-    # show_bar_graph_skillset = models.BooleanField(default=True)
-    # show_state_reported_comments = models.BooleanField(default=True)
-    # show_certification_and_awards = models.BooleanField(default=True)
+    show_education = models.BooleanField(default=True)
+    show_bar_graph_skillset = models.BooleanField(default=True)
+    show_state_reported_comments = models.BooleanField(default=True)
+    show_certification_and_awards = models.BooleanField(default=True)
     #
     # education_start_year = models.CharField(max_length=4, verbose_name="Start Year", blank=True, null=True)
     # education_end_year = models.CharField(max_length=4, verbose_name="End Year", blank=True, null=True)
