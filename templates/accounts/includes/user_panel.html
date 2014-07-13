@@ -20,9 +20,13 @@
         {% if '/account/' not in request.path %}
             {% if '/contact/' not in request.path %}
                 {% if '/search-hs/' not in request.path %}
-                    <br>
-                    <a id="update" href="/agent/profile/edit/{{ profile_claimed.1 }}/"
-                        class="btn btn-small btn-warning">{% trans "Update profile" %}</a>
+                    {% if '/claimprofile/' not in request.path %}
+                        {% if '/agent/profile/edit/' not in request.path %}
+                            <br>
+                            <a id="update" href="/agent/profile/edit/{{ profile_claimed.1 }}/"
+                                class="btn btn-small btn-warning">{% trans "Update profile" %}</a>
+                        {% endif %}
+                    {% endif %}
                 {% endif %}
             {% endif %}
         {% endif %}

@@ -5,6 +5,7 @@ from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth.models import User
 import autoslug
 
+
 class ActiveRegion(models.Model):
     country = models.CharField(max_length=40, verbose_name="Country", blank=True, null=True)
     region = models.CharField(max_length=40, verbose_name="Region", blank=True, null=True)
@@ -170,3 +171,15 @@ class Agent(Displayable):
 
     def __unicode__(self):
         return self.title
+
+
+class AgentLead(models.Model):
+    agent = models.ForeignKey(Agent, null=True, blank=True)
+    name = models.CharField(max_length=40)
+    phone_number = models.CharField(max_length=20, null=True, blank=True)
+    email_address = models.EmailField(max_length=100, null=True, blank=True)
+    subject = models.CharField(max_length=500, default='Lead from Real Estate Agent Lookup')
+    message = models.TextField(null=True, blank=True)
+
+    def __unicode__(self):
+        return self.subject

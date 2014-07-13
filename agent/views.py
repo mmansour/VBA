@@ -1,10 +1,8 @@
-from agent.models import *
 from django.contrib.auth.models import User
 from cities_light.models import City, Region, Country
 
 from django.shortcuts import render_to_response, get_object_or_404, get_list_or_404
 from django.template import RequestContext
-from django import forms
 from django.http import HttpResponse, Http404, HttpResponsePermanentRedirect, HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.sites.models import Site
@@ -19,62 +17,10 @@ from django.db import IntegrityError
 
 from django.utils.translation import ugettext_lazy as _
 
-from haystack.forms import SearchForm
-
 from mezzanine.utils.views import paginate
 
-
-# FORMS
-class ClaimForm(forms.Form):
-    license_id = forms.CharField(required=True,)
-
-
-class NotesSearchForm(SearchForm):
-    def no_query_found(self):
-        return self.searchqueryset.all()
-
-
-class AgentProfileEditForm(forms.Form):
-    about_me = forms.CharField(widget=forms.Textarea, required=False,)
-    specialties = forms.CharField(widget=forms.Textarea, required=False,)
-    certifications_awards = forms.CharField(widget=forms.Textarea, required=False,)
-    mls_association = forms.CharField(required=False,)
-    website = forms.URLField(required=False,)
-    facebook = forms.URLField(required=False,)
-    youtube = forms.URLField(required=False,)
-    twitter = forms.URLField(required=False,)
-    linkedin = forms.URLField(required=False,)
-    pinterest = forms.URLField(required=False,)
-    residential_skills = forms.IntegerField(required=False, min_value=1, max_value=10,
-                                            help_text="From 1 to 10 rate your skill level in residential real estate. "
-                                            "10 indicates the most skilled.")
-    commercial_skills = forms.IntegerField(required=False, min_value=1, max_value=10,
-                                           help_text="From 1 to 10 rate your skill level in commercial real estate. "
-                                           "10 indicates the most skilled.")
-    land_skills = forms.IntegerField(required=False, min_value=1, max_value=10,
-                                     help_text="From 1 to 10 rate your skill level in land transactions. "
-                                     "10 indicates the most skilled.")
-    investor_skills = forms.IntegerField(required=False, min_value=1, max_value=10,
-                                         help_text="From 1 to 10 rate your skill level in working with "
-                                                   "real estate investors. 10 indicates the most skilled.")
-    show_education = forms.BooleanField(initial=True, required=False)
-    show_bar_graph_skillset = forms.BooleanField(initial=True, required=False)
-    show_state_reported_comments = forms.BooleanField(initial=True, required=False)
-    show_certification_and_awards = forms.BooleanField(initial=True, required=False)
-
-    education_start_year = forms.CharField(required=False,
-                                           help_text="Enter year you started university. 4 digits e.g. 1995")
-    education_end_year = forms.CharField(required=False,
-                                         help_text="Enter year you graduated. 4 digits e.g. 1999")
-    university = forms.CharField(required=False,)
-    degree = forms.CharField(required=False,)
-    awards = forms.CharField(required=False, help_text="Enter accolades, GPA, scholarships, etc...")
-
-
-
-class AgentProfileImageForm(forms.Form):
-    profile_image = forms.ImageField(required=False,)
-    # profile_background_image = forms.ImageField(required=False,)
+from agent.models import *
+from agent.forms import *
 
 
 # New Email Function
@@ -334,19 +280,34 @@ def agent_details(request, agent_data, license_id):
     percent_commercial = get_percentage(agent.bar_graph_two)
     percent_land = get_percentage(agent.bar_graph_three)
     percent_investors = get_percentage(agent.bar_graph_four)
-
-    print percent_residential
-
     profile_claimed = is_profile_claimed(request.user)
+
+    form = AgentLeadCaptureForm(auto_id=True,)
+    if request.method == "POST":
+        form = AgentLeadCaptureForm(request.POST, request.FILES, auto_id=True)
+        if form.is_valid():
+            agent_lead = AgentLead(
+                agent=agent,
+                name=form.cleaned_data['name'],
+                phone_number=form.cleaned_data['phone_number'],
+                email_address=form.cleaned_data['email_address'],
+                subject=form.cleaned_data['subject'],
+                message=form.cleaned_data['message'],
+            )
+            agent_lead.save()
+            redirect = "{0}?success=true".format(agent.get_absolute_url())
+            return HttpResponseRedirect(redirect)
     
     active_region = ActiveRegion.objects.get(slugged_region_abbr=agent.slugged_state)
+
     return render_to_response('pages/agent_theme1.html',
                               {'agent': agent, 'active_region': active_region,
                                'profile_claimed': profile_claimed,
                                'percent_residential': percent_residential,
                                'percent_commercial': percent_commercial,
                                'percent_land': percent_land,
-                               'percent_investors': percent_investors},
+                               'percent_investors': percent_investors,
+                               'form': form},
                               context_instance=RequestContext(request))
 
 

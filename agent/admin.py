@@ -37,6 +37,13 @@ class ActiveRegionAdmin(admin.ModelAdmin):
     list_display_links = ('region',)
 #    list_editable = ('email_address',)
 
+
+class AgentLeadAdmin(admin.ModelAdmin):
+    list_display = ('agent', 'name', 'subject', 'email_address', 'phone_number', 'message' )
+    raw_id_fields = ("agent",)
+
+
+admin.site.register(AgentLead, AgentLeadAdmin)
 admin.site.register(Agent, AgentAdmin)
 admin.site.register(ActiveRegion, ActiveRegionAdmin)
 

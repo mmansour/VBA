@@ -44,6 +44,7 @@
     .header_title{font-size: 12px; margin: 0 0 10px;}
     h2{font-size: 13px; color: #FFF;}
     h4{font-size:12px;line-height:18px;}
+    label{color:#888}
 </style>
 {% endblock %}
 
@@ -55,6 +56,17 @@
 <script type="text/javascript">var switchTo5x=true;</script>
 <script type="text/javascript" src="//ws.sharethis.com/button/buttons.js"></script>
 <script type="text/javascript">stLight.options({publisher: "e2f3c702-18ba-49ba-94f5-c1346c29e214", doNotHash: false, doNotCopy: false, hashAddressBar: false});</script>
+<script type="text/javascript">
+$( document ).ready(function() {
+    $('input').each(function(){
+           $(this).addClass('text-label');
+    });
+
+    $('textarea').each(function(){
+           $(this).addClass('textarea-label');
+    });
+});
+</script>
 {% endblock %}
 
 {% block extra_breadcrumb %}
@@ -81,7 +93,19 @@
 {% endblock %}
 
 {% block alert_header %}
-{% comment %}    {% if request.user.is_authenticated %}
+
+    {% if request.GET.success == 'true' %}
+    <div class="alert alert-info" data-alert="alert">
+        <a class="close" href="#" onclick="$(this).parent().fadeOut('fast'); return false;">×</a> Your Message Has Been Sent
+    </div>
+    {% endif %}
+
+    {% if  form.errors %}
+    <div class="alert alert-danger" data-alert="alert">
+        <a class="close" href="#" onclick="$(this).parent().fadeOut('fast'); return false;">×</a> The Form Has Errors. Click the 'Contact' Button to See What's Missing
+    </div>
+    {% endif %}
+    {% comment %}{% if request.user.is_authenticated %}
         {% if not profile_claimed.0 %}
             <div class="alert" data-alert="alert">
                 <a class="close" href="#" onclick="$(this).parent().fadeOut('fast'); return false;">×</a> To finish claiming your profile copy your license id from your profile below then <a href="/agent/claimprofile/">click here!</a> That's the last step!
@@ -233,6 +257,26 @@
 
                     <!-- Right Side -->
                     <div class="col-lg-8">
+
+                        {% if request.user.is_authenticated %}
+                            {% if not profile_claimed.0 %}
+                                <div class="alert alert-info" data-alert="alert">
+                                    <a class="close" href="#" onclick="$(this).parent().fadeOut('fast'); return false;">×</a> To finish claiming your profile copy your license id from your profile (left side top box) and then <a href="/agent/claimprofile/">click here!</a> That's the last step!
+                                </div>
+                            {% else %}
+                               <div class="alert alert-info" data-alert="alert">
+                                    <a class="close" href="#" onclick="$(this).parent().fadeOut('fast'); return false;">×</a> <a href="/agent/profile/edit/{{ profile_claimed.1 }}/">Edit your profile!</a>
+                                </div>
+                            {% endif %}
+                        {% else %}
+                            {% if not agent.profile_claimed %}
+                                <div class="alert alert-info" data-alert="alert">
+                                    <a class="close" href="#" onclick="$(this).parent().fadeOut('fast'); return false;">×</a> Are you Real Estate {{ agent.get_data_for_license_type.license_type }}, {% if agent.first_name or agent.last_name %}{{ agent.first_name }}  {{ agent.last_name }}{% else %}{{ agent.full_name }}{% endif %}?
+                                    <a href="/account/signup/?next={{ agent.get_absolute_url }}">Claim and edit your profile!</a>
+                                </div>
+                            {% endif %}
+                        {% endif %}
+
                         <!-- Your Introduction Goes Here -->
                         <div class="panel">
                             <h2 class="panel-heading">About Real Estate {{ agent.get_data_for_license_type.license_type }} {% if agent.first_name or agent.last_name %}
@@ -247,25 +291,6 @@
                             {% endif %}
                         </div>
                         <!-- Your Introduction Goes Here -->
-
-                        {% if request.user.is_authenticated %}
-                            {% if not profile_claimed.0 %}
-                                <div class="alert" data-alert="alert">
-                                    <a class="close" href="#" onclick="$(this).parent().fadeOut('fast'); return false;">×</a> To finish claiming your profile copy your license id from your profile below then <a href="/agent/claimprofile/">click here!</a> That's the last step!
-                                </div>
-                            {% else %}
-                               <div class="alert" data-alert="alert">
-                                    <a class="close" href="#" onclick="$(this).parent().fadeOut('fast'); return false;">×</a> <a href="/agent/profile/edit/{{ profile_claimed.1 }}/">Edit your profile!</a>
-                                </div>
-                            {% endif %}
-                        {% else %}
-                            {% if not agent.profile_claimed %}
-                                <div class="alert" data-alert="alert">
-                                    <a class="close" href="#" onclick="$(this).parent().fadeOut('fast'); return false;">×</a> Are you Real Estate {{ agent.get_data_for_license_type.license_type }}, {% if agent.first_name or agent.last_name %}{{ agent.first_name }}  {{ agent.last_name }}{% else %}{{ agent.full_name }}{% endif %}?
-                                    <a href="/account/signup/?next={{ agent.get_absolute_url }}">Claim and edit your profile!</a>
-                                </div>
-                            {% endif %}
-                        {% endif %}
 
                         <!-- CERTS AND AWARDS -->
                         <div class="panel">
@@ -681,35 +706,52 @@
                     <div class="col-lg-8">
                         <div class="panel">
                             <div class="panel-heading">Contact</div>
-                            <form method="post" action="contact.php" name="contactform" id="contactform" class="form">
+                            <form method="post" action="{{ agent.get_absolute_url }}" name="contactform" id="contactform" class="form">
+                                {% csrf_token %}
                                 <div class="field">
                                         <p>Name<span class="req">*</span></p>
-                                        <input type="text" name="name" id="name" class="text-label" placeholder="Your name"/>
+{#                                        <input type="text" name="name" id="name" class="text-label" placeholder="Your name"/>#}
+                                        {{ form.name.errors }}
+                                        {{ form.name }}
+                                        <span class="help-block">{{ form.name.help_text }}</span>
                                 </div>
                                 <div class="field">
                                         <p>Email</p>
-                                        <input type="text" name="email" id="email" class="text-label" placeholder="Your email"/>
+{#                                        <input type="text" name="email" id="email" class="text-label" placeholder="Your email"/>#}
+                                        {{ form.email_address.errors }}
+                                        {{ form.email_address }}
+                                        <span class="help-block">{{ form.email_address.help_text }}</span>
                                 </div>
                                 <div class="field">
                                         <p>Phone</p>
-                                        <input type="text" name="phone" id="phone" class="text-label" placeholder="Your phone"/>
+{#                                        <input type="text" name="phone" id="phone" class="text-label" placeholder="Your phone"/>#}
+                                        {{ form.phone_number.errors }}
+                                        {{ form.phone_number }}
+                                        <span class="help-block">{{ form.phone_number.help_text }}</span>
                                 </div>
                                 <div class="field">
                                         <p>Subject</p>
-                                        <input type="text" name="subject" id="subject" class="text-label" placeholder="Your subject"/>
+{#                                        <input type="text" name="subject" id="subject" class="text-label" placeholder="Your subject"/>#}
+                                        {{ form.subject.errors }}
+                                        {{ form.subject }}
+                                        <span class="help-block">{{ form.subject.help_text }}</span>
                                 </div>
 
                                 <div class="field">
                                     <p>Message</p>
-                                    <textarea name="message" id="message" class="textarea-label" placeholder="Your message"></textarea>
+{#                                    <textarea name="message" id="message" class="textarea-label" placeholder="Your message"></textarea>#}
+                                    {{ form.message.errors }}
+                                    {{ form.message }}
+                                    <span class="help-block">{{ form.message.help_text }}</span>
                                 </div>
 
-                                <div class="success-message">
-                                    <strong>Success!</strong> You successfully send an email for us.
-                                </div>
+{#                                <div class="success-message">#}
+{#                                    <strong>Success!</strong> You successfully send an email for us.#}
+{#                                </div>#}
 
+                                <input class="btn btnBasic" type="submit" value="Send">
                                 <div class="field">
-                                    <button type="button" id="send" class="btn btnBasic">Send</button>
+{#                                    <button type="button" id="send" class="btn btnBasic">Send</button>#}
                                     <div class="loading-contact"><img alt="loader" src="images/loader.gif" /></div>
                                 </div>
 

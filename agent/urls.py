@@ -12,6 +12,7 @@ urlpatterns = patterns('agent.views',
     url(r'^agent/claimprofile/$', "agent_claim", name="agent_claim"),
     url(r'^agent/claimprofile/error/$', "agent_claim_error", name="agent_claim_error"),
     url(r'^agent/profile/edit/(?P<agent_id>\d+)/$', "agent_edit_profile", name="agent_edit_profile"),
-    url(r'^agent/profile/edit-headshot/(?P<agent_id>\d+)/$', "agent_edit_profile_headshot", name="agent_edit_profile_headshot"),
+    url(r'^agent/profile/edit-headshot/(?P<agent_id>\d+)/$', "agent_edit_profile_headshot",
+        name="agent_edit_profile_headshot"),
     url("^$", "home", name="home"),
 )
