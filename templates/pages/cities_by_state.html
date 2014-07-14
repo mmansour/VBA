@@ -49,6 +49,7 @@ Real Estate Licensee lookup by city in {{ active_region.region }}
 <div class="col-lg-9">
     <div class="panel">
         <h2 class="panel-heading">{{ active_region.region }} Real Estate Agents Sorted by City</h2>
+        <ul>
         {% for agt in agent %}
             {% if agt.mailing_city %}
                 {% if agt.mailing_city != 'N/A' %}
@@ -56,6 +57,7 @@ Real Estate Licensee lookup by city in {{ active_region.region }}
                 {% endif %}
             {% endif %}
         {% endfor %}
+        </ul>
     </div>
 <ul>
 </ul>
