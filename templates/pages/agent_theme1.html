@@ -23,20 +23,9 @@
 {% if agent.mailing_city %}, {{ agent.mailing_city|title }}, {{ agent.mailing_state }}{% endif %}
 {% endmetablock %}{% endblock %}
 
-{% block extra_meta %}
-{% comment %}<meta property="og:title" content="{% if agent.first_name or agent.last_name %}
-{{ agent.first_name }}  {{ agent.last_name }}
-{% else %}{{ agent.full_name }}
-{% endif %} - Real Estate {{ agent.get_data_for_license_type.license_type|title }}" />
-<meta property="og:type" content="website" />
-<meta property="og:url" content="http://{{ request.META.HTTP_HOST }}{{ agent.get_absolute_url|urlencode }}" />
-<meta property="og:image" content="https://{{ request.META.HTTP_HOST }}{{ MEDIA_URL }}{{ agent.profile_image|urlencode }}" />
-<meta property="og:site_name" content="Real Estate Agent Lookup" />
-<meta property="fb:admins" content="100001533349176" />{% endcomment %}
-{% endblock %}
+{% block extra_meta %}{% endblock %}
 
-{% block title %}
-{% endblock %}
+{% block title %}{% endblock %}
 
 {% block extra_css %}
 <style type="text/css">

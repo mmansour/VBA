@@ -79,7 +79,7 @@
             <!-- profile picture - change your profile picture here -->
             <div class="profilePicture">
             {% block profile_headshot %}
-                <img src="{% static "img/default.png" %}" alt="profilepicture" title="profilepicture" />
+                <img src="{{ MEDIA_URL }}{% agent_thumbnail "uploads/default.png" 170 170 %}" alt="Real Estate Agent Lookup Headshot" title="Real Estate Agent Lookup Headshot" />
             {% endblock %}
             </div>
             <!-- profile name - change profile name here -->
