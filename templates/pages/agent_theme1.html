@@ -762,43 +762,45 @@ $( document ).ready(function() {
 
     </div>
     <!-- END -->
-    {% block extra_js %}
-    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    {% compress js %}
+        {% block extra_js %}
+        <!-- Include all compiled plugins (below), or include individual files as needed -->
 
-    <!-- Optionally enable responsive features in IE8 -->
-    <script src="{% static "js/jquery.respond.min.js" %}"></script>
+        <!-- Optionally enable responsive features in IE8 -->
+        <script src="{% static "js/jquery.respond.min.js" %}"></script>
 
-    <script src="{% static "js/jquery.easytabs.js" %}"></script>
-    <script src="{% static "js/jquery.hashchange.min.js" %}"></script>
+        <script src="{% static "js/jquery.easytabs.js" %}"></script>
+        <script src="{% static "js/jquery.hashchange.min.js" %}"></script>
 
-    <script src="{% static "js/jquery.response.js" %}"></script>
+        <script src="{% static "js/jquery.response.js" %}"></script>
 
-    <script src="{% static "js/modernizr.custom.js" %}"></script>
+        <script src="{% static "js/modernizr.custom.js" %}"></script>
 
-    <!-- twitter -->
-{#    <script src="{% static "js/twitter/jquery.tweet.js" %}"></script>#}
-{#    <script src="{% static "js/twitter-options.js" %}"></script>#}
-    <script type="text/javascript" src="{% static "js/fancybox/jquery.mousewheel-3.0.4.pack.js" %}"></script>
-    <script type="text/javascript" src="{% static "js/fancybox/jquery.fancybox-1.3.4.pack.js" %}"></script>
+        <!-- twitter -->
+    {#    <script src="{% static "js/twitter/jquery.tweet.js" %}"></script>#}
+    {#    <script src="{% static "js/twitter-options.js" %}"></script>#}
+        <script type="text/javascript" src="{% static "js/fancybox/jquery.mousewheel-3.0.4.pack.js" %}"></script>
+        <script type="text/javascript" src="{% static "js/fancybox/jquery.fancybox-1.3.4.pack.js" %}"></script>
 
 
-    <script src="{% static "js/toucheffects.js" %}"></script>
-    <script src="{% static "js/custom.js" %}"></script>
+        <script src="{% static "js/toucheffects.js" %}"></script>
+        <script src="{% static "js/custom.js" %}"></script>
 
-{#    <script src="{% static "js/bootstrap.min.js" %}"></script>#}
+    {#    <script src="{% static "js/bootstrap.min.js" %}"></script>#}
 
-    <script type="text/javascript">
-    $(document).ready(function() {
+        <script type="text/javascript">
+        $(document).ready(function() {
 
-        $("a#example1").fancybox();
-        $("a#example2").fancybox();
-        $("a#example3").fancybox();
-        $("a#example4").fancybox();
-        $("a#example5").fancybox();
-        $("a#example6").fancybox();
-        $("a#example7").fancybox();
+            $("a#example1").fancybox();
+            $("a#example2").fancybox();
+            $("a#example3").fancybox();
+            $("a#example4").fancybox();
+            $("a#example5").fancybox();
+            $("a#example6").fancybox();
+            $("a#example7").fancybox();
 
-    });
-    </script>
-    {% endblock %}
+        });
+        </script>
+        {% endblock %}
+    {% endcompress %}
 {% endblock %}
