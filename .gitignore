@@ -17,4 +17,6 @@ log/
 migrations/
 static/media/
 static/html/
+static/CACHE/
+CACHE/
 

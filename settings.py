@@ -202,9 +202,11 @@ AUTHENTICATION_BACKENDS = ("mezzanine.core.auth_backends.MezzanineBackend",)
 STATICFILES_FINDERS = (
     "django.contrib.staticfiles.finders.FileSystemFinder",
     "django.contrib.staticfiles.finders.AppDirectoriesFinder",
+    "compressor.finders.CompressorFinder",
 #    'django.contrib.staticfiles.finders.DefaultStorageFinder',
 )
 
+COMPRESS_ENABLED = True
 
 #########
 # PATHS #
@@ -267,6 +269,7 @@ INSTALLED_APPS = (
     "agent",
     "cities_light",
     "haystack",
+    "compressor",
     "cartridge.shop",
     "mezzanine.boot",
     "mezzanine.conf",
