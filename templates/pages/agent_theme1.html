@@ -5,25 +5,18 @@
 {% endif %} {{ agent.mailing_city }}, {{ agent.mailing_state }} {{ agent.mailing_zip }}
 {% endblock %}
 
-{% block meta_description %}{% metablock %}Information about Real Estate
-
-{% if agent.get_data_for_license_type.license_type == "Agent" %} Agent {% if agent.first_name or agent.last_name %}
+{% block meta_description %}{% metablock %}Information about Real Estate {{ agent.get_data_for_license_type.license_type }} {% if agent.first_name or agent.last_name %}
 {{ agent.first_name }} {{ agent.last_name }}{% else %}{{ agent.full_name }}{% endif %}
-{% endif %}
 
-{% if agent.get_data_for_license_type.license_type == "Broker" %} Broker {% if agent.first_name or agent.last_name %}
-{{ agent.first_name }} {{ agent.last_name }}{% else %}{{ agent.full_name }}{% endif %}
-{% endif %}
-
-{% if agent.get_data_for_license_type.license_type == "Officer" %} Officer {% if agent.first_name or agent.last_name %}
-{{ agent.first_name }} {{ agent.last_name }}{% else %}{{ agent.full_name }}{% endif %}
-{% endif %}
-
-{% if agent.get_data_for_license_type.license_type == "Corporation" %} Corporation {{ agent.full_name }}{% endif %}
-{% if agent.mailing_city %}, {{ agent.mailing_city|title }}, {{ agent.mailing_state }}{% endif %}
 {% endmetablock %}{% endblock %}
 
-{% block extra_meta %}{% endblock %}
+{% block extra_meta %}
+<meta property="og:url" content="http://{{ request.META.HTTP_HOST }}{{ agent.get_absolute_url }}" />
+<meta property="og:image" content="http://{{ request.META.HTTP_HOST }}{{ MEDIA_URL }}{% agent_thumbnail agent.profile_image 170 170 %}" />
+<meta property="og:description" content="Check Out Real Estate {{ agent.get_data_for_license_type.license_type }} {% if agent.first_name or agent.last_name %}
+{{ agent.first_name }} {{ agent.last_name }}{% else %}{{ agent.full_name }}{% endif %}" />
+<meta property="og:title" content="Real Estate Agent Lookup" />
+{% endblock %}
 
 {% block title %}{% endblock %}
 
