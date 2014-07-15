@@ -762,10 +762,10 @@ $( document ).ready(function() {
 
     </div>
     <!-- END -->
-    {% compress js %}
+
         {% block extra_js %}
         <!-- Include all compiled plugins (below), or include individual files as needed -->
-
+        {% compress js %}
         <!-- Optionally enable responsive features in IE8 -->
         <script src="{% static "js/jquery.respond.min.js" %}"></script>
 
@@ -801,6 +801,6 @@ $( document ).ready(function() {
 
         });
         </script>
+        {% endcompress %}
         {% endblock %}
-    {% endcompress %}
 {% endblock %}
