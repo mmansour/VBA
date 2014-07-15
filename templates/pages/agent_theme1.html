@@ -13,9 +13,10 @@
 {% block extra_meta %}
 <meta property="og:url" content="http://{{ request.META.HTTP_HOST }}{{ agent.get_absolute_url }}" />
 <meta property="og:image" content="http://{{ request.META.HTTP_HOST }}{{ MEDIA_URL }}{% agent_thumbnail agent.profile_image 170 170 %}" />
-<meta property="og:description" content="Check Out Real Estate {{ agent.get_data_for_license_type.license_type }} {% if agent.first_name or agent.last_name %}
+<meta property="og:description" content="Real Estate {{ agent.get_data_for_license_type.license_type }} {% if agent.first_name or agent.last_name %}
 {{ agent.first_name }} {{ agent.last_name }}{% else %}{{ agent.full_name }}{% endif %}" />
-<meta property="og:title" content="Real Estate Agent Lookup" />
+<meta property="og:title" content="{{ agent.get_data_for_license_type.license_type }} {% if agent.first_name or agent.last_name %}
+{{ agent.first_name }} {{ agent.last_name }}{% else %}{{ agent.full_name }}{% endif %}" />
 {% endblock %}
 
 {% block title %}{% endblock %}
