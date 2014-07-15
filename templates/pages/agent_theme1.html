@@ -170,7 +170,9 @@ $( document ).ready(function() {
 
                         <!-- SOCIAL SHARE -->
                         <div class="panel">
-                            <h2 class="panel-heading">Share This Real Estate {{ agent.get_data_for_license_type.license_type }}</h2>
+                            <h2 class="panel-heading">Share {% if agent.first_name or agent.last_name %}
+                            {{ agent.first_name }} {{ agent.last_name }}{% else %}
+                            {{ agent.full_name }}{% endif %}</h2>
                             <div class="text-center">
                                 <span class='st_facebook_large'></span>
                                 <span class='st_twitter_large'></span>
