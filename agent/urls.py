@@ -14,5 +14,6 @@ urlpatterns = patterns('agent.views',
     url(r'^agent/profile/edit/(?P<agent_id>\d+)/$', "agent_edit_profile", name="agent_edit_profile"),
     url(r'^agent/profile/edit-headshot/(?P<agent_id>\d+)/$', "agent_edit_profile_headshot",
         name="agent_edit_profile_headshot"),
+    url(r'^agent/leads/$', "agent_leads", name="agent_leads"),
     url("^$", "home", name="home"),
 )

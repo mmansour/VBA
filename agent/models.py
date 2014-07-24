@@ -91,6 +91,8 @@ class Agent(Displayable):
     education_degree = models.CharField(max_length=100, verbose_name="Degree Earned", blank=True, null=True)
     education_awards = models.CharField(max_length=100, verbose_name="Awards / Accolades", blank=True, null=True)
 
+    subscribed_to_leads = models.BooleanField(default=False)
+
     def get_clean_main_office_address(self):
         if self.main_office_address:
             return "<address><small>{0}</small></address>".format(self.main_office_address.replace('u', '')

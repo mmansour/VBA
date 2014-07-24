@@ -311,6 +311,16 @@ def agent_details(request, agent_data, license_id):
                               context_instance=RequestContext(request))
 
 
+@login_required()
+def agent_leads(request):
+    leads = AgentLead.objects.filter(agent__user=request.user
+                                     # agent__subscribed_to_leads=True
+                                     )
+    return render_to_response('pages/agent_leads.html',
+                              {'leads': leads},
+                              context_instance=RequestContext(request))
+
+
 def states(request):
     active_regions = ActiveRegion.objects.all()
     profile_claimed = is_profile_claimed(request.user)

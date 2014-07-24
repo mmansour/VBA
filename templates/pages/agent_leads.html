@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+{% load mezzanine_tags keyword_tags %}
+
+{% block meta_title %}
+Your leads
+{% endblock %}
+
+{% comment %}{% block meta_keywords %}{% metablock %}
+{% keywords_for page as keywords %}
+{% for keyword in keywords %}
+    {% if not forloop.first %}, {% endif %}
+    {{ keyword }}
+{% endfor %}
+{% endmetablock %}{% endblock %}{% endcomment %}
+
+{% block meta_description %}{% metablock %}
+Below are leads or people looking for you
+{% endmetablock %}{% endblock %}
+
+{% block title %}
+Leads and People Looking For You
+{% endblock %}
+
+{% block extra_breadcrumb %}
+<li class="active">
+Leads
+</li>
+{% endblock %}
+
+{% block alert_header %}
+    {% if request.user.is_authenticated %}
+        {% if not profile_claimed.0 %}
+            <div class="alert" data-alert="alert">
+            <a class="close" href="#" onclick="$(this).parent().fadeOut('fast'); return false;">×</a> <a href="/agent/claimprofile/">To finish claiming your profile click here!</a> Just one more step!
+            </div>
+        {% else %}
+           <div class="alert" data-alert="alert">
+                <a class="close" href="#" onclick="$(this).parent().fadeOut('fast'); return false;">×</a> <a href="/agent/profile/edit/{{ profile_claimed.1 }}/">To edit your profile click here!</a>
+            </div>
+        {% endif %}
+    {% endif %}
+{% endblock %}
+
+{% block main %}
+<div class="col-lg-9">
+    <div class="panel">
+        <h2 class="panel-heading">Leads Sorted By Most Recent First</h2>
+        <table class="table table-striped table-bordered table-condensed">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Phone Number</th>
+                    <th>Email Address</th>
+                    <th>Subject</th>
+                    <th>Message</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for lead in leads %}
+                <tr>
+                    <td>{{ lead.name }}</td>
+                    <td>{{ lead.phone_number }}</td>
+                    <td>{{ lead.email_address }}</td>
+                    <td>{{ lead.subject }}</td>
+                    <td>{{ lead.message }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}
